@@ -2,18 +2,18 @@
 GUARDADO SEGURO (archivo 100% ASCII, a prueba de corrupcion):
 1) Copia TODO este archivo.
 2) Pegalo en un editor de texto plano (Notepad++, Acode, QuickEdit, VS Code).
-3) Guardalo como: hydro_control_v106.html
+3) Guardalo como: hydro_control_v107.html
    - Codificacion: cualquiera (UTF-8 o ANSI). No hay bytes no-ASCII que corromper.
 4) Si lo transfieres por WhatsApp/Drive/correo: envialo como ARCHIVO/DOCUMENTO, nunca como texto pegado.
 5) Abrelo en el navegador: acentos y simbolos se renderizan via entidades HTML y escapes \u de JS.
-Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.6).
+Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.7).
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Control Hidrop&oacute;nico v10.6 - ASCII Seguro</title>
+<title>Control Hidrop&oacute;nico v10.7 - ASCII Seguro</title>
 <style>
 :root { --vc:#e8f5e9; --vf:#2e7d32; --vo:#1b5e20; --ac:#e3f2fd; --af:#1565c0; --gc:#f5f5f5; --gm:#e0e0e0; --go:#616161; --ra:#c62828; --rc:#ffebee; --aa:#f9a825; --ac2:#fff8e1; --na:#ef6c00; --nc:#fff3e0; --bl:#fff; --ne:#212121; --mo:#6a1b9a; --mc:#f3e5f5; }
 * { box-sizing:border-box; margin:0; padding:0; }
@@ -26,6 +26,8 @@ header .subtitle { font-size:.85rem; opacity:.95; }
 .screen.active-screen { display:block; animation:fadeIn .3s ease-out; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 .screen-header { background:var(--gc); padding:12px 16px; font-weight:600; color:var(--go); display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--gm); }
+.nube-pill { margin-left:auto; font-size:.78rem; padding:3px 10px; border-radius:12px; font-weight:600; cursor:pointer; }
+.nube-on { background:#e8f5e9; color:#1b5e20; } .nube-off { background:#ffebee; color:#b71c1c; }
 .screen-header::before { content:""; width:10px; height:10px; border-radius:50%; background:var(--vf); }
 .step-number { font-weight:bold; color:var(--vf); }
 .form-group { margin:14px 16px; }
@@ -77,10 +79,10 @@ button:disabled { opacity:.5; cursor:not-allowed; }
 </head>
 <body>
 <div class="container">
-<header><h1>CONTROL HIDROP&Oacute;NICO v10.6</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
+<header><h1>CONTROL HIDROP&Oacute;NICO v10.7</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
 
 <div id="screen-dashboard" class="screen active-screen">
-  <div class="screen-header">Panel Principal</div>
+  <div class="screen-header">Panel Principal<span id="nube-pill" class="nube-pill nube-off" style="display:none" onclick="mostrarPantalla('screen-mas')">Fuera de l&iacute;nea</span></div>
   <div id="alertas-container"></div>
   <div class="stat-grid">
     <div class="stat-box"><div class="label">Casetas</div><div class="value" id="stat-casetas">0</div></div>
@@ -89,7 +91,15 @@ button:disabled { opacity:.5; cursor:not-allowed; }
     <div class="stat-box"><div class="label">Pr&oacute;x. Cosecha</div><div class="value" id="stat-cosecha" style="font-size:1rem">-</div></div>
   </div>
   <div id="casetas-lista"></div>
-  <div class="card card-info" style="margin:16px"><h3>Nube</h3><div class="info-box" id="nube-estado"></div>
+  <div class="btn-row" style="margin:16px"><button onclick="mostrarPantalla('screen-nueva-caseta')" class="btn-secondary">Nueva Caseta</button><button onclick="mostrarPantalla('screen-nuevo-cultivo')" class="btn-morado">Nuevo Cultivo</button></div>
+  <div class="btn-row" style="margin:0 16px 16px"><button onclick="mostrarPantalla('screen-lista-cultivos')" class="btn-tertiary">Ver Cultivos</button><button onclick="mostrarPantalla('screen-mas')" class="btn-secondary">M&aacute;s</button></div>
+</div>
+
+<div id="screen-mas" class="screen">
+  <div class="screen-header">M&aacute;s opciones</div>
+  <div class="card"><h3>Datos</h3><div class="btn-row"><button onclick="exportarBackupJSON()" class="btn-morado">Backup JSON</button><button onclick="importarBackupJSON()" class="btn-morado">Restaurar Backup</button></div>
+    <div class="btn-row" style="margin-top:8px"><button onclick="exportarTodoCSV()" class="btn-secondary">Exportar CSV</button></div></div>
+  <div class="card card-info" ><h3>Nube</h3><div class="info-box" id="nube-estado"></div>
     <div id="nube-cfg" style="display:none"><div class="form-group"><label>URL del proyecto (https://...supabase.co):</label><input type="url" id="nube-url" autocomplete="off"></div>
     <div class="form-group"><label>Llave publicable:</label><input type="text" id="nube-key" autocomplete="off"></div>
     <button onclick="syncGuardarCfg()" class="btn-secondary">Guardar</button><div id="nube-msg-cfg" style="color:#b71c1c;margin-top:6px"></div></div>
@@ -98,9 +108,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
     <button onclick="syncLoginUI()" class="btn-morado">Entrar</button><div id="nube-msg" style="color:#b71c1c;margin-top:6px"></div></div>
     <div id="nube-acciones" style="display:none"><div class="btn-row"><button onclick="syncAhora(true)" class="btn-secondary">Sincronizar ahora</button><button onclick="syncSalir()" class="btn-tertiary">Salir</button></div></div></div>
 
-  <div class="btn-row" style="margin:16px"><button onclick="mostrarPantalla('screen-nueva-caseta')" class="btn-secondary">Nueva Caseta</button><button onclick="mostrarPantalla('screen-nuevo-cultivo')" class="btn-morado">Nuevo Cultivo</button></div>
-  <div class="btn-row" style="margin:0 16px 16px"><button onclick="mostrarPantalla('screen-lista-cultivos')" class="btn-tertiary">Ver Cultivos</button><button onclick="exportarTodoCSV()" class="btn-secondary">Exportar CSV</button></div>
-  <div class="btn-row" style="margin:0 16px 16px"><button onclick="exportarBackupJSON()" class="btn-morado">Backup JSON</button><button onclick="importarBackupJSON()" class="btn-morado">Restaurar Backup</button></div>
+  <div class="btn-row" style="margin:16px"><button onclick="mostrarPantalla('screen-dashboard')" class="btn-tertiary">Volver al panel</button></div>
 </div>
 
 <div id="screen-nueva-caseta" class="screen">
@@ -265,7 +273,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
   </div>
 </div>
 
-<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.6 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
+<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.7 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
 </div>
 
 <script>
@@ -328,7 +336,8 @@ function guardarDatos(k, d) { localStorage.setItem(k, JSON.stringify(d)); if (!S
 const NUBE = { url: '', key: '' }; /* PEGA AQUI: URL del proyecto Supabase y llave publicable (anon/publishable) */
 const SYNC_COLS = { hydro_cultivos: 'cultivos', hydro_casetas: 'casetas', hydro_eventos: 'eventos' };
 const SYNC_K = { sesion: 'hydro_sync_sesion', cola: 'hydro_sync_cola', meta: 'hydro_sync_meta', cursor: 'hydro_sync_cursor', estado: 'hydro_sync_estado', respaldo: 'hydro_backup_pre_sync' };
-let SYNC_APLICANDO = false, SYNC_OCUPADO = false, SYNC_TIMER = null;
+let SYNC_APLICANDO = false, SYNC_OCUPADO = false, SYNC_TIMER = null, SYNC_REINTENTO = null;
+const SYNC_REINTENTO_MS = 60000;
 function syncLeer(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch (e) { return def; } }
 function syncGuardar(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 function syncCanon(o) { if (Array.isArray(o)) return '[' + o.map(syncCanon).join(',') + ']'; if (o && typeof o === 'object') return '{' + Object.keys(o).sort().map(k => JSON.stringify(k) + ':' + syncCanon(o[k])).join(',') + '}'; return JSON.stringify(o === undefined ? null : o); }
@@ -351,14 +360,19 @@ function syncPintar() {
   else if (!ses) t = 'Sin sesi&oacute;n: ingresa tu correo y contrase&ntilde;a. Pendientes por subir: ' + n + '.';
   else t = (e.error ? 'Sin conexi&oacute;n o con error (' + e.error + '). ' : (e.ultimoOk ? 'Sincronizado ' + e.ultimoOk + '. ' : 'Conectado. ')) + 'Pendientes por subir: ' + n + '.';
   el.innerHTML = t;
+  const pl = document.getElementById('nube-pill');
+  if (pl) { const conf = !!(NUBE.url && NUBE.key), on = conf && !!ses && !e.error && !(typeof navigator !== 'undefined' && navigator.onLine === false);
+    pl.style.display = conf ? '' : 'none'; pl.className = 'nube-pill ' + (on ? 'nube-on' : 'nube-off'); pl.innerHTML = on ? 'En l&iacute;nea' : 'Fuera de l&iacute;nea'; }
   const cf = document.getElementById('nube-cfg'); if (cf) cf.style.display = (NUBE.url && NUBE.key) ? 'none' : 'block';
   const lg = document.getElementById('nube-login'); if (lg) lg.style.display = (NUBE.url && NUBE.key && !ses) ? 'block' : 'none';
   const ac = document.getElementById('nube-acciones'); if (ac) ac.style.display = ses ? 'block' : 'none';
 }
-async function syncHttp(ruta, opts, conAuth) {
+async function syncHttp(ruta, opts, conAuth, reintento) {
   const h = Object.assign({ apikey: NUBE.key, 'Content-Type': 'application/json' }, (opts && opts.headers) || {});
   if (conAuth) { const tk = await syncToken(); if (!tk) throw new Error('sin sesion'); h.Authorization = 'Bearer ' + tk; }
-  return fetch(NUBE.url + ruta, Object.assign({}, opts, { headers: h }));
+  const r = await fetch(NUBE.url + ruta, Object.assign({}, opts, { headers: h }));
+  if (r.status === 401 && conAuth && !reintento) { const ses = syncLeer(SYNC_K.sesion, null); if (ses) { ses.exp = 0; syncGuardar(SYNC_K.sesion, ses); return syncHttp(ruta, opts, conAuth, true); } }
+  return r;
 }
 async function syncLogin(email, pass) {
   if (!NUBE.url || !NUBE.key) return { ok: false, msg: 'Nube sin configurar' };
@@ -383,10 +397,12 @@ async function syncToken() {
   return null;
 }
 function syncSalir() { syncGuardar(SYNC_K.sesion, null); syncPintar(); }
+function syncReintentar() { clearTimeout(SYNC_REINTENTO); SYNC_REINTENTO = setTimeout(() => { syncAhora(); }, SYNC_REINTENTO_MS); }
 async function syncAhora(manual) {
   if (SYNC_OCUPADO || !NUBE.url || !NUBE.key) return { ok: false, motivo: 'ocupado_o_sin_config' };
+  clearTimeout(SYNC_REINTENTO);
   const ses = syncLeer(SYNC_K.sesion, null); if (!ses) { syncPintar(); return { ok: false, motivo: 'sin_sesion' }; }
-  if (typeof navigator !== 'undefined' && navigator.onLine === false) { syncEstadoSet({ error: 'sin red' }); return { ok: false, motivo: 'offline' }; }
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) { syncEstadoSet({ error: 'sin red' }); syncReintentar(); return { ok: false, motivo: 'offline' }; }
   SYNC_OCUPADO = true;
   try {
     // 1) SUBIR la cola (solo se vacia lo que el servidor confirmo)
@@ -401,7 +417,7 @@ async function syncAhora(manual) {
       syncGuardar(SYNC_K.cola, cola);
     }
     // 2) BAJAR cambios del servidor (con 5 s de traslape; los ecos se descartan por comparacion)
-    const cur = syncLeer(SYNC_K.cursor, '1970-01-01T00:00:00.000Z'); let desde = new Date(Math.max(0, Date.parse(cur) - 5000)).toISOString(), maxVisto = cur, aplicados = 0;
+    const cur = syncLeer(SYNC_K.cursor, '1970-01-01T00:00:00.000Z'); let desde = cur, maxVisto = cur, aplicados = 0;
     for (let pag = 0; pag < 100; pag++) {
       const r = await syncHttp('/rest/v1/hydro_docs?select=coleccion,id,data,updated_at&updated_at=gte.' + encodeURIComponent(desde) + '&order=updated_at.asc&limit=500', { method: 'GET' }, true);
       if (!r.ok) throw new Error('bajada HTTP ' + r.status);
@@ -410,11 +426,12 @@ async function syncAhora(manual) {
       const ult = rows[rows.length - 1].updated_at; if (Date.parse(ult) > Date.parse(maxVisto)) maxVisto = ult;
       if (rows.length < 500 || ult === desde) break; desde = ult;
     }
-    syncGuardar(SYNC_K.cursor, maxVisto);
+    /* si lo mas nuevo es reciente (<15 s) guarda el cursor 5 s atras por transacciones que aun no confirman; si no, el cursor exacto */
+    syncGuardar(SYNC_K.cursor, (Date.now() - Date.parse(maxVisto) < 15000) ? new Date(Date.parse(maxVisto) - 5000).toISOString() : maxVisto);
     syncEstadoSet({ error: null, ultimoOk: timestampActual() });
     if (aplicados && typeof actualizarDashboard === 'function') actualizarDashboard();
     return { ok: true, aplicados: aplicados };
-  } catch (e) { syncEstadoSet({ error: String(e.message || e).slice(0, 60) }); return { ok: false, motivo: 'error', error: String(e.message || e) }; }
+  } catch (e) { syncEstadoSet({ error: String(e.message || e).slice(0, 60) }); syncReintentar(); return { ok: false, motivo: 'error', error: String(e.message || e) }; }
   finally { SYNC_OCUPADO = false; }
 }
 function syncAplicar(rows) {
@@ -443,18 +460,18 @@ function syncInicializar() {
   Object.keys(SYNC_COLS).forEach(k => { const d = cargarDatos(k); if (d) syncDetectarCambios(k, d); });
   window.addEventListener('online', () => syncAhora());
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncAhora(); });
-  setInterval(() => { if (document.visibilityState !== 'hidden') syncAhora(); }, 20000);
+  window.addEventListener('offline', () => { syncEstadoSet({ error: 'sin red' }); syncReintentar(); });
   syncPintar(); syncAhora();
 }
 
 function agregarRegistro(k, r) { const d = cargarDatos(k) || []; d.push(r); guardarDatos(k, d); return d; }
 function actualizarRegistro(k, c, v, n) { const d = cargarDatos(k) || []; const i = d.findIndex(r => r[c] === v); if (i !== -1) { d[i] = Object.assign({}, d[i], n); guardarDatos(k, d); return d[i]; } return null; }
 function migrarDatosAntiguos() {
-  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
+  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5','v10.6'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
     const old = localStorage.getItem('hydro_'+k+'_'+v), cur = localStorage.getItem('hydro_'+k);
     if (old && !cur) localStorage.setItem('hydro_'+k, old);
   });});
-  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.6');
+  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.7');
 }
 function mostrarPantalla(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
@@ -1125,7 +1142,7 @@ function cerrarRevision() {
 }
 
 function exportarBackupJSON() {
-  const b = { version: '10.6', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
+  const b = { version: '10.7', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
   const bl = new Blob([JSON.stringify(b, null, 2)], {type: 'application/json'});
   const u = URL.createObjectURL(bl); const l = document.createElement('a');
   l.href = u; l.download = 'backup_hidroponico_'+hoy()+'.json'; l.click(); URL.revokeObjectURL(u);
