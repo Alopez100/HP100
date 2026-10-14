@@ -1,0 +1,1193 @@
+<!--
+GUARDADO SEGURO (archivo 100% ASCII, a prueba de corrupcion):
+1) Copia TODO este archivo.
+2) Pegalo en un editor de texto plano (Notepad++, Acode, QuickEdit, VS Code).
+3) Guardalo como: hydro_control_v106.html
+   - Codificacion: cualquiera (UTF-8 o ANSI). No hay bytes no-ASCII que corromper.
+4) Si lo transfieres por WhatsApp/Drive/correo: envialo como ARCHIVO/DOCUMENTO, nunca como texto pegado.
+5) Abrelo en el navegador: acentos y simbolos se renderizan via entidades HTML y escapes \u de JS.
+Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.6).
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Control Hidrop&oacute;nico v10.6 - ASCII Seguro</title>
+<style>
+:root { --vc:#e8f5e9; --vf:#2e7d32; --vo:#1b5e20; --ac:#e3f2fd; --af:#1565c0; --gc:#f5f5f5; --gm:#e0e0e0; --go:#616161; --ra:#c62828; --rc:#ffebee; --aa:#f9a825; --ac2:#fff8e1; --na:#ef6c00; --nc:#fff3e0; --bl:#fff; --ne:#212121; --mo:#6a1b9a; --mc:#f3e5f5; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:linear-gradient(135deg,var(--ac),var(--vc)); color:var(--ne); line-height:1.5; min-height:100vh; padding-bottom:20px; }
+.container { max-width:720px; margin:0 auto; padding:12px; }
+header { text-align:center; margin-bottom:16px; padding:14px; background:var(--vf); color:#fff; border-radius:12px; }
+header h1 { font-size:1.4rem; font-weight:700; margin-bottom:4px; }
+header .subtitle { font-size:.85rem; opacity:.95; }
+.screen { display:none; background:var(--bl); border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,.08); overflow:hidden; margin-bottom:14px; }
+.screen.active-screen { display:block; animation:fadeIn .3s ease-out; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.screen-header { background:var(--gc); padding:12px 16px; font-weight:600; color:var(--go); display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--gm); }
+.screen-header::before { content:""; width:10px; height:10px; border-radius:50%; background:var(--vf); }
+.step-number { font-weight:bold; color:var(--vf); }
+.form-group { margin:14px 16px; }
+label { display:block; margin-bottom:6px; font-weight:600; color:var(--go); font-size:.92rem; }
+input[type=number],input[type=text],input[type=date],select { width:100%; padding:10px 12px; border:1px solid var(--gm); border-radius:8px; font-size:1rem; background:var(--bl); }
+input:focus,select:focus { outline:none; border-color:var(--vf); box-shadow:0 0 0 2px rgba(46,125,50,.15); }
+button { width:100%; padding:12px; margin:8px 0; background:var(--vf); color:#fff; border:none; border-radius:8px; font-size:1rem; font-weight:600; cursor:pointer; }
+button:hover:not(:disabled) { background:var(--vo); }
+button:disabled { opacity:.5; cursor:not-allowed; }
+.btn-secondary{background:var(--af)} .btn-warning{background:var(--na)} .btn-danger{background:var(--ra)} .btn-tertiary{background:var(--go)} .btn-morado{background:var(--mo)}
+.btn-row { display:flex; gap:8px; margin:8px 0; } .btn-row button { flex:1; margin:0; }
+.btn-small { padding:6px 10px; font-size:.85rem; margin:4px 0; width:auto; display:inline-block; }
+.error { color:var(--ra); font-size:.85rem; margin:6px 16px; padding:8px; background:var(--rc); border-radius:6px; display:none; }
+.error.visible { display:block; }
+.info-box { margin:12px 16px; padding:12px; border-radius:8px; border-left:4px solid #42a5f5; background:var(--ac); font-size:.9rem; }
+.warning-box { margin:12px 16px; padding:12px; border-radius:8px; border-left:4px solid var(--aa); background:var(--ac2); font-size:.9rem; }
+.danger-box { margin:12px 16px; padding:12px; border-radius:8px; border-left:4px solid var(--ra); background:var(--rc); font-size:.9rem; }
+.success-box { margin:12px 16px; padding:12px; border-radius:8px; border-left:4px solid var(--vf); background:var(--vc); font-size:.9rem; }
+.card { margin:12px 16px; padding:14px; border-radius:10px; border-left:4px solid var(--vf); background:var(--vc); }
+.card-warning{border-left-color:var(--aa);background:var(--ac2)} .card-danger{border-left-color:var(--ra);background:var(--rc)} .card-info{border-left-color:#42a5f5;background:var(--ac)} .card-morado{border-left-color:var(--mo);background:var(--mc)}
+.card h3 { font-size:1rem; margin-bottom:6px; } .card p { font-size:.9rem; margin:4px 0; }
+.alert-item { padding:10px 12px; margin:8px 16px; border-radius:8px; border-left:4px solid; font-size:.9rem; }
+.alert-critical{background:var(--rc);border-left-color:var(--ra)} .alert-high{background:var(--nc);border-left-color:var(--na)} .alert-medium{background:var(--ac2);border-left-color:var(--aa)} .alert-low{background:var(--ac);border-left-color:#42a5f5}
+.alert-item strong { display:block; margin-bottom:4px; }
+.stat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin:12px 16px; }
+.stat-box { background:var(--gc); padding:12px; border-radius:8px; text-align:center; }
+.stat-box .label { font-size:.75rem; color:var(--go); text-transform:uppercase; }
+.stat-box .value { font-size:1.4rem; font-weight:700; color:var(--vf); margin-top:4px; }
+.bottle-instruction { background:var(--vc); border:2px solid var(--vf); border-radius:10px; padding:14px; margin:12px 16px; }
+.bottle-instruction h4 { color:var(--vo); margin-bottom:8px; font-size:1.05rem; }
+.bottle-instruction ul { list-style:none; padding:0; }
+.bottle-instruction li { padding:6px 0; border-bottom:1px dashed #81c784; font-size:.95rem; }
+.bottle-instruction li:last-child { border-bottom:none; }
+.footer-note { font-size:.75rem; color:var(--go); text-align:center; margin:16px; padding-top:12px; border-top:1px solid var(--gm); }
+.badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:.75rem; font-weight:600; margin-left:6px; }
+.badge-ok{background:var(--vc);color:var(--vo)} .badge-warning{background:var(--ac2);color:#6d4c00} .badge-danger{background:var(--rc);color:var(--ra)} .badge-info{background:var(--ac);color:var(--af)} .badge-morado{background:var(--mc);color:var(--mo)}
+.caseta-card { margin:12px 16px; padding:14px; border-radius:10px; border-left:4px solid var(--vf); background:var(--vc); cursor:pointer; }
+.caseta-card.card-warning{border-left-color:var(--aa);background:var(--ac2)} .caseta-card.card-danger{border-left-color:var(--ra);background:var(--rc)} .caseta-card.card-morado{border-left-color:var(--mo);background:var(--mc)}
+.caseta-card h3 { font-size:1.1rem; margin-bottom:6px; }
+.tubo-item { margin:6px 0; padding:8px; background:var(--gc); border-radius:6px; font-size:.9rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; }
+.tubo-item.vacio{background:var(--ac2);border:1px dashed var(--aa)} .tubo-item.mantenimiento{background:var(--mc);border:1px dashed var(--mo)} .tubo-item.inactivo{background:var(--gc);border:1px dashed var(--gm);opacity:.7}
+.tubo-info { flex:1; min-width:200px; } .tubo-actions { display:flex; gap:4px; flex-wrap:wrap; } .tubo-actions button { padding:4px 8px; font-size:.75rem; margin:0; width:auto; }
+.evento-item { margin:6px 0; padding:10px; background:var(--gc); border-radius:6px; border-left:3px solid #42a5f5; }
+.evento-header { font-weight:600; font-size:.9rem; margin-bottom:4px; } .evento-medicion { font-size:.85rem; color:var(--go); margin:2px 0; }
+.cultivo-card { margin:12px 16px; padding:14px; border-radius:10px; border-left:4px solid var(--vf); background:var(--vc); cursor:pointer; }
+.cultivo-card.fase-germinacion{border-left-color:var(--mo);background:var(--mc)} .cultivo-card.fase-charola{border-left-color:#42a5f5;background:var(--ac)} .cultivo-card.fase-tubo{border-left-color:var(--vf);background:var(--vc)} .cultivo-card.cosechado{border-left-color:var(--go);background:var(--gc);opacity:.7}
+@media(max-width:480px){ .container{padding:8px} header h1{font-size:1.2rem} .stat-grid{grid-template-columns:repeat(2,1fr)} .tubo-item{flex-direction:column;align-items:flex-start} .tubo-actions{width:100%} .tubo-actions button{flex:1} }
+</style>
+</head>
+<body>
+<div class="container">
+<header><h1>CONTROL HIDROP&Oacute;NICO v10.6</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
+
+<div id="screen-dashboard" class="screen active-screen">
+  <div class="screen-header">Panel Principal</div>
+  <div id="alertas-container"></div>
+  <div class="stat-grid">
+    <div class="stat-box"><div class="label">Casetas</div><div class="value" id="stat-casetas">0</div></div>
+    <div class="stat-box"><div class="label">Cultivos Activos</div><div class="value" id="stat-cultivos">0</div></div>
+    <div class="stat-box"><div class="label">Tubos Activos</div><div class="value" id="stat-tubos">0</div></div>
+    <div class="stat-box"><div class="label">Pr&oacute;x. Cosecha</div><div class="value" id="stat-cosecha" style="font-size:1rem">-</div></div>
+  </div>
+  <div id="casetas-lista"></div>
+  <div class="card card-info" style="margin:16px"><h3>Nube</h3><div class="info-box" id="nube-estado"></div>
+    <div id="nube-cfg" style="display:none"><div class="form-group"><label>URL del proyecto (https://...supabase.co):</label><input type="url" id="nube-url" autocomplete="off"></div>
+    <div class="form-group"><label>Llave publicable:</label><input type="text" id="nube-key" autocomplete="off"></div>
+    <button onclick="syncGuardarCfg()" class="btn-secondary">Guardar</button><div id="nube-msg-cfg" style="color:#b71c1c;margin-top:6px"></div></div>
+    <div id="nube-login" style="display:none"><div class="form-group"><label>Correo:</label><input type="email" id="nube-email" autocomplete="username"></div>
+    <div class="form-group"><label>Contrase&ntilde;a:</label><input type="password" id="nube-pass" autocomplete="current-password"></div>
+    <button onclick="syncLoginUI()" class="btn-morado">Entrar</button><div id="nube-msg" style="color:#b71c1c;margin-top:6px"></div></div>
+    <div id="nube-acciones" style="display:none"><div class="btn-row"><button onclick="syncAhora(true)" class="btn-secondary">Sincronizar ahora</button><button onclick="syncSalir()" class="btn-tertiary">Salir</button></div></div></div>
+
+  <div class="btn-row" style="margin:16px"><button onclick="mostrarPantalla('screen-nueva-caseta')" class="btn-secondary">Nueva Caseta</button><button onclick="mostrarPantalla('screen-nuevo-cultivo')" class="btn-morado">Nuevo Cultivo</button></div>
+  <div class="btn-row" style="margin:0 16px 16px"><button onclick="mostrarPantalla('screen-lista-cultivos')" class="btn-tertiary">Ver Cultivos</button><button onclick="exportarTodoCSV()" class="btn-secondary">Exportar CSV</button></div>
+  <div class="btn-row" style="margin:0 16px 16px"><button onclick="exportarBackupJSON()" class="btn-morado">Backup JSON</button><button onclick="importarBackupJSON()" class="btn-morado">Restaurar Backup</button></div>
+</div>
+
+<div id="screen-nueva-caseta" class="screen">
+  <div class="screen-header"><span class="step-number">Nueva</span> Caseta</div>
+  <div class="form-group"><label>N&uacute;mero de caseta:</label><input type="number" id="caseta-numero" min="1" placeholder="Ej: 1"></div>
+  <div class="form-group"><label>Tubos iniciales (1-12):</label><input type="number" id="caseta-tubos" min="1" max="12" placeholder="Ej: 4"></div>
+  <div class="form-group"><label>Volumen m&aacute;ximo del tanque (L):</label><input type="number" id="caseta-vol-max" value="100" min="50" max="200"></div>
+  <div class="card card-info"><h3>Geometr&iacute;a de Tubos NFT</h3>
+    <div class="form-group" style="margin:8px 0"><label>Di&aacute;metro interno (cm):</label><input type="number" id="caseta-tubo-diametro" step="0.1" value="7.62"><small style="color:var(--go)">3&quot; = 7.62 cm &middot; 4&quot; = 10.16 cm</small></div>
+    <div class="form-group" style="margin:8px 0"><label>Altura de l&aacute;mina de agua (cm):</label><input type="number" id="caseta-tubo-lamina" step="0.1" value="4.0"><small style="color:var(--go)">Del fondo del tubo a la superficie</small></div>
+    <div class="form-group" style="margin:8px 0"><label>Longitud del tubo (m):</label><input type="number" id="caseta-tubo-longitud" step="0.1" value="3.0"></div>
+    <div id="calculo-volumen-preview" style="margin-top:10px;padding:8px;background:var(--vc);border-radius:6px;font-weight:600"></div>
+  </div>
+  <div id="error-caseta" class="error"></div>
+  <div style="padding:0 16px 16px"><button onclick="crearCaseta()">Crear Caseta</button><button onclick="mostrarPantalla('screen-dashboard')" class="btn-tertiary">Cancelar</button></div>
+</div>
+
+<div id="screen-detalle-caseta" class="screen">
+  <div class="screen-header">Caseta <span id="detalle-caseta-num"></span></div>
+  <div id="detalle-caseta-contenido"></div>
+  <div style="padding:0 16px 16px">
+    <button onclick="iniciarRevisionCaseta()" class="btn-warning" id="btn-revision">REVISAR / AJUSTAR</button>
+    <button onclick="registrarCaseta(estado.casetaActual.numero)" class="btn-secondary">Registrar Medici&oacute;n</button>
+    <button onclick="mostrarGestionCaseta()" class="btn-morado">Gestionar Infraestructura</button>
+    <button onclick="verHistorialCaseta()" class="btn-tertiary">Historial</button>
+    <button onclick="mostrarPantalla('screen-dashboard')" class="btn-tertiary">Dashboard</button>
+  </div>
+</div>
+
+<div id="screen-gestion-caseta" class="screen">
+  <div class="screen-header">Gesti&oacute;n - Caseta <span id="gestion-caseta-num"></span></div>
+  <div id="gestion-caseta-contenido"></div>
+  <div style="padding:0 16px 16px"><button onclick="verDetalleCaseta(estado.casetaActual.numero)" class="btn-secondary">Volver al Detalle</button></div>
+</div>
+
+<div id="screen-historial-caseta" class="screen">
+  <div class="screen-header">Historial - Caseta <span id="historial-caseta-num"></span></div>
+  <div id="historial-contenido"></div>
+  <div style="padding:0 16px 16px"><button onclick="verDetalleCaseta(estado.casetaActual.numero)" class="btn-tertiary">Volver</button></div>
+</div>
+
+<div id="screen-registro-rapido" class="screen">
+  <div class="screen-header">Registro R&aacute;pido de Medici&oacute;n</div>
+  <div class="info-box" id="rr-info-caseta"></div>
+  <div class="form-group"><label>Volumen actual en tanque (L):</label><input type="number" id="rr-volumen" step="0.5" min="0" placeholder="Ej: 47"></div>
+  <div class="card card-info"><h3>1. Ambiente (term&oacute;metro de la caseta)</h3>
+    <div class="info-box" id="rr-hora-box"></div>
+    <div class="form-group" style="margin:0"><label>Actual (&deg;C):</label><input type="number" id="rr-temp-amb" step="0.1" placeholder="Ej: 31.0"></div>
+    <div class="form-group" style="margin:0"><label>M&aacute;xima del d&iacute;a (&deg;C):</label><input type="number" id="rr-temp-amb-max" step="0.1" placeholder="Ej: 38.3"></div>
+    <div class="form-group" style="margin:0"><label>M&iacute;nima del d&iacute;a (&deg;C):</label><input type="number" id="rr-temp-amb-min" step="0.1" placeholder="Ej: 17.4"></div>
+    <div class="form-group" style="margin:0"><label>Humedad relativa (%):</label><input type="number" id="rr-hr" step="1" placeholder="Ej: 45"></div></div>
+  <div class="card card-warning"><h3>2. Agua (medidor de pluma)</h3>
+    <div class="form-group" style="margin:0"><label>Temperatura agua (&deg;C):</label><input type="number" id="rr-temp-agua" step="0.1" placeholder="Ej: 24"></div>
+    <div class="form-group" style="margin:0"><label>pH:</label><input type="number" id="rr-ph" step="0.01" placeholder="Ej: 6.57"></div>
+    <div class="form-group" style="margin:0"><label>EC (mS/cm):</label><input type="number" id="rr-ec" step="0.01" placeholder="Ej: 1.48"></div></div>
+  <div id="rr-advertencias" style="margin:8px 16px"></div>
+  <div id="error-rr" class="error"></div>
+  <div style="padding:0 16px 16px"><button onclick="guardarRegistroRapido()">Guardar Medici&oacute;n</button><button onclick="verDetalleCaseta(estado.casetaActual.numero)" class="btn-tertiary">Cancelar</button></div>
+</div>
+
+<div id="screen-nuevo-cultivo" class="screen">
+  <div class="screen-header"><span class="step-number">Nuevo</span> Cultivo</div>
+  <div class="form-group"><label>Variedad:</label><select id="cultivo-variedad"><option value="">-- Seleccionar --</option><option>Albahaca Genovesa</option><option>Ar&uacute;gula</option><option>Lechuga Parris Island</option><option>Espinaca</option></select></div>
+  <div class="form-group"><label>Fecha de siembra:</label><input type="date" id="cultivo-fecha-siembra"></div>
+  <div class="form-group"><label>Cantidad de semillas:</label><input type="number" id="cultivo-cantidad" min="1" placeholder="Ej: 15"></div>
+  <div class="form-group"><label>Asignar a caseta (opcional):</label><select id="cultivo-caseta-destino" onchange="actualizarOpcionesTubos()"><option value="">-- Sin asignar --</option></select></div>
+  <div class="form-group"><label>Tubo destino (opcional):</label><select id="cultivo-tubo-destino"><option value="">-- Sin asignar --</option></select></div>
+  <div id="error-cultivo" class="error"></div>
+  <div style="padding:0 16px 16px"><button onclick="crearCultivo()">Crear Cultivo</button><button onclick="mostrarPantalla('screen-lista-cultivos')" class="btn-tertiary">Cancelar</button></div>
+</div>
+
+<div id="screen-detalle-cultivo" class="screen">
+  <div class="screen-header">Cultivo <span id="detalle-cultivo-id"></span></div>
+  <div id="detalle-cultivo-contenido"></div>
+  <div style="padding:0 16px 16px">
+    <button onclick="mostrarPantalla('screen-editar-cultivo')" class="btn-morado">Editar Cultivo</button>
+    <button onclick="trasplantarCultivo()" class="btn-morado" id="btn-trasplantar">Trasplantar a Tubo</button>
+    <button onclick="cosecharCultivo()" class="btn-warning" id="btn-cosechar">Cosechar</button>
+    <button onclick="mostrarPantalla('screen-lista-cultivos')" class="btn-tertiary">Volver</button>
+  </div>
+</div>
+
+<div id="screen-editar-cultivo" class="screen">
+  <div class="screen-header">Editar Cultivo <span id="editar-cultivo-id"></span></div>
+  <div class="form-group"><label>Variedad:</label><select id="edit-cultivo-variedad"><option>Albahaca Genovesa</option><option>Ar&uacute;gula</option><option>Lechuga Parris Island</option><option>Espinaca</option></select></div>
+  <div class="form-group"><label>Fecha de siembra:</label><input type="date" id="edit-cultivo-fecha-siembra"></div>
+  <div class="form-group"><label>Cantidad de semillas:</label><input type="number" id="edit-cultivo-cantidad" min="1"></div>
+  <div class="form-group"><label>Cantidad germinada:</label><input type="number" id="edit-cultivo-germinadas" min="0"></div>
+  <div class="form-group"><label>Fase actual:</label><select id="edit-cultivo-fase"><option value="germinacion">Germinaci&oacute;n</option><option value="crecimiento_charola">En charola</option><option value="trasplantado">Trasplantado</option><option value="crecimiento_tubo">En tubo</option><option value="pre_cosecha">Pre-cosecha</option><option value="cosechado">Cosechado</option></select></div>
+  <div class="form-group"><label>Fecha trasplante real:</label><input type="date" id="edit-cultivo-fecha-trasplante"></div>
+  <div class="form-group"><label>Fecha cosecha real:</label><input type="date" id="edit-cultivo-fecha-cosecha"></div>
+  <div id="error-edit-cultivo" class="error"></div>
+  <div style="padding:0 16px 16px"><button onclick="guardarEdicionCultivo()">Guardar Cambios</button><button onclick="verDetalleCultivo(estado.cultivoActual.cultivo_id)" class="btn-tertiary">Cancelar</button></div>
+</div>
+
+<div id="screen-lista-cultivos" class="screen">
+  <div class="screen-header">Cultivos Registrados</div>
+  <div id="lista-cultivos-contenido"></div>
+  <div style="padding:0 16px 16px"><button onclick="mostrarPantalla('screen-nuevo-cultivo')" class="btn-morado">Nuevo Cultivo</button><button onclick="mostrarPantalla('screen-dashboard')" class="btn-tertiary">Dashboard</button></div>
+</div>
+
+<div id="screen-revision-1" class="screen">
+  <div class="screen-header"><span class="step-number">Paso 1/5</span> Volumen del Tanque</div>
+  <div class="info-box" id="revision-info-caseta"></div>
+  <div class="form-group"><label>Volumen actual en el tanque (L):</label><input type="number" id="rev-volumen" step="0.5" min="0" placeholder="Ej: 47">
+    <small style="color:var(--go);display:block;margin-top:4px">M&iacute;nimo seguro: <span id="rev-vol-min"></span>L | Objetivo: <span id="rev-vol-obj"></span>L | M&aacute;ximo: <span id="rev-vol-max"></span>L</small></div>
+  <div id="advertencias-volumen" style="margin:8px 16px"></div>
+  <div id="error-rev1" class="error"></div>
+  <div style="padding:0 16px 16px"><button onclick="revisionPaso1()">Continuar</button><button onclick="verDetalleCaseta(estado.casetaActual.numero)" class="btn-tertiary">Cancelar</button></div>
+</div>
+
+<div id="screen-revision-2" class="screen">
+  <div class="screen-header"><span class="step-number">Paso 2/5</span> Medici&oacute;n</div>
+  <div class="info-box" id="revision-info-medicion"></div>
+  <div class="card card-info"><h3>1. Ambiente (term&oacute;metro de la caseta)</h3>
+    <div class="info-box" id="rev-hora-box"></div>
+    <div class="form-group" style="margin:0"><label>Actual (&deg;C):</label><input type="number" id="rev-temp-amb-actual" step="0.1" placeholder="Ej: 31"></div>
+    <div class="form-group" style="margin:0"><label>M&aacute;xima del d&iacute;a (&deg;C):</label><input type="number" id="rev-temp-amb-max" step="0.1" placeholder="Ej: 38"></div>
+    <div class="form-group" style="margin:0"><label>M&iacute;nima del d&iacute;a (&deg;C):</label><input type="number" id="rev-temp-amb-min" step="0.1" placeholder="Ej: 17"></div></div>
+  <div class="card card-warning"><h3>2. Agua (medidor de pluma)</h3>
+    <div class="form-group" style="margin:0"><label>Temperatura agua (&deg;C):</label><input type="number" id="rev-temp-agua" step="0.1" placeholder="Ej: 24"></div>
+    <div class="form-group" style="margin:0"><label>pH:</label><input type="number" id="rev-ph" step="0.01" placeholder="Ej: 6.57"></div>
+    <div class="form-group" style="margin:0"><label>EC (mS/cm):</label><input type="number" id="rev-ec" step="0.01" placeholder="Ej: 1.48"></div></div>
+  <div id="error-rev2" class="error"></div>
+  <div style="padding:0 16px 16px"><button onclick="revisionPaso2()">Calcular Ajustes</button><button onclick="mostrarPantalla('screen-revision-1')" class="btn-tertiary">Atr&aacute;s</button></div>
+</div>
+
+<div id="screen-revision-3" class="screen">
+  <div class="screen-header"><span class="step-number">Paso 3/5</span> Plan de Ajuste</div>
+  <div id="revision-plan-contenido"></div>
+  <div style="padding:0 16px 16px">
+    <button onclick="confirmarAjustes()" id="btn-confirmar-ajustes">Ejecutar Ajustes</button>
+    <button onclick="marcarCompletadoSinAjustes()" class="btn-secondary" id="btn-sin-ajustes" style="display:none">Todo en Rango - Cerrar</button>
+    <button onclick="mostrarPantalla('screen-revision-2')" class="btn-tertiary">Re-medir</button>
+  </div>
+</div>
+
+<div id="screen-revision-4" class="screen">
+  <div class="screen-header"><span class="step-number">Paso 4/5</span> Nueva Medici&oacute;n Post-Ajuste</div>
+  <div class="info-box" id="revision-info-post"></div>
+  <div class="form-group"><label>Volumen actual del tanque (L):</label><input type="number" id="rev-volumen-post" step="0.5" min="0" placeholder="Ej: 52"><small style="color:var(--go)">Actual&iacute;zalo si agregaste o drenaste agua durante el ajuste.</small></div>
+  <div class="card card-info"><h3>1. Ambiente (term&oacute;metro de la caseta)</h3>
+    <div class="info-box" id="rev-hora-box-post"></div>
+    <div class="form-group" style="margin:0"><label>Actual (&deg;C):</label><input type="number" id="rev-temp-amb-actual-post" step="0.1" placeholder="Ej: 31"></div>
+    <div class="form-group" style="margin:0"><label>M&aacute;xima del d&iacute;a (&deg;C):</label><input type="number" id="rev-temp-amb-max-post" step="0.1" placeholder="Ej: 38"></div>
+    <div class="form-group" style="margin:0"><label>M&iacute;nima del d&iacute;a (&deg;C):</label><input type="number" id="rev-temp-amb-min-post" step="0.1" placeholder="Ej: 17"></div></div>
+  <div class="card card-warning"><h3>2. Agua (medidor de pluma)</h3>
+    <div class="form-group" style="margin:0"><label>Temperatura agua (&deg;C):</label><input type="number" id="rev-temp-agua-post" step="0.1" placeholder="Ej: 24"></div>
+    <div class="form-group" style="margin:0"><label>pH:</label><input type="number" id="rev-ph-post" step="0.01" placeholder="Ej: 6.57"></div>
+    <div class="form-group" style="margin:0"><label>EC (mS/cm):</label><input type="number" id="rev-ec-post" step="0.01" placeholder="Ej: 1.48"></div></div>
+  <div id="advertencias-volumen-post" style="margin:8px 16px"></div>
+  <div id="error-rev4" class="error"></div>
+  <div style="padding:0 16px 16px"><button onclick="revisionPaso4()">Evaluar Resultado</button></div>
+</div>
+
+<div id="screen-revision-5" class="screen">
+  <div class="screen-header"><span class="step-number">Paso 5/5</span> Evaluaci&oacute;n Final</div>
+  <div id="revision-final-contenido"></div>
+  <div style="padding:0 16px 16px">
+    <button onclick="cerrarRevision()" id="btn-cerrar-revision" class="btn-secondary">Cerrar Revisi&oacute;n</button>
+    <button onclick="seguirAjustando()" class="btn-warning" id="btn-seguir-ajustando">Seguir Ajustando</button>
+  </div>
+</div>
+
+<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.6 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
+</div>
+
+<script>
+const CONFIG = {
+  CAPACIDAD_TANQUE_MAX: 100, VOLUMEN_MINIMO_BOMBA: 45, MARGEN_SEGURIDAD: 10,
+  VOLUMEN_BOTELLA: 2.5, VOLUMEN_BIDON: 20, TIEMPO_RECIRCULACION: 15, GR_NUTRIENTE_POR_BIDON: 30,
+  MAX_PORCENTAJE_DRENAJE: 0.25, MAX_EC_VALIDA: 10, MIN_EC_VALIDA: 0.05, UMBRAL_CONVERSION_EC: 20, UMBRAL_EC_EXTREMA: 3,
+  KJ_POR_BOTELLA_CONGELADA: 743,
+  POTENCIA_AGUA_LIMPIA: { ph_up: { porGota: 0.24, porMl: 4.8 }, ph_down: { porGota: 0.34, porMl: 6.8 } },
+  POTENCIA_CON_NUTRIENTES: { ph_up: { porGota: 0.035, porMl: 0.70 } },
+  CAIDA_PH_POR_NUTRIENTES: 3.17,
+  GRAMOS_CITRICO_POR_PH_62L: 1.55, CONCENTRACION_SOLUCION_CITRICO: 6,
+  PH_SEGURO_MIN: 5.0, PH_SEGURO_MAX: 7.0, EC_SEGURO_MAX: 2.5,
+  PH_OBJETIVO_MIN: 5.8, PH_OBJETIVO_MAX: 6.2, PH_OBJETIVO: 6.0,
+  EC_OBJETIVO_MIN: 1.4, EC_OBJETIVO_MAX: 1.6, EC_OBJETIVO: 1.5,
+  TEMP_AGUA_MAX: 24, TEMP_AMBIENTAL_MAX: 30, TEMP_AMBIENTAL_MIN: 10, TEMP_AMBIENTAL_DIFERENCIA_MAX: 15,
+  MAX_VENTANA_INI_MIN: 630, MAX_VENTANA_FIN_MIN: 1110, /* minutos desde 00:00 (dato del operador): la maxima del dia solo ocurre entre 10:31 y 18:30; la minima, de noche o madrugada */
+  UMBRAL_EC: 0.15, ML_MAX_PH_UP_POR_BOTELLA: 15, MAX_BOTELLAS_POR_SESION: 6,
+  ESTADOS_TUBO: { ACTIVO: 'activo', MANTENIMIENTO: 'mantenimiento', INACTIVO: 'inactivo' },
+  ESTADOS_CASETA: { OPERATIVA: 'operativa', PARCIAL: 'parcial', MANTENIMIENTO: 'mantenimiento', INACTIVA: 'inactiva' },
+  FASES_CULTIVO: { GERMINACION: 'germinacion', CRECIMIENTO_CHAROLA: 'crecimiento_charola', TRASPLANTADO: 'trasplantado', CRECIMIENTO_TUBO: 'crecimiento_tubo', PRE_COSECHA: 'pre_cosecha', COSECHADO: 'cosechado' },
+  CULTIVOS: {
+    'Albahaca Genovesa': { ph_min:5.8, ph_max:6.5, ec_min:1.2, ec_max:1.6, temp_agua_min:20, temp_agua_max:25, temp_amb_min:20, temp_amb_max:25, dias_oscuridad:2, dias_trasplante:17, dias_cosecha:27, requiere_oscuridad:true, descripcion_oscuridad:'Oscuridad total los primeros 2 d&iacute;as' },
+    'Ar\u00fagula': { ph_min:6.0, ph_max:6.5, ec_min:1.2, ec_max:1.6, temp_agua_min:15, temp_agua_max:20, temp_amb_min:15, temp_amb_max:20, dias_oscuridad:2, dias_trasplante:12, dias_cosecha:27, requiere_oscuridad:true, descripcion_oscuridad:'Oscuridad los primeros 2 d&iacute;as' },
+    'Lechuga Parris Island': { ph_min:5.8, ph_max:6.2, ec_min:1.4, ec_max:1.8, temp_agua_min:18, temp_agua_max:22, temp_amb_min:18, temp_amb_max:22, dias_oscuridad:2, dias_trasplante:16, dias_cosecha:40, requiere_oscuridad:false, descripcion_oscuridad:'Luz brillante indirecta desde el inicio' },
+    'Espinaca': { ph_min:6.0, ph_max:6.5, ec_min:1.4, ec_max:1.8, temp_agua_min:15, temp_agua_max:20, temp_amb_min:15, temp_amb_max:20, dias_oscuridad:3, dias_trasplante:16, dias_cosecha:40, requiere_oscuridad:true, descripcion_oscuridad:'Oscuridad total los primeros 3 d&iacute;as' } },
+  STORAGE_KEYS: { cultivos:'hydro_cultivos', casetas:'hydro_casetas', eventos:'hydro_eventos', alertas:'hydro_alertas', schema:'hydro_schema_v102' }
+};
+let estado = { casetaActual: null, cultivoActual: null, revisionActual: null };
+
+function horaActual() { const n = new Date(); return String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0'); }
+function ventanaTermica() {
+  const n = new Date(), m = n.getHours() * 60 + n.getMinutes();
+  const maxEstado = m <= CONFIG.MAX_VENTANA_INI_MIN ? 'antes' : (m <= CONFIG.MAX_VENTANA_FIN_MIN ? 'en_curso' : 'completa');
+  const minEstado = (m > CONFIG.MAX_VENTANA_INI_MIN && m <= CONFIG.MAX_VENTANA_FIN_MIN) ? 'completa' : 'en_curso';
+  return { hora: horaActual(), maxEstado: maxEstado, minEstado: minEstado, maxCompleta: maxEstado === 'completa', minCompleta: minEstado === 'completa' };
+}
+function actualizarHoraBox(id) {
+  const el = document.getElementById(id); if (!el) return; const v = ventanaTermica();
+  const mx = { antes: 'M&aacute;xima: su ventana (10:31-18:30) a&uacute;n no inicia; lo registrado es solo el valor m&aacute;s alto hasta ahora, no el pico del d&iacute;a.',
+    en_curso: 'M&aacute;xima: en su ventana (puede seguir subiendo hasta las 18:30). Si ya supera el l&iacute;mite la alerta es v&aacute;lida; si no, es solo una cota inferior.',
+    completa: 'M&aacute;xima del d&iacute;a: ya ocurri&oacute; (pasadas las 18:30).' }[v.maxEstado];
+  const mn = v.minCompleta ? 'M&iacute;nima: la de la madrugada ya ocurri&oacute;; puede bajar de nuevo en la noche.' : 'M&iacute;nima: puede seguir bajando (noche o madrugada).';
+  el.innerHTML = '<strong>Hora de la medici&oacute;n: '+v.hora+'</strong> (autom&aacute;tica). ' + mn + ' ' + mx;
+}
+function hoy() { const n = new Date(); return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0'); }
+function timestampActual() { const n = new Date(); return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')+' '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0'); }
+function diasEntre(f1, f2) { const d1 = new Date(f1), d2 = new Date(f2 || new Date()); return Math.floor((d2 - d1) / 86400000); }
+function sumarDias(f, d) { const x = new Date(f); x.setDate(x.getDate() + d); return x.toISOString().split('T')[0]; }
+function generarIdCultivo() { const h = hoy().replace(/-/g,''); const c = cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []; return 'C-'+h+'-'+String(c.filter(x => x.fecha_siembra === hoy()).length + 1).padStart(2,'0'); }
+function generarIdEvento(id) { return 'E-C'+id+'-'+timestampActual().replace(/[-: ]/g,''); }
+function normalizarEC(v) { if (v > CONFIG.UMBRAL_CONVERSION_EC) return { ec: Math.round(v/10)/100, convertida: true, original: v }; return { ec: v, convertida: false, original: v }; }
+function validarRangos(ph, ec) { const e = []; if (ph < 0 || ph > 14) e.push('pH '+ph+' fuera de 0-14.'); if (ec < CONFIG.MIN_EC_VALIDA || ec > CONFIG.MAX_EC_VALIDA) e.push('EC '+ec+' fuera de '+CONFIG.MIN_EC_VALIDA+'-'+CONFIG.MAX_EC_VALIDA+' mS/cm.'); return e; }
+function contarCultivosActivos(n) { return (cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []).filter(c => c.caseta_actual === n && c.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO).length; }
+function cargarDatos(k) { const d = localStorage.getItem(k); return d ? JSON.parse(d) : null; }
+function guardarDatos(k, d) { localStorage.setItem(k, JSON.stringify(d)); if (!SYNC_APLICANDO && typeof syncDetectarCambios === 'function') syncDetectarCambios(k, d); }
+/* ===== v10.6: sincronizacion en la nube (Supabase, REST) con cola sin conexion =====
+   Solo SUBE y ACTUALIZA registros: nunca borra datos locales ni remotos.
+   Sincroniza cultivos, casetas y eventos (las alertas se recalculan y no se sincronizan). */
+const NUBE = { url: '', key: '' }; /* PEGA AQUI: URL del proyecto Supabase y llave publicable (anon/publishable) */
+const SYNC_COLS = { hydro_cultivos: 'cultivos', hydro_casetas: 'casetas', hydro_eventos: 'eventos' };
+const SYNC_K = { sesion: 'hydro_sync_sesion', cola: 'hydro_sync_cola', meta: 'hydro_sync_meta', cursor: 'hydro_sync_cursor', estado: 'hydro_sync_estado', respaldo: 'hydro_backup_pre_sync' };
+let SYNC_APLICANDO = false, SYNC_OCUPADO = false, SYNC_TIMER = null;
+function syncLeer(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch (e) { return def; } }
+function syncGuardar(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+function syncCanon(o) { if (Array.isArray(o)) return '[' + o.map(syncCanon).join(',') + ']'; if (o && typeof o === 'object') return '{' + Object.keys(o).sort().map(k => JSON.stringify(k) + ':' + syncCanon(o[k])).join(',') + '}'; return JSON.stringify(o === undefined ? null : o); }
+function syncHash(o) { const s = syncCanon(o); let h = 5381; for (let i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) >>> 0; return h.toString(36) + ':' + s.length; }
+function syncIdDe(col, r) { return String(col === 'cultivos' ? r.cultivo_id : col === 'casetas' ? r.numero : r.evento_id); }
+function syncDetectarCambios(k, arr) {
+  const col = SYNC_COLS[k]; if (!col || !Array.isArray(arr)) return;
+  const meta = syncLeer(SYNC_K.meta, {}); let cola = syncLeer(SYNC_K.cola, []), cambio = false;
+  arr.forEach(r => { const id = syncIdDe(col, r); if (id === 'undefined') return; const mk = col + '|' + id, h = syncHash(r);
+    if (meta[mk] !== h) { meta[mk] = h; cola = cola.filter(q => !(q.c === col && q.id === id)); cola.push({ c: col, id: id, data: r }); cambio = true; } });
+  if (cambio) { syncGuardar(SYNC_K.meta, meta); syncGuardar(SYNC_K.cola, cola); syncProgramar(); }
+}
+function syncProgramar() { if (!NUBE.url) return; clearTimeout(SYNC_TIMER); SYNC_TIMER = setTimeout(() => { syncAhora(); }, 1500); syncPintar(); }
+function syncEstadoSet(o) { syncGuardar(SYNC_K.estado, Object.assign(syncLeer(SYNC_K.estado, {}), o)); syncPintar(); }
+function syncPintar() {
+  const el = document.getElementById('nube-estado'); if (!el) return;
+  const ses = syncLeer(SYNC_K.sesion, null), e = syncLeer(SYNC_K.estado, {}), n = syncLeer(SYNC_K.cola, []).length;
+  let t;
+  if (!NUBE.url || !NUBE.key) t = 'Nube sin configurar (falta URL y llave en el archivo). Los datos se guardan solo en este tel&eacute;fono.';
+  else if (!ses) t = 'Sin sesi&oacute;n: ingresa tu correo y contrase&ntilde;a. Pendientes por subir: ' + n + '.';
+  else t = (e.error ? 'Sin conexi&oacute;n o con error (' + e.error + '). ' : (e.ultimoOk ? 'Sincronizado ' + e.ultimoOk + '. ' : 'Conectado. ')) + 'Pendientes por subir: ' + n + '.';
+  el.innerHTML = t;
+  const cf = document.getElementById('nube-cfg'); if (cf) cf.style.display = (NUBE.url && NUBE.key) ? 'none' : 'block';
+  const lg = document.getElementById('nube-login'); if (lg) lg.style.display = (NUBE.url && NUBE.key && !ses) ? 'block' : 'none';
+  const ac = document.getElementById('nube-acciones'); if (ac) ac.style.display = ses ? 'block' : 'none';
+}
+async function syncHttp(ruta, opts, conAuth) {
+  const h = Object.assign({ apikey: NUBE.key, 'Content-Type': 'application/json' }, (opts && opts.headers) || {});
+  if (conAuth) { const tk = await syncToken(); if (!tk) throw new Error('sin sesion'); h.Authorization = 'Bearer ' + tk; }
+  return fetch(NUBE.url + ruta, Object.assign({}, opts, { headers: h }));
+}
+async function syncLogin(email, pass) {
+  if (!NUBE.url || !NUBE.key) return { ok: false, msg: 'Nube sin configurar' };
+  try {
+    const r = await syncHttp('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email: email, password: pass }) }, false);
+    const j = await r.json();
+    if (!r.ok || !j.access_token) return { ok: false, msg: (j && (j.error_description || j.msg || j.message)) || ('HTTP ' + r.status) };
+    syncGuardar(SYNC_K.sesion, { access: j.access_token, refresh: j.refresh_token, exp: Date.now() + (j.expires_in || 3600) * 1000, uid: j.user && j.user.id, email: email });
+    if (!localStorage.getItem(SYNC_K.respaldo)) syncGuardar(SYNC_K.respaldo, { fecha: timestampActual(), cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [] });
+    syncEstadoSet({ error: null }); return { ok: true };
+  } catch (e) { return { ok: false, msg: 'sin conexion' }; }
+}
+async function syncToken() {
+  const s = syncLeer(SYNC_K.sesion, null); if (!s) return null;
+  if (s.exp - 60000 > Date.now()) return s.access;
+  try {
+    const r = await fetch(NUBE.url + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: { apikey: NUBE.key, 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: s.refresh }) });
+    const j = await r.json();
+    if (r.ok && j.access_token) { s.access = j.access_token; s.refresh = j.refresh_token || s.refresh; s.exp = Date.now() + (j.expires_in || 3600) * 1000; syncGuardar(SYNC_K.sesion, s); return s.access; }
+    if (r.status >= 400 && r.status < 500) { syncGuardar(SYNC_K.sesion, null); syncPintar(); }
+  } catch (e) {}
+  return null;
+}
+function syncSalir() { syncGuardar(SYNC_K.sesion, null); syncPintar(); }
+async function syncAhora(manual) {
+  if (SYNC_OCUPADO || !NUBE.url || !NUBE.key) return { ok: false, motivo: 'ocupado_o_sin_config' };
+  const ses = syncLeer(SYNC_K.sesion, null); if (!ses) { syncPintar(); return { ok: false, motivo: 'sin_sesion' }; }
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) { syncEstadoSet({ error: 'sin red' }); return { ok: false, motivo: 'offline' }; }
+  SYNC_OCUPADO = true;
+  try {
+    // 1) SUBIR la cola (solo se vacia lo que el servidor confirmo)
+    let cola = syncLeer(SYNC_K.cola, []);
+    while (cola.length) {
+      const lote = cola.slice(0, 200);
+      const r = await syncHttp('/rest/v1/hydro_docs?on_conflict=owner,coleccion,id', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify(lote.map(q => ({ owner: ses.uid, coleccion: q.c, id: q.id, data: q.data }))) }, true);
+      if (!r.ok) throw new Error('subida HTTP ' + r.status);
+      const sent = {}; lote.forEach(q => { sent[q.c + '|' + q.id] = syncHash(q.data); });
+      cola = syncLeer(SYNC_K.cola, []).filter(q => sent[q.c + '|' + q.id] !== syncHash(q.data));
+      syncGuardar(SYNC_K.cola, cola);
+    }
+    // 2) BAJAR cambios del servidor (con 5 s de traslape; los ecos se descartan por comparacion)
+    const cur = syncLeer(SYNC_K.cursor, '1970-01-01T00:00:00.000Z'); let desde = new Date(Math.max(0, Date.parse(cur) - 5000)).toISOString(), maxVisto = cur, aplicados = 0;
+    for (let pag = 0; pag < 100; pag++) {
+      const r = await syncHttp('/rest/v1/hydro_docs?select=coleccion,id,data,updated_at&updated_at=gte.' + encodeURIComponent(desde) + '&order=updated_at.asc&limit=500', { method: 'GET' }, true);
+      if (!r.ok) throw new Error('bajada HTTP ' + r.status);
+      const rows = await r.json(); if (!rows.length) break;
+      aplicados += syncAplicar(rows);
+      const ult = rows[rows.length - 1].updated_at; if (Date.parse(ult) > Date.parse(maxVisto)) maxVisto = ult;
+      if (rows.length < 500 || ult === desde) break; desde = ult;
+    }
+    syncGuardar(SYNC_K.cursor, maxVisto);
+    syncEstadoSet({ error: null, ultimoOk: timestampActual() });
+    if (aplicados && typeof actualizarDashboard === 'function') actualizarDashboard();
+    return { ok: true, aplicados: aplicados };
+  } catch (e) { syncEstadoSet({ error: String(e.message || e).slice(0, 60) }); return { ok: false, motivo: 'error', error: String(e.message || e) }; }
+  finally { SYNC_OCUPADO = false; }
+}
+function syncAplicar(rows) {
+  const pend = {}; syncLeer(SYNC_K.cola, []).forEach(q => { pend[q.c + '|' + q.id] = 1; });
+  const meta = syncLeer(SYNC_K.meta, {}); const porCol = {}; let n = 0;
+  rows.forEach(row => { const mk = row.coleccion + '|' + row.id; if (pend[mk]) return; if (meta[mk] === syncHash(row.data)) return; (porCol[row.coleccion] = porCol[row.coleccion] || []).push(row); });
+  Object.keys(SYNC_COLS).forEach(k => { const col = SYNC_COLS[k], rs = porCol[col]; if (!rs) return;
+    const arr = cargarDatos(k) || [];
+    rs.forEach(row => { const i = arr.findIndex(x => syncIdDe(col, x) === String(row.id)); if (i === -1) arr.push(row.data); else arr[i] = row.data; meta[col + '|' + row.id] = syncHash(row.data); n++; });
+    SYNC_APLICANDO = true; try { guardarDatos(k, arr); } finally { SYNC_APLICANDO = false; } });
+  syncGuardar(SYNC_K.meta, meta); return n;
+}
+async function syncLoginUI() {
+  const e = document.getElementById('nube-email').value.trim(), p = document.getElementById('nube-pass').value;
+  const r = await syncLogin(e, p); const m = document.getElementById('nube-msg'); m.textContent = r.ok ? '' : 'No se pudo entrar: ' + r.msg;
+  if (r.ok) { document.getElementById('nube-pass').value = ''; syncAhora(true); }
+}
+function syncCargarCfg() { const c = syncLeer('hydro_sync_cfg', null); if (c && c.url && c.key && (!NUBE.url || !NUBE.key)) { NUBE.url = c.url; NUBE.key = c.key; } }
+function syncGuardarCfg() {
+  const u = document.getElementById('nube-url').value.trim().replace(/\/+$/, ''), k = document.getElementById('nube-key').value.trim(), m = document.getElementById('nube-msg-cfg');
+  if (!/^https:\/\/[^\s\/]+\.[^\s]*$/.test(u) || k.length < 20) { m.textContent = 'URL (https://...) o llave no validas.'; return; }
+  m.textContent = ''; syncGuardar('hydro_sync_cfg', { url: u, key: k }); NUBE.url = u; NUBE.key = k; syncPintar(); syncProgramar();
+}
+function syncInicializar() {
+  syncCargarCfg();
+  Object.keys(SYNC_COLS).forEach(k => { const d = cargarDatos(k); if (d) syncDetectarCambios(k, d); });
+  window.addEventListener('online', () => syncAhora());
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncAhora(); });
+  setInterval(() => { if (document.visibilityState !== 'hidden') syncAhora(); }, 20000);
+  syncPintar(); syncAhora();
+}
+
+function agregarRegistro(k, r) { const d = cargarDatos(k) || []; d.push(r); guardarDatos(k, d); return d; }
+function actualizarRegistro(k, c, v, n) { const d = cargarDatos(k) || []; const i = d.findIndex(r => r[c] === v); if (i !== -1) { d[i] = Object.assign({}, d[i], n); guardarDatos(k, d); return d[i]; } return null; }
+function migrarDatosAntiguos() {
+  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
+    const old = localStorage.getItem('hydro_'+k+'_'+v), cur = localStorage.getItem('hydro_'+k);
+    if (old && !cur) localStorage.setItem('hydro_'+k, old);
+  });});
+  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.6');
+}
+function mostrarPantalla(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
+  document.getElementById(id).classList.add('active-screen'); window.scrollTo(0,0);
+  if (id === 'screen-dashboard') actualizarDashboard();
+  if (id === 'screen-lista-cultivos') renderListaCultivos();
+  if (id === 'screen-nuevo-cultivo') prepararFormCultivo();
+  if (id === 'screen-editar-cultivo') prepararFormEdicionCultivo();
+  if (id === 'screen-nueva-caseta') calcularPreviewVolumenTubo();
+}
+
+function avisosAmbientePorCultivo(n, ta) {
+  const act = (cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []).filter(c => c.caseta_actual === n && c.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO && CONFIG.CULTIVOS[c.variedad]);
+  const vistos = {}, out = [];
+  act.forEach(c => { if (vistos[c.variedad]) return; vistos[c.variedad] = 1; const i = CONFIG.CULTIVOS[c.variedad];
+    if (ta < i.temp_amb_min || ta > i.temp_amb_max) out.push('<div class="info-box">Ambiente '+ta+'&deg;C fuera del rango de '+c.variedad+' ('+i.temp_amb_min+'-'+i.temp_amb_max+'&deg;C).</div>'); });
+  return out;
+}
+function calcularVolumenTubo(d, h, L) {
+  const R = d / 2;
+  if (h <= 0) return 0;
+  if (h >= d) return (Math.PI * R * R * L * 100) / 1000;
+  const theta = 2 * Math.acos(Math.max(-1, Math.min(1, (R - h) / R)));
+  const area = (R * R * (theta - Math.sin(theta))) / 2;
+  return (area * L * 100) / 1000;
+}
+function calcularPreviewVolumenTubo() {
+  const d = parseFloat(document.getElementById('caseta-tubo-diametro').value) || 7.62;
+  const h = parseFloat(document.getElementById('caseta-tubo-lamina').value) || 4;
+  const L = parseFloat(document.getElementById('caseta-tubo-longitud').value) || 3;
+  const v = calcularVolumenTubo(d, h, L);
+  document.getElementById('calculo-volumen-preview').innerHTML = 'Volumen por tubo: <strong>' + v.toFixed(2) + ' L</strong> (' + Math.round(h/d*100) + '% de secci&oacute;n)';
+}
+function obtenerTubosActivos(c) { if (!c.tubos) return Array.from({length: c.numTubos || 4}, (_, i) => ({numero: i+1, estado: 'activo'})); return c.tubos.filter(t => t.estado === 'activo'); }
+function obtenerTubosEnMantenimiento(c) { return c.tubos ? c.tubos.filter(t => t.estado === 'mantenimiento') : []; }
+function calcularVolumenesSistema(c) {
+  const ta = obtenerTubosActivos(c);
+  const nt = c.tubos ? c.tubos.length : (c.numTubos || 4);
+  let vpt = 4;
+  if (c.geometria_tubos) vpt = calcularVolumenTubo(c.geometria_tubos.diametro_cm, c.geometria_tubos.lamina_cm, c.geometria_tubos.longitud_m);
+  const vt = ta.length * vpt;
+  const mx = CONFIG.CAPACIDAD_TANQUE_MAX - vt;
+  let mg = CONFIG.MARGEN_SEGURIDAD;
+  if ((mx - mg) < CONFIG.VOLUMEN_MINIMO_BOMBA) mg = Math.max(0, mx - CONFIG.VOLUMEN_MINIMO_BOMBA);
+  const vo = mx - mg;
+  return { numTubosActivos: ta.length, numTubosTotal: nt, tubosActivos: ta, volumenPorTubo: vpt, volTubos: vt, maxAbsolutoTanque: mx, volumenObjetivoTanque: vo, volumenTotalObjetivo: vo + vt, margen: mg, minBomba: CONFIG.VOLUMEN_MINIMO_BOMBA };
+}
+function calcularPotenciaPH(v, t, n) {
+  const f = 2 / v;
+  if (t === 'ph_up') return n ? { porGota: CONFIG.POTENCIA_CON_NUTRIENTES.ph_up.porGota*f, porMl: CONFIG.POTENCIA_CON_NUTRIENTES.ph_up.porMl*f } : { porGota: CONFIG.POTENCIA_AGUA_LIMPIA.ph_up.porGota*f, porMl: CONFIG.POTENCIA_AGUA_LIMPIA.ph_up.porMl*f };
+  return { porGota: CONFIG.POTENCIA_AGUA_LIMPIA.ph_down.porGota*f, porMl: CONFIG.POTENCIA_AGUA_LIMPIA.ph_down.porMl*f };
+}
+function botellasEnfriamiento(volTotal, tempActual) {
+  const porBotella = CONFIG.KJ_POR_BOTELLA_CONGELADA / (volTotal * 4.18);
+  return { botellas: Math.max(1, Math.ceil((tempActual - CONFIG.TEMP_AGUA_MAX) / porBotella)), gradosPorBotella: Math.round(porBotella * 10) / 10 };
+}
+
+function calcularAjusteTanque(volTanque, nTubos, ph, ec, temp, caseta) {
+  const vols = calcularVolumenesSistema(caseta || { tubos: Array.from({length: nTubos}, (_, i) => ({numero: i+1, estado: 'activo'})) });
+  const volTotal = volTanque + vols.volTubos;
+  const volFalt = vols.volumenObjetivoTanque - volTanque;
+  const dPH = CONFIG.PH_OBJETIVO - ph, dEC = CONFIG.EC_OBJETIVO - ec;
+  const phOk = ph >= CONFIG.PH_OBJETIVO_MIN && ph <= CONFIG.PH_OBJETIVO_MAX;
+  const ecOk = ec >= CONFIG.EC_OBJETIVO_MIN && ec <= CONFIG.EC_OBJETIVO_MAX;
+  const tOk = temp <= CONFIG.TEMP_AGUA_MAX;
+  const cult = caseta ? contarCultivosActivos(caseta.numero) : 0;
+  if (phOk && ecOk && tOk) return { tipo: 'sin_ajuste', mensaje: 'Todos los par&aacute;metros dentro del rango objetivo.', dentroRango: true };
+  const ecAlta = dEC < -CONFIG.UMBRAL_EC, ecBaja = dEC > CONFIG.UMBRAL_EC;
+  if (!tOk && phOk && ecOk) return { tipo: 'solo_enfriamiento', botellas: botellasEnfriamiento(volTotal, temp), mensaje: 'Temperatura de agua '+temp+'&deg;C sobre el m&aacute;ximo de '+CONFIG.TEMP_AGUA_MAX+'&deg;C. La prioridad es enfriar antes que cualquier qu&iacute;mica.', dentroRango: false };
+  if (ecAlta && cult > 0 && Math.abs(dEC) < 0.3 && phOk) return { tipo: 'esperar_consumo', mensaje: 'EC ligeramente alta ('+ec+') con '+cult+' cultivo(s). Las plantas consumir&aacute;n el excedente en 24-48h. Verifica ma&ntilde;ana.', dentroRango: false };
+  if (!phOk && ecOk && Math.abs(dPH) <= 0.3) {
+    if (dPH > 0) { const ml = Math.abs(dPH) / calcularPotenciaPH(volTotal, 'ph_up', true).porMl; return { tipo: 'ajuste_fino_tanque', mlPHUp: Math.round(ml*10)/10, mlPHDown: 0, mensaje: 'Ajuste fino: '+Math.round(ml*10)/10+' mL de pH Up directo al tanque. Recircular 15 min.', dentroRango: false }; }
+    const g = Math.abs(dPH) * CONFIG.GRAMOS_CITRICO_POR_PH_62L * (volTotal / 62);
+    return { tipo: 'ajuste_fino_tanque', mlPHUp: 0, mlPHDown: 0, mlSolucionCitrico: Math.round(g / CONFIG.CONCENTRACION_SOLUCION_CITRICO * 1000), mensaje: 'Ajuste fino: '+Math.round(g/CONFIG.CONCENTRACION_SOLUCION_CITRICO*1000)+' mL de soluci&oacute;n de &aacute;cido c&iacute;trico en al&iacute;cuotas de 20-30 mL.', dentroRango: false };
+  }
+  if (!phOk && ecOk) return calcularEscenarioSoloPH(vols, volTotal, volTanque, ph, dPH);
+  if (ecBaja && ph > 6.3 && volFalt >= CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioDual(vols, volTotal, volFalt, ph, ec);
+  if (ecBaja && volFalt >= CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioNutriente(vols, volTotal, volFalt, ph, ec);
+  if (ecAlta && volFalt >= CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioDilucion(vols, volTotal, volFalt, ph, ec);
+  if (ecAlta && volFalt < CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioDrenaje(vols, volTotal, volTanque, ph, ec);
+  if (ecBaja && volFalt < CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioDrenajeNutriente(vols, volTotal, volTanque, ph, ec);
+  // v10.3: zona muerta de EC (desviacion <= UMBRAL_EC pero fuera de EC_OBJETIVO_MIN/MAX). Antes caia en 'generico' sin receta.
+  const gEst = dEC > 0 ? Math.round(dEC * volTotal * 10) / 10 : 0;
+  const notaEC = dEC > 0 ? ' EC '+ec+' ligeramente baja: ~'+gEst+' g de nutriente pre-disuelto (estimado con 1 g/L = 1 mS/cm).' : ' EC '+ec+' ligeramente alta: no agregues nutriente; las plantas la bajar&aacute;n.';
+  if (!phOk) { const r = calcularEscenarioSoloPH(vols, volTotal, volTanque, ph, dPH); r.ecMarginal = ec; r.gramosNutrienteEstimados = gEst; r.mensaje = r.mensaje + notaEC + ' Corrige primero el pH y re-mide.'; return r; }
+  return { tipo: 'ec_marginal', ecMarginal: ec, gramosNutrienteEstimados: gEst, mensaje: 'pH en rango.' + notaEC, dentroRango: false };
+}
+function calcularEscenarioSoloPH(vols, volTotal, volTanque, ph, dPH) {
+  if (dPH > 0) {
+    const p = calcularPotenciaPH(volTotal, 'ph_up', true); const mlT = dPH / p.porMl;
+    let nb = Math.max(1, Math.ceil(mlT / CONFIG.ML_MAX_PH_UP_POR_BOTELLA)), mb = mlT / nb;
+    const vf = vols.volumenObjetivoTanque - volTanque;
+    if (nb * CONFIG.VOLUMEN_BOTELLA > vf && vf > 0) { nb = Math.max(1, Math.floor(vf / CONFIG.VOLUMEN_BOTELLA)); mb = mlT / nb; }
+    return { tipo: 'solo_ph_up', numBotellas: nb, mlPHUpPorBotella: Math.round(mb*10)/10, mensaje: 'pH bajo ('+ph+'). Preparar '+nb+' botella(s) con '+Math.round(mb*10)/10+' mL pH Up.', dentroRango: false };
+  }
+  const g = Math.abs(dPH) * CONFIG.GRAMOS_CITRICO_POR_PH_62L * (volTotal / 62);
+  const ml = g / CONFIG.CONCENTRACION_SOLUCION_CITRICO * 1000;
+  return { tipo: 'solo_ph_down', gramosCitrico: Math.round(g*10)/10, mlSolucionCitrico: Math.round(ml), mensaje: 'pH alto ('+ph+'). Agregar ~'+Math.round(ml)+' mL de soluci&oacute;n de &aacute;cido c&iacute;trico ('+CONFIG.CONCENTRACION_SOLUCION_CITRICO+' g/L) en al&iacute;cuotas de 30-40 mL con recirculaci&oacute;n de 10 min.', dentroRango: false };
+}
+function toparGramos(g) { const ec = g / CONFIG.VOLUMEN_BOTELLA; if (ec > CONFIG.EC_SEGURO_MAX) return { gramos: CONFIG.EC_SEGURO_MAX * CONFIG.VOLUMEN_BOTELLA, limitado: true }; return { gramos: g, limitado: false }; }
+function calcularEscenarioNutriente(vols, volTotal, volFalt, ph, ec) {
+  const nb = Math.min(CONFIG.MAX_BOTELLAS_POR_SESION, Math.max(1, Math.ceil(volFalt / CONFIG.VOLUMEN_BOTELLA)));
+  const vm = nb * CONFIG.VOLUMEN_BOTELLA;
+  const gT = CONFIG.EC_OBJETIVO * (volTotal + vm) - ec * volTotal;
+  const t = toparGramos(gT / nb);
+  const phN = 6.0 - CONFIG.CAIDA_PH_POR_NUTRIENTES;
+  const phM = Math.max(CONFIG.PH_SEGURO_MIN, Math.min(CONFIG.PH_SEGURO_MAX, (CONFIG.PH_OBJETIVO*(volTotal+vm) - ph*volTotal) / vm));
+  const ml = Math.max(0, Math.round((phM - phN) / calcularPotenciaPH(CONFIG.VOLUMEN_BOTELLA, 'ph_up', false).porMl * 10) / 10);
+  const phF = (ph*volTotal + phM*vm) / (volTotal + vm);
+  return { tipo: 'mezcla_madre', numBotellas: nb, mlPHUpPorBotella: ml, gramosNutrientePorBotella: Math.round(t.gramos*10)/10, ecMezclaLimitada: t.limitado, phMezclaMadre: Math.round(phM*10)/10, phInicialConNutrientes: phN, pH_final_esperado: Math.round(phF*10)/10, requiere_ajuste_fino: (phF < CONFIG.PH_OBJETIVO_MIN || phF > CONFIG.PH_OBJETIVO_MAX), mensaje: 'EC baja ('+ec+'). Preparar '+nb+' botella(s) con '+Math.round(t.gramos*10)/10+'g nutriente + '+ml+'mL pH Up.', dentroRango: false };
+}
+function calcularEscenarioDual(vols, volTotal, volFalt, ph, ec) {
+  const nb = Math.min(CONFIG.MAX_BOTELLAS_POR_SESION, Math.max(1, Math.ceil(volFalt / CONFIG.VOLUMEN_BOTELLA)));
+  const vm = nb * CONFIG.VOLUMEN_BOTELLA;
+  const gT = CONFIG.EC_OBJETIVO * (volTotal + vm) - ec * volTotal;
+  const t = toparGramos(gT / nb);
+  const phM = Math.max(CONFIG.PH_SEGURO_MIN, Math.min(CONFIG.PH_SEGURO_MAX, (CONFIG.PH_OBJETIVO*(volTotal+vm) - ph*volTotal) / vm));
+  const phN = 6.0 - CONFIG.CAIDA_PH_POR_NUTRIENTES;
+  const ml = Math.max(0, Math.round((phM - phN) / calcularPotenciaPH(CONFIG.VOLUMEN_BOTELLA, 'ph_up', false).porMl * 10) / 10);
+  const phF = (ph*volTotal + phM*vm) / (volTotal + vm);
+  const ecF = (ec*volTotal + t.gramos*nb) / (volTotal + vm);
+  return { tipo: 'mezcla_madre_dual', numBotellas: nb, mlPHUpPorBotella: ml, gramosNutrientePorBotella: Math.round(t.gramos*10)/10, ecMezclaLimitada: t.limitado, phMezclaMadre: Math.round(phM*10)/10, phInicialConNutrientes: phN, pH_final_esperado: Math.round(phF*10)/10, ec_final_esperada: Math.round(ecF*100)/100, requiere_ajuste_fino: (phF < CONFIG.PH_OBJETIVO_MIN || phF > CONFIG.PH_OBJETIVO_MAX), mensaje: 'CORRECCI&Oacute;N DUAL (pH '+ph+' / EC '+ec+'): '+nb+' botella(s) con '+Math.round(t.gramos*10)/10+' g nutriente + '+ml+' mL pH Up c/u. Esperado: pH '+Math.round(phF*10)/10+' / EC '+Math.round(ecF*100)/100+((phF < CONFIG.PH_OBJETIVO_MIN || phF > CONFIG.PH_OBJETIVO_MAX) ? '. El pH quedar&aacute; fuera de rango: requiere ajuste fino con c&iacute;trico despu&eacute;s.' : '.'), dentroRango: false };
+}
+function calcularEscenarioDilucion(vols, volTotal, volFalt, ph, ec) {
+  const vA = volTotal * (ec - CONFIG.EC_OBJETIVO) / CONFIG.EC_OBJETIVO;
+  const phR = (ph*volTotal + 6.0*vA) / (volTotal + vA);
+  const nb = Math.min(CONFIG.MAX_BOTELLAS_POR_SESION, Math.ceil(vA / CONFIG.VOLUMEN_BOTELLA));
+  return { tipo: 'dilucion', numBotellas: nb, phResultante: Math.round(phR*10)/10, mensaje: 'EC alta ('+ec+'). Preparar '+nb+' botella(s) de agua limpia SIN aditivos. El pH se ajusta despu&eacute;s con &aacute;cido c&iacute;trico si queda fuera de rango.', dentroRango: false };
+}
+function calcularEscenarioDrenaje(vols, volTotal, volTanque, ph, ec) {
+  const lt = volTotal * (ec - CONFIG.EC_OBJETIVO) / ec;
+  const l1 = volTotal * CONFIG.MAX_PORCENTAJE_DRENAJE;
+  const l2 = Math.max(0, volTanque - CONFIG.VOLUMEN_MINIMO_BOMBA);
+  const l3 = CONFIG.MARGEN_SEGURIDAD + volTotal * 0.10;
+  const ls = Math.max(0, Math.min(lt, l1, l2, l3));
+  const ld = Math.ceil(ls / CONFIG.VOLUMEN_BOTELLA) * CONFIG.VOLUMEN_BOTELLA;
+  const ecP = (ec * (volTotal - ld)) / volTotal;
+  const cult = estado.casetaActual ? contarCultivosActivos(estado.casetaActual.numero) : 0;
+  const vd = volTotal - ld;
+  const phR = (ph*vd + 6.0*ld) / volTotal;
+  const nb = Math.min(CONFIG.MAX_BOTELLAS_POR_SESION, Math.max(1, Math.ceil(ld / CONFIG.VOLUMEN_BOTELLA)));
+  return { tipo: 'drenaje', litrosDrenar: ld, numBotellas: nb, phResultante: Math.round(phR*10)/10, litrosTeoricos: Math.round(lt*10)/10, ecPostDrenaje: Math.round(ecP*100)/100, requiereSegundaSesion: ecP > CONFIG.EC_OBJETIVO_MAX, cultivosActivos: cult, mensaje: 'Tanque lleno con EC alta ('+ec+'). Drenar '+ld+'L (l&iacute;mite seguro) y reponer con agua limpia.', dentroRango: false };
+}
+function calcularEscenarioDrenajeNutriente(vols, volTotal, volTanque, ph, ec) {
+  const lt = Math.min(CONFIG.MARGEN_SEGURIDAD, volTotal * (CONFIG.EC_OBJETIVO - ec) / CONFIG.EC_OBJETIVO);
+  const ld = Math.ceil(lt / CONFIG.VOLUMEN_BOTELLA) * CONFIG.VOLUMEN_BOTELLA;
+  const ecM = Math.min((CONFIG.EC_OBJETIVO*(volTotal+ld) - ec*volTotal) / ld, CONFIG.EC_SEGURO_MAX);
+  const phN = 6.0 - CONFIG.CAIDA_PH_POR_NUTRIENTES;
+  const phM = Math.max(CONFIG.PH_SEGURO_MIN, Math.min(CONFIG.PH_SEGURO_MAX, (CONFIG.PH_OBJETIVO*(volTotal+ld) - ph*volTotal) / ld));
+  const ml = Math.round((phM - phN) / calcularPotenciaPH(CONFIG.VOLUMEN_BOTELLA,'ph_up',false).porMl);
+  const nb = Math.min(CONFIG.MAX_BOTELLAS_POR_SESION, Math.ceil(ld / CONFIG.VOLUMEN_BOTELLA));
+  return { tipo: 'drenaje_nutriente', litrosDrenar: ld, numBotellas: nb, mlPHUpPorBotella: ml, gramosNutrientePorBotella: Math.round(ecM*CONFIG.VOLUMEN_BOTELLA*10)/10, phMezclaMadre: Math.round(phM*10)/10, cultivosActivos: estado.casetaActual ? contarCultivosActivos(estado.casetaActual.numero) : 0, mensaje: 'Tanque lleno con EC baja ('+ec+'). Drenar '+ld+'L y reponer con mezcla madre.', dentroRango: false };
+}
+function calcularMezclaBidon20L(phBase, g, phObj) {
+  const phN = phBase - CONFIG.CAIDA_PH_POR_NUTRIENTES;
+  const ml = (phObj - phN) / calcularPotenciaPH(CONFIG.VOLUMEN_BIDON, 'ph_up', true).porMl;
+  return { volumen: 20, gramosNutriente: g, phDespuesNutrientes: Math.round(phN*100)/100, phObjetivo: phObj, mlPHUpTotal: Math.round(ml*10)/10, mlPorEtapa: Math.round(ml/3*10)/10, etapas: 3, ecEstimada: Math.round(g/20*100)/100 };
+}
+function calcularProtocoloLimpieza(nT) {
+  const vols = calcularVolumenesSistema({ tubos: Array.from({length: nT}, (_, i) => ({numero: i+1, estado: 'activo'})) });
+  const nb = Math.ceil(vols.volumenObjetivoTanque / 20);
+  const m = calcularMezclaBidon20L(6.0, 30, 7.0);
+  return { numBidones: nb, volumenTotal: nb*20, gramosTotal: nb*30, mlPHUpTotal: nb*m.mlPHUpTotal, mezcla: m };
+}
+
+function prepararFormCultivo() {
+  document.getElementById('cultivo-fecha-siembra').value = hoy();
+  document.getElementById('cultivo-cantidad').value = '';
+  document.getElementById('cultivo-variedad').value = '';
+  document.getElementById('error-cultivo').classList.remove('visible');
+  const cs = cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [];
+  const s = document.getElementById('cultivo-caseta-destino');
+  s.innerHTML = '<option value="">-- Sin asignar --</option>';
+  cs.filter(c => c.estado !== 'inactiva' && c.estado !== 'mantenimiento').forEach(c => { s.innerHTML += '<option value="'+c.numero+'">Caseta '+c.numero+' ('+obtenerTubosActivos(c).length+' tubos)</option>'; });
+  actualizarOpcionesTubos();
+}
+function actualizarOpcionesTubos() {
+  const n = document.getElementById('cultivo-caseta-destino').value;
+  const s = document.getElementById('cultivo-tubo-destino');
+  s.innerHTML = '<option value="">-- Sin asignar --</option>';
+  if (!n) return;
+  const c = (cargarDatos(CONFIG.STORAGE_KEYS.casetas) || []).find(x => x.numero === parseInt(n));
+  if (!c) return;
+  const cu = cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [];
+  obtenerTubosActivos(c).forEach(t => {
+    const o = cu.find(x => x.caseta_actual === parseInt(n) && x.tubo_actual === t.numero && x.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO);
+    s.innerHTML += '<option value="'+t.numero+'" '+(o ? 'disabled' : '')+'>Tubo '+t.numero+(o ? ' (ocupado)' : ' (libre)')+'</option>';
+  });
+}
+function crearCultivo() {
+  const v = document.getElementById('cultivo-variedad').value, f = document.getElementById('cultivo-fecha-siembra').value, c = parseInt(document.getElementById('cultivo-cantidad').value);
+  const cd = document.getElementById('cultivo-caseta-destino').value, td = document.getElementById('cultivo-tubo-destino').value;
+  const e = document.getElementById('error-cultivo');
+  if (!v || !f || !c) { e.textContent = 'Completa variedad, fecha y cantidad.'; e.classList.add('visible'); return; }
+  const i = CONFIG.CULTIVOS[v];
+  const cult = { cultivo_id: generarIdCultivo(), variedad: v, fecha_siembra: f, cantidad_semillas: c, cantidad_germinadas: c,
+    fase_actual: cd ? CONFIG.FASES_CULTIVO.TRASPLANTADO : CONFIG.FASES_CULTIVO.GERMINACION,
+    fecha_exposicion_luz: sumarDias(f, i.dias_oscuridad), fecha_trasplante_sugerida: sumarDias(f, i.dias_trasplante),
+    fecha_trasplante_real: cd ? f : null, fecha_cosecha_tentativa: sumarDias(sumarDias(f, i.dias_trasplante), i.dias_cosecha), fecha_cosecha_real: null,
+    caseta_actual: cd ? parseInt(cd) : null, tubo_actual: td ? parseInt(td) : null,
+    requiere_oscuridad: i.requiere_oscuridad, dias_oscuridad: i.dias_oscuridad,
+    eventos: [{ tipo: 'siembra', fecha: timestampActual(), descripcion: 'Siembra de '+c+' semillas de '+v }], creado_en: timestampActual() };
+  agregarRegistro(CONFIG.STORAGE_KEYS.cultivos, cult);
+  e.classList.remove('visible');
+  if (cd) { estado.cultivoActual = cult; verDetalleCultivo(cult.cultivo_id); } else mostrarPantalla('screen-lista-cultivos');
+}
+function prepararFormEdicionCultivo() {
+  const c = estado.cultivoActual; if (!c) return;
+  document.getElementById('editar-cultivo-id').textContent = c.cultivo_id;
+  document.getElementById('edit-cultivo-variedad').value = c.variedad;
+  document.getElementById('edit-cultivo-fecha-siembra').value = c.fecha_siembra;
+  document.getElementById('edit-cultivo-cantidad').value = c.cantidad_semillas;
+  document.getElementById('edit-cultivo-germinadas').value = c.cantidad_germinadas;
+  document.getElementById('edit-cultivo-fase').value = c.fase_actual;
+  document.getElementById('edit-cultivo-fecha-trasplante').value = c.fecha_trasplante_real || '';
+  document.getElementById('edit-cultivo-fecha-cosecha').value = c.fecha_cosecha_real || '';
+}
+function guardarEdicionCultivo() {
+  const c = estado.cultivoActual; if (!c) return;
+  const v = document.getElementById('edit-cultivo-variedad').value, f = document.getElementById('edit-cultivo-fecha-siembra').value;
+  const i = CONFIG.CULTIVOS[v];
+  const ft = document.getElementById('edit-cultivo-fecha-trasplante').value || null;
+  actualizarRegistro(CONFIG.STORAGE_KEYS.cultivos, 'cultivo_id', c.cultivo_id, {
+    variedad: v, fecha_siembra: f,
+    cantidad_semillas: parseInt(document.getElementById('edit-cultivo-cantidad').value),
+    cantidad_germinadas: parseInt(document.getElementById('edit-cultivo-germinadas').value),
+    fase_actual: document.getElementById('edit-cultivo-fase').value,
+    fecha_exposicion_luz: sumarDias(f, i.dias_oscuridad), fecha_trasplante_sugerida: sumarDias(f, i.dias_trasplante),
+    fecha_trasplante_real: ft, fecha_cosecha_tentativa: sumarDias(ft || sumarDias(f, i.dias_trasplante), i.dias_cosecha),
+    fecha_cosecha_real: document.getElementById('edit-cultivo-fecha-cosecha').value || null,
+    requiere_oscuridad: i.requiere_oscuridad, dias_oscuridad: i.dias_oscuridad });
+  alert('Cultivo actualizado'); verDetalleCultivo(c.cultivo_id);
+}
+function renderListaCultivos() {
+  const cs = cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [];
+  const c = document.getElementById('lista-cultivos-contenido');
+  if (!cs.length) { c.innerHTML = '<div class="info-box">No hay cultivos.</div>'; return; }
+  let h = '';
+  cs.slice().sort((a, b) => b.creado_en.localeCompare(a.creado_en)).forEach(x => {
+    const i = CONFIG.CULTIVOS[x.variedad], d = diasEntre(x.fecha_siembra), dc = x.fecha_cosecha_tentativa ? diasEntre(hoy(), x.fecha_cosecha_tentativa) : null;
+    let fc = '', ft = '';
+    if (x.fase_actual === 'cosechado') { fc = 'cosechado'; ft = 'Cosechado'; }
+    else if (x.fase_actual === 'germinacion') { fc = 'fase-germinacion'; ft = 'Germinaci&oacute;n'; }
+    else if (x.fase_actual === 'crecimiento_charola') { fc = 'fase-charola'; ft = 'En charola'; }
+    else if (x.fase_actual === 'pre_cosecha') { fc = 'fase-cosecha'; ft = 'Pre-cosecha'; }
+    else { fc = 'fase-tubo'; ft = 'En tubo'; }
+    h += '<div class="cultivo-card '+fc+'" onclick="verDetalleCultivo(\''+x.cultivo_id+'\')"><h3>'+x.cultivo_id+' - '+x.variedad+' <span class="badge badge-info">'+ft+'</span></h3><p><strong>Siembra:</strong> '+x.fecha_siembra+' ('+d+'d) &middot; <strong>Ubicaci&oacute;n:</strong> '+(x.caseta_actual ? 'C'+x.caseta_actual+'-T'+x.tubo_actual : 'Charola')+'</p><p><strong>Cosecha:</strong> '+(dc !== null ? (dc >= 0 ? dc+' d&iacute;as' : 'Retrasada '+Math.abs(dc)+'d') : 'N/A')+'</p>'+(x.fase_actual === 'germinacion' && d < i.dias_oscuridad ? '<p style="color:var(--mo)"><strong>Oscuridad:</strong> '+(i.dias_oscuridad-d)+'d restantes</p>' : '')+'</div>';
+  });
+  c.innerHTML = h;
+}
+function verDetalleCultivo(id) {
+  const c = (cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []).find(x => x.cultivo_id === id); if (!c) return;
+  estado.cultivoActual = c;
+  document.getElementById('detalle-cultivo-id').textContent = id;
+  const i = CONFIG.CULTIVOS[c.variedad], d = diasEntre(c.fecha_siembra), dc = c.fecha_cosecha_tentativa ? diasEntre(hoy(), c.fecha_cosecha_tentativa) : null;
+  let h = '<div class="card"><h3>'+c.cultivo_id+' - '+c.variedad+'</h3><p><strong>Fase:</strong> '+c.fase_actual+'</p><p><strong>Siembra:</strong> '+c.fecha_siembra+' ('+d+'d)</p><p><strong>Semillas:</strong> '+c.cantidad_semillas+' ('+c.cantidad_germinadas+' germinadas)</p><p><strong>Cosecha tentativa:</strong> '+c.fecha_cosecha_tentativa+(dc !== null ? ' ('+(dc >= 0 ? dc+'d' : 'retrasada '+Math.abs(dc)+'d')+')' : '')+'</p></div>';
+  if (c.fase_actual === 'germinacion') h += d < i.dias_oscuridad ? '<div class="card card-morado"><h3>Oscuridad</h3><p>'+i.descripcion_oscuridad+'</p><p><strong>Restantes:</strong> '+(i.dias_oscuridad-d)+'d &middot; <strong>Exponer:</strong> '+c.fecha_exposicion_luz+'</p></div>' : '<div class="card card-info"><h3>Luz indirecta</h3><p><strong>Trasplante sugerido:</strong> '+c.fecha_trasplante_sugerida+'</p></div>';
+  else if (c.fase_actual === 'crecimiento_charola') h += '<div class="card card-info"><h3>Charola</h3><p><strong>Trasplante:</strong> '+c.fecha_trasplante_sugerida+'</p></div>';
+  else if (c.fase_actual !== 'cosechado') h += '<div class="card"><h3>En tubo</h3><p>Caseta '+c.caseta_actual+' Tubo '+c.tubo_actual+' &middot; Trasplante '+c.fecha_trasplante_real+' ('+diasEntre(c.fecha_trasplante_real)+'d)</p></div>';
+  h += '<div class="card"><h3>Eventos</h3>';
+  (c.eventos || []).forEach(e => { h += '<div class="evento-item"><div class="evento-header">'+e.tipo.toUpperCase()+' - '+e.fecha+'</div><div class="evento-medicion">'+e.descripcion+'</div></div>'; });
+  h += '</div>';
+  document.getElementById('detalle-cultivo-contenido').innerHTML = h;
+  document.getElementById('btn-trasplantar').style.display = (c.fase_actual === 'germinacion' || c.fase_actual === 'crecimiento_charola') ? 'block' : 'none';
+  document.getElementById('btn-cosechar').style.display = (c.fase_actual === 'trasplantado' || c.fase_actual === 'crecimiento_tubo' || c.fase_actual === 'pre_cosecha') ? 'block' : 'none';
+  mostrarPantalla('screen-detalle-cultivo');
+}
+function trasplantarCultivo() {
+  const c = estado.cultivoActual; if (!c) return;
+  const cs = (cargarDatos(CONFIG.STORAGE_KEYS.casetas) || []).filter(x => x.estado !== 'inactiva' && x.estado !== 'mantenimiento');
+  if (!cs.length) { alert('Sin casetas disponibles'); return; }
+  let op = '', idx = 1; const disp = []; const cu = cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [];
+  cs.forEach(x => { obtenerTubosActivos(x).forEach(t => { if (!cu.find(y => y.caseta_actual === x.numero && y.tubo_actual === t.numero && y.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO)) { op += idx+'. Caseta '+x.numero+' Tubo '+t.numero+'\n'; disp.push({c: x.numero, t: t.numero}); idx++; } }); });
+  if (!disp.length) { alert('Sin tubos libres'); return; }
+  const s = prompt('Tubos disponibles:\n'+op+'\nNumero:'); if (!s) return;
+  const i = parseInt(s)-1; if (i < 0 || i >= disp.length) { alert('Seleccion invalida'); return; }
+  const d = disp[i];
+  actualizarRegistro(CONFIG.STORAGE_KEYS.cultivos, 'cultivo_id', c.cultivo_id, { fase_actual: CONFIG.FASES_CULTIVO.TRASPLANTADO, caseta_actual: d.c, tubo_actual: d.t, fecha_trasplante_real: hoy(), eventos: (c.eventos || []).concat([{ tipo: 'trasplante', fecha: timestampActual(), descripcion: 'Trasplantado a C'+d.c+' T'+d.t }]) });
+  alert('Trasplantado'); verDetalleCultivo(c.cultivo_id);
+}
+function cosecharCultivo() {
+  const c = estado.cultivoActual; if (!c) return;
+  const f = prompt('Fecha cosecha (YYYY-MM-DD) o vacio=hoy:', hoy()); if (f === null) return;
+  actualizarRegistro(CONFIG.STORAGE_KEYS.cultivos, 'cultivo_id', c.cultivo_id, { fase_actual: CONFIG.FASES_CULTIVO.COSECHADO, fecha_cosecha_real: f || hoy(), eventos: (c.eventos || []).concat([{ tipo: 'cosecha', fecha: timestampActual(), descripcion: 'Cosechado' }]) });
+  alert('Cosechado'); mostrarPantalla('screen-lista-cultivos');
+}
+function asignarCultivoATubo(n, t) {
+  const cu = (cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []).filter(c => c.fase_actual === 'germinacion' || c.fase_actual === 'crecimiento_charola' || c.caseta_actual === null);
+  if (!cu.length) { alert('Sin cultivos disponibles'); return; }
+  const s = prompt(cu.map((c, i) => (i+1)+'. '+c.cultivo_id+' '+c.variedad).join('\n')+'\n\nNumero:'); if (!s) return;
+  const i = parseInt(s)-1; if (i < 0 || i >= cu.length) { alert('Seleccion invalida'); return; }
+  const c = cu[i];
+  actualizarRegistro(CONFIG.STORAGE_KEYS.cultivos, 'cultivo_id', c.cultivo_id, { fase_actual: CONFIG.FASES_CULTIVO.TRASPLANTADO, caseta_actual: n, tubo_actual: t, fecha_trasplante_real: hoy(), eventos: (c.eventos || []).concat([{ tipo: 'trasplante', fecha: timestampActual(), descripcion: 'Asignado a C'+n+' T'+t }]) });
+  verDetalleCaseta(n);
+}
+
+function crearCaseta() {
+  const n = parseInt(document.getElementById('caseta-numero').value), t = parseInt(document.getElementById('caseta-tubos').value), vm = parseInt(document.getElementById('caseta-vol-max').value);
+  const d = parseFloat(document.getElementById('caseta-tubo-diametro').value), l = parseFloat(document.getElementById('caseta-tubo-lamina').value), lo = parseFloat(document.getElementById('caseta-tubo-longitud').value);
+  const e = document.getElementById('error-caseta');
+  if (!n || !t || t < 1 || t > 12) { e.textContent = 'Tubos entre 1 y 12.'; e.classList.add('visible'); return; }
+  if (!d || !l || !lo) { e.textContent = 'Completa la geometria.'; e.classList.add('visible'); return; }
+  if ((cargarDatos(CONFIG.STORAGE_KEYS.casetas) || []).find(c => c.numero === n)) { e.textContent = 'Ya existe esa caseta.'; e.classList.add('visible'); return; }
+  agregarRegistro(CONFIG.STORAGE_KEYS.casetas, { numero: n, tubos: Array.from({length: t}, (_, i) => ({numero: i+1, estado: 'activo', creado_en: timestampActual()})), volumenTanqueMax: vm, geometria_tubos: { diametro_cm: d, lamina_cm: l, longitud_m: lo }, estado: 'operativa', creado_en: timestampActual() });
+  document.getElementById('caseta-numero').value = ''; document.getElementById('caseta-tubos').value = '';
+  e.classList.remove('visible'); mostrarPantalla('screen-dashboard');
+}
+function mostrarGestionCaseta() {
+  const c = estado.casetaActual; if (!c) return;
+  document.getElementById('gestion-caseta-num').textContent = c.numero;
+  if (!c.tubos) { c.tubos = Array.from({length: c.numTubos || 4}, (_, i) => ({numero: i+1, estado: 'activo'})); actualizarRegistro(CONFIG.STORAGE_KEYS.casetas, 'numero', c.numero, {tubos: c.tubos}); }
+  const v = calcularVolumenesSistema(c);
+  const cu = (cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []).filter(x => x.caseta_actual === c.numero && x.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO);
+  let h = '<div class="card card-info"><h3>Estado</h3><p>Tubos: '+v.numTubosActivos+' activos / '+v.numTubosTotal+' &middot; En mant.: '+obtenerTubosEnMantenimiento(c).length+' &middot; Inactivos: '+c.tubos.filter(t => t.estado === 'inactivo').length+'</p><p>Vol/tubo: '+v.volumenPorTubo.toFixed(2)+' L &middot; Vol tubos: '+v.volTubos.toFixed(1)+' L</p><p>Objetivo tanque: '+v.volumenObjetivoTanque.toFixed(1)+' L &middot; Total: '+v.volumenTotalObjetivo.toFixed(1)+' L</p><p>Estado: '+c.estado+'</p></div>';
+  if (c.geometria_tubos) h += '<div class="card"><h3>Geometr&iacute;a</h3><p>&Oslash; '+c.geometria_tubos.diametro_cm+' cm &middot; l&aacute;mina '+c.geometria_tubos.lamina_cm+' cm &middot; '+c.geometria_tubos.longitud_m+' m</p></div>';
+  h += '<div class="card"><h3>Agregar tubos (disponibles: '+(12-c.tubos.length)+')</h3><div class="form-group" style="margin:0"><input type="number" id="tubos-a-agregar" min="1" max="'+(12-c.tubos.length)+'" placeholder="Ej: 2"></div><button onclick="agregarTubos()" class="btn-secondary btn-small">Agregar</button></div>';
+  h += '<div class="card card-morado"><h3>Gesti&oacute;n de Tubos</h3><p><span class="badge badge-ok">Activo</span><span class="badge badge-morado">Mantenimiento</span><span class="badge badge-warning">Inactivo</span></p>';
+  c.tubos.forEach(t => {
+    const cult = cu.find(x => x.tubo_actual === t.numero);
+    const bc = t.estado === 'activo' ? 'badge-ok' : t.estado === 'mantenimiento' ? 'badge-morado' : 'badge-warning';
+    h += '<div class="tubo-item '+(t.estado === 'activo' ? '' : t.estado)+'"><div class="tubo-info"><strong>Tubo '+t.numero+'</strong> <span class="badge '+bc+'">'+t.estado+'</span>'+(cult ? '<br><small>'+cult.variedad+' ('+cult.cultivo_id+')</small>' : '<br><small><em>Sin cultivo</em></small>')+'</div><div class="tubo-actions">'+(t.estado !== 'activo' ? '<button onclick="cambiarEstadoTubo('+t.numero+',\'activo\')" class="btn-secondary btn-small">Activar</button>' : '')+(t.estado !== 'mantenimiento' ? '<button onclick="cambiarEstadoTubo('+t.numero+',\'mantenimiento\')" class="btn-morado btn-small">Mant.</button>' : '')+(t.estado !== 'inactivo' && !cult ? '<button onclick="cambiarEstadoTubo('+t.numero+',\'inactivo\')" class="btn-tertiary btn-small">Inactivar</button>' : '')+'</div></div>';
+  });
+  h += '</div>';
+  h += '<div class="card card-warning"><h3>Protocolo de Limpieza</h3><p>Re-preparaci&oacute;n completa con bidones de 20L.</p><button onclick="mostrarProtocoloLimpieza()" class="btn-danger btn-small">Ver Protocolo</button></div>';
+  h += '<div class="card"><h3>Estado de la Caseta</h3><div class="btn-row"><button onclick="cambiarEstadoCaseta(\'operativa\')" class="btn-secondary btn-small">Operativa</button><button onclick="cambiarEstadoCaseta(\'parcial\')" class="btn-warning btn-small">Parcial</button><button onclick="cambiarEstadoCaseta(\'mantenimiento\')" class="btn-morado btn-small">Mant.</button><button onclick="cambiarEstadoCaseta(\'inactiva\')" class="btn-tertiary btn-small">Inactiva</button></div></div>';
+  document.getElementById('gestion-caseta-contenido').innerHTML = h;
+  mostrarPantalla('screen-gestion-caseta');
+}
+function mostrarProtocoloLimpieza() {
+  const c = estado.casetaActual;
+  const p = calcularProtocoloLimpieza(obtenerTubosActivos(c).length);
+  document.getElementById('gestion-caseta-contenido').innerHTML = '<div class="card card-danger"><h3>Protocolo de Limpieza y Re-preparaci&oacute;n</h3><p>Caseta '+c.numero+' &middot; Bidones: '+p.numBidones+' x 20L = '+p.volumenTotal+'L</p><p>Nutriente total: '+p.gramosTotal+'g &middot; pH Up total: '+p.mlPHUpTotal+' mL</p></div><div class="bottle-instruction"><h4>Por cada bid&oacute;n de 20L</h4><ul><li>20 L de agua</li><li>'+CONFIG.GR_NUTRIENTE_POR_BIDON+' g de nutriente (pH caer&aacute; a ~'+p.mezcla.phDespuesNutrientes+')</li><li>pH Up: '+p.mezcla.mlPHUpTotal+' mL en 3 etapas de '+p.mezcla.mlPorEtapa+' mL, agitando 2 min</li><li>pH objetivo del bid&oacute;n: '+p.mezcla.phObjetivo+' &middot; EC estimada: '+p.mezcla.ecEstimada+' mS/cm</li></ul><ol style="margin-left:20px;margin-top:10px"><li>Drenar y enjuagar tanque</li><li>Preparar los '+p.numBidones+' bidones</li><li>Verter uno por uno con 15 min de recirculaci&oacute;n entre cada uno</li><li>Medici&oacute;n final y ajuste fino con &aacute;cido c&iacute;trico</li></ol></div>';
+  mostrarPantalla('screen-gestion-caseta');
+}
+function agregarTubos() {
+  const n = parseInt(document.getElementById('tubos-a-agregar').value); const c = estado.casetaActual;
+  if (!n || n < 1) { alert('Cantidad valida.'); return; }
+  if (c.tubos.length + n > 12) { alert('Maximo '+(12-c.tubos.length)+' tubos.'); return; }
+  if (!confirm('Agregar '+n+' tubo(s) a Caseta '+c.numero+'?')) return;
+  const b = c.tubos.length + 1;
+  c.tubos = c.tubos.concat(Array.from({length: n}, (_, i) => ({numero: b+i, estado: 'activo', creado_en: timestampActual()})));
+  actualizarRegistro(CONFIG.STORAGE_KEYS.casetas, 'numero', c.numero, {tubos: c.tubos});
+  alert(n+' tubo(s) agregado(s). Total: '+c.tubos.length); mostrarGestionCaseta();
+}
+function cambiarEstadoTubo(t, e) {
+  const c = estado.casetaActual; const tb = c.tubos.find(x => x.numero === t); if (!tb) return;
+  const cult = (cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []).find(x => x.caseta_actual === c.numero && x.tubo_actual === t && x.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO);
+  if (e === 'inactivo' && cult) { alert('Tubo con cultivo: cosecha primero.'); return; }
+  if (e === 'mantenimiento' && cult && !confirm('Tubo con cultivo '+cult.cultivo_id+'. Continuar?')) return;
+  tb.estado = e;
+  const a = c.tubos.filter(x => x.estado === 'activo').length, m = c.tubos.filter(x => x.estado === 'mantenimiento').length;
+  c.estado = a === 0 ? 'inactiva' : m > 0 ? 'parcial' : 'operativa';
+  actualizarRegistro(CONFIG.STORAGE_KEYS.casetas, 'numero', c.numero, {tubos: c.tubos, estado: c.estado});
+  alert('Tubo '+t+': '+e); mostrarGestionCaseta();
+}
+function cambiarEstadoCaseta(e) {
+  const c = estado.casetaActual;
+  if ((e === 'mantenimiento' || e === 'inactiva') && !confirm('Caseta '+c.numero+' en '+e+'?')) return;
+  c.estado = e; actualizarRegistro(CONFIG.STORAGE_KEYS.casetas, 'numero', c.numero, {estado: e});
+  alert('Caseta: '+e); mostrarGestionCaseta();
+}
+
+function actualizarDashboard() {
+  const cu = cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], cs = cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], ev = cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [];
+  const act = cu.filter(c => c.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO);
+  document.getElementById('stat-casetas').textContent = cs.length;
+  document.getElementById('stat-cultivos').textContent = act.length;
+  document.getElementById('stat-tubos').textContent = cs.reduce((s, c) => s + obtenerTubosActivos(c).length, 0);
+  const pc = act.filter(c => c.fecha_cosecha_tentativa).map(c => ({c: c, d: diasEntre(hoy(), c.fecha_cosecha_tentativa)})).filter(x => x.d >= 0).sort((a, b) => a.d - b.d);
+  document.getElementById('stat-cosecha').textContent = pc.length ? pc[0].d+'d '+pc[0].c.variedad.split(' ')[0] : '-';
+  generarAlertas(act, cs, ev);
+  const l = document.getElementById('casetas-lista');
+  if (!cs.length) { l.innerHTML = '<div class="info-box">No hay casetas. Crea una nueva.</div>'; return; }
+  l.innerHTML = cs.map(c => {
+    const v = calcularVolumenesSistema(c);
+    const cc = act.filter(x => x.caseta_actual === c.numero);
+    const ue = ev.filter(e => e.caseta_id === c.numero).sort((a, b) => b.fecha_inicio.localeCompare(a.fecha_inicio))[0];
+    let pr = 3, cl = '', tx = 'OK';
+    if (c.estado === 'inactiva' || c.estado === 'mantenimiento') { pr = 4; cl = 'card-morado'; tx = c.estado.toUpperCase(); }
+    else if (ue && ue.ultimo_ph) {
+      if (ue.ultimo_ph < 5 || ue.ultimo_ph > 7 || ue.ultimo_temp_agua > CONFIG.TEMP_AGUA_MAX) { pr = 1; cl = 'card-danger'; tx = 'CRITICO'; }
+      else if (!ue.dentro_rango) { pr = 2; cl = 'card-warning'; tx = 'En ajuste'; }
+    } else { cl = 'card-warning'; tx = 'Sin mediciones'; }
+    if (c.estado === 'parcial') tx += ' (Parcial)';
+    const bc = cl === 'card-danger' ? 'badge-danger' : cl === 'card-warning' ? 'badge-warning' : cl === 'card-morado' ? 'badge-morado' : 'badge-ok';
+    const dis = (c.estado === 'inactiva' || c.estado === 'mantenimiento') ? 'disabled' : '';
+    const med = ue ? 'pH '+ue.ultimo_ph+' &middot; EC '+ue.ultimo_ec+' &middot; Agua '+ue.ultimo_temp_agua+'&deg;C &middot; '+ue.fecha_inicio.split(' ')[1] : 'Sin mediciones';
+    return { pr: pr, html: '<div class="caseta-card '+cl+'" onclick="verDetalleCaseta('+c.numero+')"><h3>Caseta '+c.numero+' <span class="badge '+bc+'">'+tx+'</span></h3><p><strong>'+v.numTubosActivos+' tubos</strong> / '+v.numTubosTotal+' &middot; '+v.volumenPorTubo.toFixed(1)+' L/tubo</p><p>'+cc.length+' cultivo(s)</p><p style="font-size:.85rem;color:var(--go)">'+med+'</p><button onclick="event.stopPropagation();revisarCaseta('+c.numero+')" style="margin-top:8px;padding:8px;font-size:.9rem" '+dis+'>REVISAR / AJUSTAR</button><button onclick="event.stopPropagation();registrarCaseta('+c.numero+')" class="btn-secondary" style="margin-top:4px;padding:8px;font-size:.9rem">Registrar Medici&oacute;n</button></div>' };
+  }).sort((a, b) => a.pr - b.pr).map(x => x.html).join('');
+}
+function generarAlertas(cu, cs, ev) {
+  const a = [];
+  cu.forEach(c => {
+    if (c.fecha_cosecha_tentativa) { const d = diasEntre(hoy(), c.fecha_cosecha_tentativa);
+      if (d >= 0 && d <= 5) a.push({t: 'proxima_cosecha', p: 'high', m: 'Cosecha de '+c.cultivo_id+' en '+d+'d', c: c.caseta_actual});
+      if (d < 0) a.push({t: 'cosecha_retrasada', p: 'medium', m: c.cultivo_id+' retrasada '+Math.abs(d)+'d', c: c.caseta_actual}); }
+    if (c.fase_actual === 'germinacion') { const i = CONFIG.CULTIVOS[c.variedad], d = diasEntre(c.fecha_siembra);
+      if (d >= i.dias_oscuridad && d < i.dias_trasplante) a.push({t: 'exponer_luz', p: 'medium', m: c.cultivo_id+': exponer a luz (dia '+d+')', c: null});
+      if (d >= i.dias_trasplante) a.push({t: 'listo_trasplante', p: 'high', m: c.cultivo_id+' listo para trasplante', c: null}); }
+  });
+  cs.forEach(c => {
+    if (c.estado === 'mantenimiento') a.push({t: 'caseta_mantenimiento', p: 'medium', m: 'Caseta '+c.numero+' en mantenimiento', c: c.numero});
+    if (c.estado === 'inactiva') a.push({t: 'caseta_inactiva', p: 'low', m: 'Caseta '+c.numero+' inactiva', c: c.numero});
+    const tm = obtenerTubosEnMantenimiento(c);
+    if (tm.length) a.push({t: 'tubos_mantenimiento', p: 'low', m: 'C'+c.numero+': '+tm.length+' tubo(s) en mant.', c: c.numero});
+    const ue = ev.filter(e => e.caseta_id === c.numero).sort((x, y) => y.fecha_inicio.localeCompare(x.fecha_inicio))[0];
+    if (ue) {
+      if (ue.ultimo_temp_agua > CONFIG.TEMP_AGUA_MAX) a.push({t: 'temp_agua', p: 'critical', m: 'C'+c.numero+': agua '+ue.ultimo_temp_agua+'&deg;C (max '+CONFIG.TEMP_AGUA_MAX+')', c: c.numero});
+      if (ue.ultimo_temp_ambiental_max > CONFIG.TEMP_AMBIENTAL_MAX) a.push({t: 'temp_amb', p: 'high', m: 'C'+c.numero+': max 24h '+ue.ultimo_temp_ambiental_max+'&deg;C', c: c.numero});
+      if (ue.ultimo_temp_ambiental_max - ue.ultimo_temp_ambiental_min > CONFIG.TEMP_AMBIENTAL_DIFERENCIA_MAX) a.push({t: 'estres_termico', p: 'high', m: 'C'+c.numero+': oscilacion '+(ue.ultimo_temp_ambiental_max-ue.ultimo_temp_ambiental_min).toFixed(1)+'&deg;C', c: c.numero});
+      if (ue.ultimo_ph < 5 || ue.ultimo_ph > 7) a.push({t: 'ph_critico', p: 'critical', m: 'C'+c.numero+': pH '+ue.ultimo_ph, c: c.numero});
+      if (ue.ultimo_ec < 0.8 || ue.ultimo_ec > 2) a.push({t: 'ec_critica', p: 'high', m: 'C'+c.numero+': EC '+ue.ultimo_ec, c: c.numero});
+    }
+  });
+  guardarDatos(CONFIG.STORAGE_KEYS.alertas, a); renderAlertas(a);
+}
+function renderAlertas(a) {
+  const c = document.getElementById('alertas-container');
+  if (!a.length) { c.innerHTML = '<div class="success-box" style="margin:12px 16px">Sin alertas</div>'; return; }
+  c.innerHTML = '<div style="padding:8px 16px;background:var(--ac2);font-weight:600">'+a.length+' alerta(s)</div>' + a.slice(0,5).map(x => '<div class="alert-item alert-'+x.p+'" '+(x.c ? 'onclick="verDetalleCaseta('+x.c+')" style="cursor:pointer"' : '')+'><strong>'+x.m+'</strong></div>').join('');
+}
+function verDetalleCaseta(n) {
+  const c = (cargarDatos(CONFIG.STORAGE_KEYS.casetas) || []).find(x => x.numero === n); if (!c) return;
+  if (!c.tubos) { c.tubos = Array.from({length: c.numTubos || 4}, (_, i) => ({numero: i+1, estado: 'activo'})); actualizarRegistro(CONFIG.STORAGE_KEYS.casetas, 'numero', n, {tubos: c.tubos}); }
+  if (!c.estado) { c.estado = 'operativa'; actualizarRegistro(CONFIG.STORAGE_KEYS.casetas, 'numero', n, {estado: c.estado}); }
+  estado.casetaActual = c;
+  document.getElementById('detalle-caseta-num').textContent = n;
+  const v = calcularVolumenesSistema(c);
+  const cu = (cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []).filter(x => x.caseta_actual === n);
+  const ev = cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [];
+  const ue = ev.filter(e => e.caseta_id === n).sort((a, b) => b.fecha_inicio.localeCompare(a.fecha_inicio))[0];
+  let h = '<div class="card"><h3>Configuraci&oacute;n</h3><p>Tubos: '+v.numTubosActivos+'/'+v.numTubosTotal+' &middot; Vol/tubo: '+v.volumenPorTubo.toFixed(2)+' L &middot; Vol tubos: '+v.volTubos.toFixed(1)+' L</p><p>Objetivo tanque: '+v.volumenObjetivoTanque.toFixed(1)+' L &middot; M&aacute;x: '+v.maxAbsolutoTanque.toFixed(1)+' L &middot; Total: '+v.volumenTotalObjetivo.toFixed(1)+' L</p></div>';
+  if (c.geometria_tubos) h += '<div class="card card-info"><h3>Geometr&iacute;a</h3><p>&Oslash; '+c.geometria_tubos.diametro_cm+' cm &middot; l&aacute;mina '+c.geometria_tubos.lamina_cm+' cm &middot; '+c.geometria_tubos.longitud_m+' m</p></div>';
+  h += '<div class="card"><h3>Punto dulce</h3><p>pH '+CONFIG.PH_OBJETIVO+' ('+CONFIG.PH_OBJETIVO_MIN+'-'+CONFIG.PH_OBJETIVO_MAX+') &middot; EC '+CONFIG.EC_OBJETIVO+' mS/cm &middot; Agua &lt;'+CONFIG.TEMP_AGUA_MAX+'&deg;C</p></div>';
+  if (ue) h += '<div class="card"><h3>&Uacute;ltima medici&oacute;n <span class="badge badge-info">'+ue.fecha_inicio.split(' ')[1]+'</span></h3><p>Vol '+ue.ultimo_volumen+' L &middot; Agua '+ue.ultimo_temp_agua+'&deg;C &middot; Amb '+ue.ultimo_temp_ambiental+'&deg;C (max '+ue.ultimo_temp_ambiental_max+'/min '+ue.ultimo_temp_ambiental_min+')</p><p>pH '+ue.ultimo_ph+' &middot; EC '+ue.ultimo_ec+'</p></div>';
+  else h += '<div class="warning-box">Sin mediciones.</div>';
+  h += '<div class="card"><h3>Tubos y cultivos</h3>';
+  c.tubos.forEach(t => {
+    const cult = cu.find(x => x.tubo_actual === t.numero && x.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO);
+    if (t.estado === 'activo') {
+      if (cult) h += '<div class="tubo-item"><div class="tubo-info"><strong>Tubo '+t.numero+'</strong> <span class="badge badge-ok">activo</span><br><small>'+cult.variedad+' &middot; '+cult.cultivo_id+'</small></div></div>';
+      else h += '<div class="tubo-item vacio"><div class="tubo-info"><strong>Tubo '+t.numero+'</strong> <span class="badge badge-ok">activo</span> &middot; <em>Disponible</em></div><div class="tubo-actions"><button onclick="asignarCultivoATubo('+n+','+t.numero+')" class="btn-small btn-secondary">Asignar</button></div></div>';
+    } else if (t.estado === 'mantenimiento') h += '<div class="tubo-item mantenimiento"><div class="tubo-info"><strong>Tubo '+t.numero+'</strong> <span class="badge badge-morado">mantenimiento</span>'+(cult ? '<br><small>'+cult.variedad+' EN PAUSA</small>' : '')+'</div></div>';
+    else h += '<div class="tubo-item inactivo"><div class="tubo-info"><strong>Tubo '+t.numero+'</strong> <span class="badge badge-warning">inactivo</span></div></div>';
+  });
+  h += '</div>';
+  document.getElementById('detalle-caseta-contenido').innerHTML = h;
+  const b = document.getElementById('btn-revision');
+  if (c.estado === 'inactiva' || c.estado === 'mantenimiento' || v.numTubosActivos === 0) { b.disabled = true; b.textContent = 'NO DISPONIBLE'; }
+  else { b.disabled = false; b.textContent = 'REVISAR / AJUSTAR'; }
+  mostrarPantalla('screen-detalle-caseta');
+}
+function verHistorialCaseta() {
+  const c = estado.casetaActual; if (!c) return;
+  document.getElementById('historial-caseta-num').textContent = c.numero;
+  const ev = (cargarDatos(CONFIG.STORAGE_KEYS.eventos) || []).filter(e => e.caseta_id === c.numero).sort((a, b) => b.fecha_inicio.localeCompare(a.fecha_inicio));
+  const h = document.getElementById('historial-contenido');
+  if (!ev.length) { h.innerHTML = '<div class="info-box">Sin eventos.</div>'; mostrarPantalla('screen-historial-caseta'); return; }
+  h.innerHTML = ev.map(e => {
+    let x = '<div class="evento-item"><div class="evento-header">'+e.tipo.toUpperCase()+' &middot; '+e.fecha_inicio+(e.fecha_fin ? ' &rarr; '+e.fecha_fin : '')+'</div>';
+    (e.mediciones || []).forEach(m => { x += '<div class="evento-medicion">'+m.timestamp+' &middot; Vol '+m.volumen+'L &middot; pH '+m.ph+' &middot; EC '+m.ec+' &middot; Agua '+m.temp_agua+'&deg;C &middot; Amb '+m.temp_ambiental_actual+'&deg;C (max '+m.temp_ambiental_max+'/min '+m.temp_ambiental_min+')'+(m.hr != null ? ' &middot; HR '+m.hr+'%' : '')+'</div>'; });
+    (e.acciones || []).forEach(a => { x += '<div class="evento-medicion">&rarr; '+a.timestamp+' '+a.tipo+': '+a.descripcion+'</div>'; });
+    return x + '</div>';
+  }).join('');
+  mostrarPantalla('screen-historial-caseta');
+}
+
+function registrarCaseta(n) {
+  const c = (cargarDatos(CONFIG.STORAGE_KEYS.casetas) || []).find(x => x.numero === n); if (!c) return;
+  estado.casetaActual = c; abrirRegistroRapido();
+}
+function abrirRegistroRapido() {
+  const c = estado.casetaActual; if (!c) return;
+  const v = calcularVolumenesSistema(c);
+  document.getElementById('rr-info-caseta').innerHTML = '<strong>Caseta '+c.numero+'</strong> &middot; '+v.numTubosActivos+' tubos &middot; '+v.volumenPorTubo.toFixed(1)+' L/tubo';
+  ['rr-volumen','rr-temp-agua','rr-ph','rr-ec','rr-temp-amb','rr-temp-amb-max','rr-temp-amb-min','rr-hr'].forEach(i => document.getElementById(i).value = '');
+  document.getElementById('error-rr').classList.remove('visible');
+  document.getElementById('rr-advertencias').innerHTML = ''; actualizarHoraBox('rr-hora-box');
+  mostrarPantalla('screen-registro-rapido');
+}
+function guardarRegistroRapido() {
+  const c = estado.casetaActual, v = calcularVolumenesSistema(c);
+  const vol = parseFloat(document.getElementById('rr-volumen').value), t = parseFloat(document.getElementById('rr-temp-agua').value);
+  const p = parseFloat(document.getElementById('rr-ph').value); let ec = parseFloat(document.getElementById('rr-ec').value);
+  const ta = parseFloat(document.getElementById('rr-temp-amb').value), tm = parseFloat(document.getElementById('rr-temp-amb-max').value), tn = parseFloat(document.getElementById('rr-temp-amb-min').value);
+  const hr = parseFloat(document.getElementById('rr-hr').value);
+  const e = document.getElementById('error-rr');
+  if ([vol, t, p, ec, ta, tm, tn].some(isNaN)) { e.textContent = 'Completa todos (HR opcional).'; e.classList.add('visible'); return; }
+  const n = normalizarEC(ec); if (n.convertida && confirm('EC='+n.original+' parece uS/cm. Convertir a '+n.ec+' mS/cm?')) ec = n.ec;
+  const er = validarRangos(p, ec); if (er.length) { e.textContent = er.join(' '); e.classList.add('visible'); return; }
+  let a = [];
+  if (vol < v.minBomba) a.push('<div class="warning-box">Vol '+vol+'L bajo m&iacute;nimo '+v.minBomba+'L.</div>');
+  if (vol === v.minBomba) a.push('<div class="warning-box">Vol '+vol+'L justo en el m&iacute;nimo: repon agua antes de que la evaporaci&oacute;n lo baje.</div>');
+  if (vol > v.maxAbsolutoTanque) a.push('<div class="warning-box">Vol sobre maximo '+v.maxAbsolutoTanque.toFixed(1)+'L.</div>');
+  if (t > CONFIG.TEMP_AGUA_MAX) a.push('<div class="danger-box">AGUA '+t+'&deg;C: riesgo Pythium. Botellas congeladas YA.</div>');
+  if (tm > CONFIG.TEMP_AMBIENTAL_MAX) a.push('<div class="danger-box">MAX 24h '+tm+'&deg;C: estres termico.</div>');
+  if (tm - tn > CONFIG.TEMP_AMBIENTAL_DIFERENCIA_MAX) a.push('<div class="warning-box">Oscilaci&oacute;n '+(tm-tn).toFixed(1)+'&deg;C excesiva'+(ventanaTermica().maxCompleta ? '' : ' (parcial: el m&aacute;ximo del d&iacute;a a&uacute;n puede subir)')+'.</div>');
+  if (p > CONFIG.PH_OBJETIVO_MAX) a.push('<div class="warning-box">pH '+p+' alto: corregir con acido citrico.</div>');
+  avisosAmbientePorCultivo(c.numero, ta).forEach(x => a.push(x));
+  document.getElementById('rr-advertencias').innerHTML = a.join('');
+  const ok = p >= CONFIG.PH_OBJETIVO_MIN && p <= CONFIG.PH_OBJETIVO_MAX && ec >= CONFIG.EC_OBJETIVO_MIN && ec <= CONFIG.EC_OBJETIVO_MAX && t <= CONFIG.TEMP_AGUA_MAX;
+  agregarRegistro(CONFIG.STORAGE_KEYS.eventos, { evento_id: generarIdEvento(c.numero), caseta_id: c.numero, fecha_inicio: timestampActual(), fecha_fin: timestampActual(), tipo: 'medicion_rutinaria', medicion_inicial: null, medicion_final: null, mediciones: [{ timestamp: timestampActual(), ph: p, ec: ec, temp_agua: t, temp_ambiental_actual: ta, temp_ambiental_max: tm, temp_ambiental_min: tn, hora: horaActual(), min_completo: ventanaTermica().minCompleta, max_completo: ventanaTermica().maxCompleta, min_estado: ventanaTermica().minEstado, max_estado: ventanaTermica().maxEstado, hr: isNaN(hr) ? null : hr, volumen: vol }], acciones: [], dentro_rango: ok, ultimo_ph: p, ultimo_ec: ec, ultimo_temp_agua: t, ultimo_temp_ambiental: ta, ultimo_temp_ambiental_max: tm, ultimo_temp_ambiental_min: tn, ultimo_volumen: vol });
+  alert('Medici\u00f3n guardada en historial de Caseta ' + c.numero);
+  verDetalleCaseta(c.numero);
+}
+
+function revisarCaseta(n) {
+  const c = (cargarDatos(CONFIG.STORAGE_KEYS.casetas) || []).find(x => x.numero === n); if (!c) return;
+  estado.casetaActual = c; iniciarRevisionCaseta();
+}
+function iniciarRevisionCaseta() {
+  const c = estado.casetaActual;
+  if (c.estado === 'inactiva' || c.estado === 'mantenimiento') { alert('Caseta no disponible.'); return; }
+  if (!obtenerTubosActivos(c).length) { alert('Sin tubos activos.'); return; }
+  estado.revisionActual = { caseta: c, ciclo: 1, iteraciones: 0, evento: { evento_id: generarIdEvento(c.numero), caseta_id: c.numero, fecha_inicio: timestampActual(), tipo: 'ajuste_completo', mediciones: [], acciones: [] } };
+  mostrarPantalla('screen-revision-1'); prepararRevisionPaso1();
+}
+function prepararRevisionPaso1() {
+  const c = estado.revisionActual.caseta, v = calcularVolumenesSistema(c);
+  document.getElementById('revision-info-caseta').innerHTML = '<strong>Caseta '+c.numero+'</strong> &middot; '+v.numTubosActivos+' tubos &middot; '+v.volumenPorTubo.toFixed(1)+' L/tubo<br>Objetivo tanque: '+v.volumenObjetivoTanque.toFixed(1)+' L';
+  document.getElementById('rev-vol-min').textContent = v.minBomba;
+  document.getElementById('rev-vol-obj').textContent = v.volumenObjetivoTanque.toFixed(1);
+  document.getElementById('rev-vol-max').textContent = v.maxAbsolutoTanque.toFixed(1);
+  document.getElementById('rev-volumen').value = '';
+  document.getElementById('error-rev1').classList.remove('visible');
+  document.getElementById('advertencias-volumen').innerHTML = '';
+}
+function revisionPaso1() {
+  const v = parseFloat(document.getElementById('rev-volumen').value);
+  const vo = calcularVolumenesSistema(estado.revisionActual.caseta);
+  const e = document.getElementById('error-rev1'), a = document.getElementById('advertencias-volumen');
+  if (isNaN(v) || v < 0) { e.textContent = 'Volumen v\u00e1lido (>=0).'; e.classList.add('visible'); return; }
+  let ad = [];
+  if (v === 0) ad.push('<div class="danger-box">TANQUE VACIO. Reposicion urgente antes de ajustes quimicos.</div>');
+  else if (v < vo.minBomba) ad.push('<div class="warning-box">Vol '+v+'L bajo m&iacute;nimo '+vo.minBomba+'L. Se sugerira reposicion.</div>');
+  else if (v === vo.minBomba) ad.push('<div class="warning-box">Vol '+v+'L justo en el m&iacute;nimo: repon agua antes de que la evaporaci&oacute;n lo baje.</div>');
+  else if (v > vo.maxAbsolutoTanque) ad.push('<div class="warning-box">Vol '+v+'L sobre maximo '+vo.maxAbsolutoTanque.toFixed(1)+'L. Riesgo desborde.</div>');
+  a.innerHTML = ad.join('');
+  estado.revisionActual.volumenTanque = v; estado.revisionActual.vols = vo;
+  e.classList.remove('visible');
+  document.getElementById('revision-info-medicion').innerHTML = '<strong>Caseta '+estado.revisionActual.caseta.numero+'</strong> &middot; Tanque '+v+'L + tubos '+vo.volTubos.toFixed(1)+'L = <strong>'+(v+vo.volTubos).toFixed(1)+' L recirculando</strong> (base de las dosis). Mide el tanque con la bomba encendida.';
+  ['rev-temp-agua','rev-temp-amb-actual','rev-temp-amb-max','rev-temp-amb-min','rev-ph','rev-ec'].forEach(i => document.getElementById(i).value = '');
+  document.getElementById('error-rev2').classList.remove('visible');
+  actualizarHoraBox('rev-hora-box'); mostrarPantalla('screen-revision-2');
+}
+function revisionPaso2() {
+  const t = parseFloat(document.getElementById('rev-temp-agua').value), ta = parseFloat(document.getElementById('rev-temp-amb-actual').value);
+  const tm = parseFloat(document.getElementById('rev-temp-amb-max').value), tn = parseFloat(document.getElementById('rev-temp-amb-min').value);
+  const p = parseFloat(document.getElementById('rev-ph').value); let ec = parseFloat(document.getElementById('rev-ec').value);
+  const e = document.getElementById('error-rev2');
+  if ([t, ta, tm, tn, p, ec].some(isNaN)) { e.textContent = 'Completa todos.'; e.classList.add('visible'); return; }
+  const n = normalizarEC(ec); if (n.convertida && confirm('EC='+n.original+' parece uS/cm. Convertir a '+n.ec+' mS/cm?')) ec = n.ec;
+  if (ec > CONFIG.UMBRAL_EC_EXTREMA && !confirm('EC muy alta ('+ec+' mS/cm). Continuar?')) return;
+  const er = validarRangos(p, ec); if (er.length) { e.textContent = er.join(' '); e.classList.add('visible'); return; }
+  Object.assign(estado.revisionActual, { tempAgua: t, tempAmbActual: ta, tempAmbMax: tm, tempAmbMin: tn, ph: p, ec: ec });
+  e.classList.remove('visible');
+  const m = { timestamp: timestampActual(), ph: p, ec: ec, temp_agua: t, temp_ambiental_actual: ta, temp_ambiental_max: tm, temp_ambiental_min: tn, hora: horaActual(), min_completo: ventanaTermica().minCompleta, max_completo: ventanaTermica().maxCompleta, min_estado: ventanaTermica().minEstado, max_estado: ventanaTermica().maxEstado, volumen: estado.revisionActual.volumenTanque };
+  estado.revisionActual.evento.medicion_inicial = m; estado.revisionActual.evento.mediciones.push(m);
+  estado.revisionActual.avisoAmb = avisosAmbientePorCultivo(estado.revisionActual.caseta.numero, ta).join('');
+  estado.revisionActual.ajuste = calcularAjusteTanque(estado.revisionActual.volumenTanque, estado.revisionActual.vols.numTubosActivos, p, ec, t, estado.revisionActual.caseta);
+  renderPlanAjuste(estado.revisionActual.ajuste); mostrarPantalla('screen-revision-3');
+}
+function bloqueEnfriamiento(volTotal, temp) {
+  const b = botellasEnfriamiento(volTotal, temp);
+  return '<div class="danger-box"><strong>PRIORIDAD TERMICA:</strong> Agua a '+temp+'&deg;C (max '+CONFIG.TEMP_AGUA_MAX+'&deg;C).<br>Accion: '+b.botellas+' botella(s) congelada(s) de 2L al tanque (cada una baja ~'+b.gradosPorBotella+'&deg;C en este volumen). Rota cada 6-8h hasta &le;24&deg;C.<br>Complementa: aislar tanque, sombra extra 10-17h, ventilacion solo nocturna.</div>';
+}
+function renderPlanAjuste(a) {
+  const c = document.getElementById('revision-plan-contenido');
+  const r = estado.revisionActual;
+  if (a.tipo === 'sin_ajuste' || a.tipo === 'esperar_consumo' || a.tipo === 'ec_marginal') {
+    c.innerHTML = (r.avisoAmb || '') + (r.tempAgua > CONFIG.TEMP_AGUA_MAX ? bloqueEnfriamiento(r.volumenTanque + r.vols.volTubos, r.tempAgua) : '') + '<div class="'+(a.tipo === 'sin_ajuste' ? 'success-box' : 'info-box')+'">'+a.mensaje+'</div>';
+    document.getElementById('btn-confirmar-ajustes').style.display = 'none';
+    document.getElementById('btn-sin-ajustes').style.display = 'block'; return;
+  }
+  document.getElementById('btn-confirmar-ajustes').style.display = 'block';
+  document.getElementById('btn-sin-ajustes').style.display = 'none';
+  let h = '<div class="info-box">Dosis calculadas sobre <strong>'+(r.volumenTanque + r.vols.volTubos).toFixed(1)+' L</strong> recirculando (tanque '+r.volumenTanque+' L + tubos '+r.vols.volTubos.toFixed(1)+' L).</div>' + (r.avisoAmb || '') + (r.tempAgua > CONFIG.TEMP_AGUA_MAX ? bloqueEnfriamiento(r.volumenTanque + r.vols.volTubos, r.tempAgua) : '');
+  h += '<div class="warning-box"><strong>'+a.mensaje+'</strong></div>';
+  const phAlto = r.ph > 6.5;
+  if (a.tipo === 'solo_enfriamiento') {
+    h += '<div class="bottle-instruction"><h4>Protocolo de enfriamiento</h4><ol style="margin-left:20px"><li>Introduce '+a.botellas.botellas+' botella(s) congelada(s) de 2L</li><li>Aisla y sombrea el tanque</li><li>Re-mide temperatura en 2h</li><li>Repite rotacion hasta &le;24&deg;C</li></ol></div>';
+  } else if (a.tipo === 'ajuste_fino_tanque') {
+    h += '<div class="bottle-instruction"><h4>Ajuste fino directo</h4><ul>'+(a.mlPHUp ? '<li>pH Up: '+a.mlPHUp+' mL</li>' : '')+(a.mlSolucionCitrico ? '<li>&Aacute;cido c&iacute;trico ('+CONFIG.CONCENTRACION_SOLUCION_CITRICO+' g/L): '+a.mlSolucionCitrico+' mL en al&iacute;cuotas de 20-30 mL</li>' : '')+'</ul><ol style="margin-left:20px"><li>Agregar cerca del retorno</li><li>Recircular 10-15 min</li><li>Medir</li></ol></div>';
+    if (phAlto) h += '<div class="info-box">Usa &aacute;cido c&iacute;trico, no pH Down fosf&oacute;rico (evita algas).</div>';
+  } else if (a.tipo === 'solo_ph_up') {
+    h += '<div class="bottle-instruction"><h4>pH Up ('+a.numBotellas+' botellas 2.5L)</h4><ul><li>2.5 L agua</li><li>pH Up: '+a.mlPHUpPorBotella+' mL</li></ul><ol style="margin-left:20px"><li>Verter una por una</li><li>15 min recirculaci&oacute;n entre cada una</li><li>Medir al final</li></ol></div>';
+  } else if (a.tipo === 'solo_ph_down') {
+    h += '<div class="bottle-instruction"><h4>Bajar pH con &aacute;cido c&iacute;trico</h4><ul><li>Polvo equiv.: '+a.gramosCitrico+' g</li><li>Soluci&oacute;n '+CONFIG.CONCENTRACION_SOLUCION_CITRICO+' g/L: '+a.mlSolucionCitrico+' mL</li><li>Al&iacute;cuotas de 30-40 mL</li><li>10 min recirculaci&oacute;n entre al&iacute;cuotas</li></ul></div>';
+  } else if (a.tipo === 'mezcla_madre' || a.tipo === 'mezcla_madre_dual') {
+    h += '<div class="bottle-instruction"><h4>'+(a.tipo === 'mezcla_madre_dual' ? 'Correcci&oacute;n dual' : 'Mezcla madre')+' ('+a.numBotellas+' botellas 2.5L)</h4><ul><li>2.5 L agua</li><li>Nutriente: '+a.gramosNutrientePorBotella+' g</li><li>pH caer&aacute; a ~'+a.phInicialConNutrientes.toFixed(1)+'</li><li>pH Up: '+a.mlPHUpPorBotella+' mL (a pH '+a.phMezclaMadre+')</li></ul><p><strong>Esperado:</strong> pH '+a.pH_final_esperado+(a.ec_final_esperada ? ' &middot; EC '+a.ec_final_esperada : '')+'</p><ol style="margin-left:20px"><li>Verter una por una</li><li>15 min recirculaci&oacute;n</li><li>Medir</li></ol></div>';
+    if (a.ecMezclaLimitada) h += '<div class="warning-box">Gramos limitados a EC 2.5 por seguridad. Requerira segunda sesion.</div>';
+    if (a.requiere_ajuste_fino) h += '<div class="warning-box">pH final ~'+a.pH_final_esperado+': requerira ajuste fino posterior con c&iacute;trico.</div>';
+  } else if (a.tipo === 'dilucion') {
+    h += '<div class="bottle-instruction"><h4>Diluci&oacute;n ('+a.numBotellas+' botellas)</h4><ul><li>2.5 L agua limpia SIN aditivos</li></ul><ol style="margin-left:20px"><li>Verter una por una</li><li>15 min recirculaci&oacute;n</li><li>Medir; si el pH queda alto, ajusta despu&eacute;s con c&iacute;trico en al&iacute;cuotas</li></ol></div>';
+    h += '<div class="info-box">pH estimado tras diluir: '+a.phResultante+'. No agregues pH Down fosf&oacute;rico.</div>';
+  } else if (a.tipo === 'drenaje') {
+    if (a.cultivosActivos) h += '<div class="danger-box">'+a.cultivosActivos+' cultivo(s) vivos: el drenaje estresara raices. Si la desviacion de EC es &lt;0.3 considera esperar.</div>';
+    if (a.litrosTeoricos > a.litrosDrenar) h += '<div class="warning-box">Drenaje limitado a '+a.litrosDrenar+'L (teorico '+a.litrosTeoricos+'L).</div>';
+    if (a.requiereSegundaSesion) h += '<div class="info-box">EC post-drenaje ~'+a.ecPostDrenaje+': segunda sesion en 24-48h.</div>';
+    h += '<div class="bottle-instruction"><h4>Drenaje seguro</h4><ol style="margin-left:20px"><li>Drenar '+a.litrosDrenar+'L</li><li>Reponer con '+a.numBotellas+' botella(s) de agua limpia SIN aditivos</li><li>15 min recirculaci&oacute;n</li><li>Medir; ajusta pH despu&eacute;s con c&iacute;trico si queda fuera</li></ol></div>';
+  } else if (a.tipo === 'drenaje_nutriente') {
+    if (a.cultivosActivos) h += '<div class="danger-box">'+a.cultivosActivos+' cultivo(s) vivos: evita exponer raices al aire.</div>';
+    h += '<div class="bottle-instruction"><h4>Drenaje + nutriente</h4><ol style="margin-left:20px"><li>Drenar '+a.litrosDrenar+'L</li><li>Reponer con '+a.numBotellas+' botella(s): '+a.gramosNutrientePorBotella+'g nutriente + '+a.mlPHUpPorBotella+'mL pH Up</li><li>Medir</li></ol></div>';
+  }
+  c.innerHTML = h;
+}
+function confirmarAjustes() {
+  estado.revisionActual.iteraciones++;
+  estado.revisionActual.evento.acciones.push({ timestamp: timestampActual(), tipo: estado.revisionActual.ajuste.tipo, descripcion: estado.revisionActual.ajuste.mensaje });
+  mostrarPantalla('screen-revision-4'); prepararRevisionPaso4();
+}
+function marcarCompletadoSinAjustes() {
+  const e = estado.revisionActual.evento, r = estado.revisionActual;
+  e.medicion_final = e.mediciones.length ? e.mediciones[e.mediciones.length - 1] : e.medicion_inicial; e.fecha_fin = timestampActual(); e.dentro_rango = (r.tempAgua <= CONFIG.TEMP_AGUA_MAX);
+  Object.assign(e, { ultimo_ph: r.ph, ultimo_ec: r.ec, ultimo_temp_agua: r.tempAgua, ultimo_temp_ambiental: r.tempAmbActual, ultimo_temp_ambiental_max: r.tempAmbMax, ultimo_temp_ambiental_min: r.tempAmbMin, ultimo_volumen: r.volumenTanque });
+  agregarRegistro(CONFIG.STORAGE_KEYS.eventos, e);
+  verDetalleCaseta(estado.casetaActual.numero);
+}
+function prepararRevisionPaso4() {
+  document.getElementById('revision-info-post').innerHTML = '<strong>Caseta '+estado.revisionActual.caseta.numero+'</strong> &middot; Iteraci&oacute;n '+estado.revisionActual.iteraciones+' &middot; Vol previo '+estado.revisionActual.volumenTanque+'L';
+  document.getElementById('rev-volumen-post').value = estado.revisionActual.volumenTanque;
+  ['rev-temp-agua-post','rev-temp-amb-actual-post','rev-temp-amb-max-post','rev-temp-amb-min-post','rev-ph-post','rev-ec-post'].forEach(i => document.getElementById(i).value = '');
+  document.getElementById('error-rev4').classList.remove('visible');
+  document.getElementById('advertencias-volumen-post').innerHTML = ''; actualizarHoraBox('rev-hora-box-post');
+}
+function revisionPaso4() {
+  const v = parseFloat(document.getElementById('rev-volumen-post').value), t = parseFloat(document.getElementById('rev-temp-agua-post').value);
+  const ta = parseFloat(document.getElementById('rev-temp-amb-actual-post').value), tm = parseFloat(document.getElementById('rev-temp-amb-max-post').value), tn = parseFloat(document.getElementById('rev-temp-amb-min-post').value);
+  const p = parseFloat(document.getElementById('rev-ph-post').value); let ec = parseFloat(document.getElementById('rev-ec-post').value);
+  const e = document.getElementById('error-rev4'), ad = document.getElementById('advertencias-volumen-post');
+  if ([v, t, ta, tm, tn, p, ec].some(isNaN)) { e.textContent = 'Completa todos.'; e.classList.add('visible'); return; }
+  const vo = estado.revisionActual.vols; let a = [];
+  if (v < vo.minBomba) a.push('<div class="warning-box">Vol '+v+'L bajo m&iacute;nimo.</div>');
+  if (v > vo.maxAbsolutoTanque) a.push('<div class="warning-box">Vol sobre maximo.</div>');
+  ad.innerHTML = a.join('');
+  const n = normalizarEC(ec); if (n.convertida && confirm('EC='+n.original+' parece uS/cm. Convertir?')) ec = n.ec;
+  const er = validarRangos(p, ec); if (er.length) { e.textContent = er.join(' '); e.classList.add('visible'); return; }
+  e.classList.remove('visible');
+  estado.revisionActual.volumenTanque = v;
+  estado.revisionActual.evento.mediciones.push({ timestamp: timestampActual(), ph: p, ec: ec, temp_agua: t, temp_ambiental_actual: ta, temp_ambiental_max: tm, temp_ambiental_min: tn, hora: horaActual(), min_completo: ventanaTermica().minCompleta, max_completo: ventanaTermica().maxCompleta, min_estado: ventanaTermica().minEstado, max_estado: ventanaTermica().maxEstado, volumen: v });
+  const tO = t <= CONFIG.TEMP_AGUA_MAX, aO = ta >= CONFIG.TEMP_AMBIENTAL_MIN && ta <= CONFIG.TEMP_AMBIENTAL_MAX;
+  const pO = p >= CONFIG.PH_OBJETIVO_MIN && p <= CONFIG.PH_OBJETIVO_MAX, eO = ec >= CONFIG.EC_OBJETIVO_MIN && ec <= CONFIG.EC_OBJETIVO_MAX;
+  const ok = tO && aO && pO && eO;
+  const sg = ok ? null : calcularAjusteTanque(v, vo.numTubosActivos, p, ec, t, estado.revisionActual.caseta);
+  Object.assign(estado.revisionActual, { tempAgua: t, tempAmbActual: ta, tempAmbMax: tm, tempAmbMin: tn, ph: p, ec: ec, siguienteAjuste: sg, avisoAmb: avisosAmbientePorCultivo(estado.revisionActual.caseta.numero, ta).join('') });
+  renderResultadoFinal(t, ta, p, ec, ok, sg); mostrarPantalla('screen-revision-5');
+}
+function renderResultadoFinal(t, ta, p, ec, ok, sg) {
+  const c = document.getElementById('revision-final-contenido');
+  let h = (t > CONFIG.TEMP_AGUA_MAX ? bloqueEnfriamiento(estado.revisionActual.volumenTanque + estado.revisionActual.vols.volTubos, t) : '');
+  h += '<div class="card '+(ok ? '' : 'card-warning')+'"><h3>Medici&oacute;n #'+estado.revisionActual.iteraciones+'</h3><p>Vol '+estado.revisionActual.volumenTanque+'L &middot; Agua '+t+'&deg;C &middot; Amb '+ta+'&deg;C &middot; pH '+p+' &middot; EC '+ec+'</p></div>';
+  if (ok && t <= CONFIG.TEMP_AGUA_MAX) { h += '<div class="success-box">Caseta en rango.</div>'; document.getElementById('btn-cerrar-revision').style.display = 'block'; document.getElementById('btn-seguir-ajustando').style.display = 'none'; }
+  else { h += '<div class="warning-box">A&uacute;n fuera de rango'+(t > CONFIG.TEMP_AGUA_MAX ? ' (temperatura critica)' : '')+'.</div>'+(sg ? '<div class="info-box"><strong>Siguiente:</strong> '+sg.mensaje+'</div>' : ''); if (estado.revisionActual.iteraciones >= 3) h += '<div class="danger-box">3 iteraciones sin rango: revisa medidor.</div>'; document.getElementById('btn-cerrar-revision').style.display = 'none'; document.getElementById('btn-seguir-ajustando').style.display = 'block'; }
+  c.innerHTML = h;
+}
+function seguirAjustando() {
+  const r = estado.revisionActual; if (!r) return;
+  if (r.siguienteAjuste) { r.ajuste = r.siguienteAjuste; r.siguienteAjuste = null; renderPlanAjuste(r.ajuste); mostrarPantalla('screen-revision-3'); }
+  else mostrarPantalla('screen-revision-4');
+}
+function cerrarRevision() {
+  const e = estado.revisionActual.evento, r = estado.revisionActual;
+  e.medicion_final = { timestamp: timestampActual(), ph: r.ph, ec: r.ec, temp_agua: r.tempAgua, temp_ambiental_actual: r.tempAmbActual, temp_ambiental_max: r.tempAmbMax, temp_ambiental_min: r.tempAmbMin, volumen: r.volumenTanque };
+  e.fecha_fin = timestampActual(); e.dentro_rango = true;
+  Object.assign(e, { ultimo_ph: r.ph, ultimo_ec: r.ec, ultimo_temp_agua: r.tempAgua, ultimo_temp_ambiental: r.tempAmbActual, ultimo_temp_ambiental_max: r.tempAmbMax, ultimo_temp_ambiental_min: r.tempAmbMin, ultimo_volumen: r.volumenTanque });
+  agregarRegistro(CONFIG.STORAGE_KEYS.eventos, e);
+  verDetalleCaseta(estado.casetaActual.numero);
+}
+
+function exportarBackupJSON() {
+  const b = { version: '10.6', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
+  const bl = new Blob([JSON.stringify(b, null, 2)], {type: 'application/json'});
+  const u = URL.createObjectURL(bl); const l = document.createElement('a');
+  l.href = u; l.download = 'backup_hidroponico_'+hoy()+'.json'; l.click(); URL.revokeObjectURL(u);
+  alert('Backup exportado');
+}
+function importarBackupJSON() {
+  const i = document.createElement('input'); i.type = 'file'; i.accept = 'application/json';
+  i.onchange = e => { const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = ev => { try { const b = JSON.parse(ev.target.result); if (!b.datos) { alert('Backup invalido'); return; }
+      if (!confirm('Esto REEMPLAZARA todos los datos actuales. Continuar?')) return;
+      if (b.datos.cultivos) guardarDatos(CONFIG.STORAGE_KEYS.cultivos, b.datos.cultivos);
+      if (b.datos.casetas) guardarDatos(CONFIG.STORAGE_KEYS.casetas, b.datos.casetas);
+      if (b.datos.eventos) guardarDatos(CONFIG.STORAGE_KEYS.eventos, b.datos.eventos);
+      if (b.datos.alertas) guardarDatos(CONFIG.STORAGE_KEYS.alertas, b.datos.alertas);
+      alert('Restaurado. Recargando...'); location.reload();
+    } catch (err) { alert('Error: '+err.message); } };
+    r.readAsText(f); };
+  i.click();
+}
+
+function exportarTodoCSV() {
+  const cu = cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], cs = cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], ev = cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], al = cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [];
+  if (!cu.length && !cs.length && !ev.length) { alert('Sin datos'); return; }
+  const h = hoy();
+  if (cs.length) {
+    const hd = ['numero','estado','tubos_total','tubos_activos','tubos_mant','tubos_inac','diametro_cm','lamina_cm','longitud_m','vol_por_tubo_L','vol_tubos_L','max_tanque_L','obj_tanque_L','vol_total_L','cultivos','ult_fecha','ult_ph','ult_ec','ult_temp_agua_C','ult_temp_amb_C','ult_temp_max_C','ult_temp_min_C','ult_volumen_L','dentro_rango'];
+    const rw = cs.map(c => { if (!c.tubos) c.tubos = Array.from({length: c.numTubos || 4}, (_, i) => ({numero: i+1, estado: 'activo'}));
+      const v = calcularVolumenesSistema(c), g = c.geometria_tubos || {};
+      const u = (ev.filter(e => e.caseta_id === c.numero).sort((a, b) => b.fecha_inicio.localeCompare(a.fecha_inicio))[0]) || {};
+      return [c.numero, c.estado, c.tubos.length, obtenerTubosActivos(c).length, obtenerTubosEnMantenimiento(c).length, c.tubos.filter(t => t.estado === 'inactivo').length, g.diametro_cm || '', g.lamina_cm || '', g.longitud_m || '', v.volumenPorTubo.toFixed(2), v.volTubos.toFixed(1), v.maxAbsolutoTanque.toFixed(1), v.volumenObjetivoTanque.toFixed(1), v.volumenTotalObjetivo.toFixed(1), contarCultivosActivos(c.numero), u.fecha_inicio || '', u.ultimo_ph || '', u.ultimo_ec || '', u.ultimo_temp_agua || '', u.ultimo_temp_ambiental || '', u.ultimo_temp_ambiental_max || '', u.ultimo_temp_ambiental_min || '', u.ultimo_volumen || '', u.dentro_rango ? 'Si' : 'No'].map(x => '"'+String(x).replace(/"/g,'""')+'"').join(','); });
+    descargarCSV('casetas_'+h+'.csv', [hd.join(','), ...rw].join('\n'));
+    const hd2 = ['caseta','tubo','estado','cultivo','variedad','fase'];
+    const rw2 = []; cs.forEach(c => c.tubos.forEach(t => { const k = cu.find(x => x.caseta_actual === c.numero && x.tubo_actual === t.numero && x.fase_actual !== 'cosechado'); rw2.push([c.numero, t.numero, t.estado, k ? k.cultivo_id : '', k ? k.variedad : '', k ? k.fase_actual : ''].map(x => '"'+String(x).replace(/"/g,'""')+'"').join(',')); }));
+    descargarCSV('tubos_'+h+'.csv', [hd2.join(','), ...rw2].join('\n'));
+  }
+  if (cu.length) {
+    const hd = ['cultivo_id','variedad','fecha_siembra','dias_oscuridad','fecha_exposicion_luz','dias_siembra','semillas','germinadas','fase','trasplante_sugerido','trasplante_real','dias_tubo','cosecha_tentativa','dias_cosecha','cosecha_real','caseta','tubo'];
+    const rw = cu.map(c => [c.cultivo_id, c.variedad, c.fecha_siembra, c.dias_oscuridad, c.fecha_exposicion_luz, diasEntre(c.fecha_siembra), c.cantidad_semillas, c.cantidad_germinadas, c.fase_actual, c.fecha_trasplante_sugerida, c.fecha_trasplante_real || '', c.fecha_trasplante_real ? diasEntre(c.fecha_trasplante_real) : '', c.fecha_cosecha_tentativa, c.fecha_cosecha_tentativa ? diasEntre(hoy(), c.fecha_cosecha_tentativa) : '', c.fecha_cosecha_real || '', c.caseta_actual || '', c.tubo_actual || ''].map(x => '"'+String(x).replace(/"/g,'""')+'"').join(','));
+    descargarCSV('cultivos_'+h+'.csv', [hd.join(','), ...rw].join('\n'));
+  }
+  if (ev.length) {
+    const hd = ['evento_id','caseta','inicio','fin','tipo','n_mediciones','n_acciones','ult_ph','ult_ec','ult_temp_agua_C','ult_temp_amb_C','ult_temp_max_C','ult_temp_min_C','ult_volumen_L','dentro_rango'];
+    const rw = ev.map(e => [e.evento_id, e.caseta_id, e.fecha_inicio, e.fecha_fin || '', e.tipo, (e.mediciones || []).length, (e.acciones || []).length, e.ultimo_ph || '', e.ultimo_ec || '', e.ultimo_temp_agua || '', e.ultimo_temp_ambiental || '', e.ultimo_temp_ambiental_max || '', e.ultimo_temp_ambiental_min || '', e.ultimo_volumen || '', e.dentro_rango ? 'Si' : 'No'].map(x => '"'+String(x).replace(/"/g,'""')+'"').join(','));
+    descargarCSV('eventos_'+h+'.csv', [hd.join(','), ...rw].join('\n'));
+  }
+  if (al.length) descargarCSV('alertas_'+h+'.csv', 'tipo,prioridad,caseta,mensaje\n' + al.map(a => [a.t, a.p, a.c || '', a.m].map(x => '"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n'));
+  alert('CSV exportados: casetas, tubos, cultivos, eventos, alertas');
+}
+function descargarCSV(n, c) {
+  const b = new Blob(['\ufeff'+c], {type: 'text/csv;charset=utf-8;'});
+  const u = URL.createObjectURL(b); const l = document.createElement('a');
+  l.href = u; l.download = n; l.style.visibility = 'hidden';
+  document.body.appendChild(l); l.click(); document.body.removeChild(l); URL.revokeObjectURL(u);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  migrarDatosAntiguos();
+  ['caseta-tubo-diametro','caseta-tubo-lamina','caseta-tubo-longitud'].forEach(i => { const e = document.getElementById(i); if (e) e.addEventListener('input', calcularPreviewVolumenTubo); });
+  actualizarDashboard();
+  syncInicializar();
+});
+</script>
+</body>
+</html>
