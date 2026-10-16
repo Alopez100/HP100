@@ -2,18 +2,18 @@
 GUARDADO SEGURO (archivo 100% ASCII, a prueba de corrupcion):
 1) Copia TODO este archivo.
 2) Pegalo en un editor de texto plano (Notepad++, Acode, QuickEdit, VS Code).
-3) Guardalo como: hydro_control_v108.html
+3) Guardalo como: hydro_control_v109.html
    - Codificacion: cualquiera (UTF-8 o ANSI). No hay bytes no-ASCII que corromper.
 4) Si lo transfieres por WhatsApp/Drive/correo: envialo como ARCHIVO/DOCUMENTO, nunca como texto pegado.
 5) Abrelo en el navegador: acentos y simbolos se renderizan via entidades HTML y escapes \u de JS.
-Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.8).
+Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.9).
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Control Hidrop&oacute;nico v10.8 - ASCII Seguro</title>
+<title>Control Hidrop&oacute;nico v10.9 - ASCII Seguro</title>
 <style>
 :root { --vc:#e8f5e9; --vf:#2e7d32; --vo:#1b5e20; --ac:#e3f2fd; --af:#1565c0; --gc:#f5f5f5; --gm:#e0e0e0; --go:#616161; --ra:#c62828; --rc:#ffebee; --aa:#f9a825; --ac2:#fff8e1; --na:#ef6c00; --nc:#fff3e0; --bl:#fff; --ne:#212121; --mo:#6a1b9a; --mc:#f3e5f5; }
 * { box-sizing:border-box; margin:0; padding:0; }
@@ -79,7 +79,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
 </head>
 <body>
 <div class="container">
-<header><h1>CONTROL HIDROP&Oacute;NICO v10.8</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
+<header><h1>CONTROL HIDROP&Oacute;NICO v10.9</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
 
 <div id="screen-dashboard" class="screen active-screen">
   <div class="screen-header">Panel Principal<span id="nube-pill" class="nube-pill nube-off" style="display:none" onclick="mostrarPantalla('screen-mas')">Fuera de l&iacute;nea</span></div>
@@ -249,12 +249,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
   <div class="screen-header"><span class="step-number">Paso 4/5</span> Nueva Medici&oacute;n Post-Ajuste</div>
   <div class="info-box" id="revision-info-post"></div>
   <div class="form-group"><label>Volumen actual del tanque (L):</label><input type="number" id="rev-volumen-post" step="0.5" min="0" placeholder="Ej: 52"><small style="color:var(--go)">Actual&iacute;zalo si agregaste o drenaste agua durante el ajuste.</small></div>
-  <div class="card card-info"><h3>1. Ambiente (term&oacute;metro de la caseta)</h3>
-    <div class="info-box" id="rev-hora-box-post"></div>
-    <div class="form-group" style="margin:0"><label>Actual (&deg;C):</label><input type="number" id="rev-temp-amb-actual-post" step="0.1" placeholder="Ej: 31"></div>
-    <div class="form-group" style="margin:0"><label>M&aacute;xima del d&iacute;a (&deg;C):</label><input type="number" id="rev-temp-amb-max-post" step="0.1" placeholder="Ej: 38"></div>
-    <div class="form-group" style="margin:0"><label>M&iacute;nima del d&iacute;a (&deg;C):</label><input type="number" id="rev-temp-amb-min-post" step="0.1" placeholder="Ej: 17"></div></div>
-  <div class="card card-warning"><h3>2. Agua (medidor de pluma)</h3>
+  <div class="card card-warning"><h3>Agua (medidor de pluma)</h3>
     <div class="form-group" style="margin:0"><label>Temperatura agua (&deg;C):</label><input type="number" id="rev-temp-agua-post" step="0.1" placeholder="Ej: 24"></div>
     <div class="form-group" style="margin:0"><label>pH:</label><input type="number" id="rev-ph-post" step="0.01" placeholder="Ej: 6.57"></div>
     <div class="form-group" style="margin:0"><label>EC (mS/cm):</label><input type="number" id="rev-ec-post" step="0.01" placeholder="Ej: 1.48"></div></div>
@@ -272,7 +267,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
   </div>
 </div>
 
-<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.8 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
+<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.9 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
 </div>
 
 <script>
@@ -285,6 +280,10 @@ const CONFIG = {
   POTENCIA_CON_NUTRIENTES: { ph_up: { porGota: 0.035, porMl: 0.70 } },
   CAIDA_PH_POR_NUTRIENTES: 3.17,
   GRAMOS_CITRICO_POR_PH_62L: 1.55, CONCENTRACION_SOLUCION_CITRICO: 6,
+  /* v10.9: dosificacion por cucharitas (1 g al ras, medido en bascula por el operador) y pH Up en gotas medido EN EL TANQUE */
+  CUCHARITA_G_CITRICO: 1.0, CUCHARITA_G_NUTRIENTE: 1.0, EC_MS_POR_G_POR_L: 1.0,
+  PASO_MAX_CITRICO: 2, PASO_MAX_NUTRIENTE: 5, PASO_MAX_PHUP_GOTAS: 20,
+  PHUP_REF_V: 76, PHUP_POR_GOTA_REF: 0.03, /* 15-oct-2026: 30 gotas subieron pH 4.34 -> 5.35 a ~76 L (0.052, 0.030, 0.030 pH/gota por bloque) */
   PH_SEGURO_MIN: 5.0, PH_SEGURO_MAX: 7.0, EC_SEGURO_MAX: 2.5,
   PH_OBJETIVO_MIN: 5.8, PH_OBJETIVO_MAX: 6.2, PH_OBJETIVO: 6.0,
   EC_OBJETIVO_MIN: 1.4, EC_OBJETIVO_MAX: 1.6, EC_OBJETIVO: 1.5,
@@ -467,11 +466,11 @@ function syncInicializar() {
 function agregarRegistro(k, r) { const d = cargarDatos(k) || []; d.push(r); guardarDatos(k, d); return d; }
 function actualizarRegistro(k, c, v, n) { const d = cargarDatos(k) || []; const i = d.findIndex(r => r[c] === v); if (i !== -1) { d[i] = Object.assign({}, d[i], n); guardarDatos(k, d); return d[i]; } return null; }
 function migrarDatosAntiguos() {
-  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5','v10.6','v10.7'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
+  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5','v10.6','v10.7','v10.8'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
     const old = localStorage.getItem('hydro_'+k+'_'+v), cur = localStorage.getItem('hydro_'+k);
     if (old && !cur) localStorage.setItem('hydro_'+k, old);
   });});
-  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.8');
+  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.9');
 }
 function mostrarPantalla(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
@@ -543,57 +542,67 @@ function calcularAjusteTanque(volTanque, nTubos, ph, ec, temp, caseta) {
   if (!tOk && phOk && ecOk) return { tipo: 'solo_enfriamiento', botellas: botellasEnfriamiento(volTotal, temp), mensaje: 'Temperatura de agua '+temp+'&deg;C sobre el m&aacute;ximo de '+CONFIG.TEMP_AGUA_MAX+'&deg;C. La prioridad es enfriar antes que cualquier qu&iacute;mica.', dentroRango: false };
   if (ecAlta && cult > 0 && Math.abs(dEC) < 0.3 && phOk) return { tipo: 'esperar_consumo', mensaje: 'EC ligeramente alta ('+ec+') con '+cult+' cultivo(s). Las plantas consumir&aacute;n el excedente en 24-48h. Verifica ma&ntilde;ana.', dentroRango: false };
   if (!phOk && ecOk && Math.abs(dPH) <= 0.3) {
-    if (dPH > 0) { const ml = Math.abs(dPH) / calcularPotenciaPH(volTotal, 'ph_up', true).porMl; return { tipo: 'ajuste_fino_tanque', mlPHUp: Math.round(ml*10)/10, mlPHDown: 0, mensaje: 'Ajuste fino: '+Math.round(ml*10)/10+' mL de pH Up directo al tanque. Recircular 15 min.', dentroRango: false }; }
-    const g = Math.abs(dPH) * CONFIG.GRAMOS_CITRICO_POR_PH_62L * (volTotal / 62);
-    return { tipo: 'ajuste_fino_tanque', mlPHUp: 0, mlPHDown: 0, mlSolucionCitrico: Math.round(g / CONFIG.CONCENTRACION_SOLUCION_CITRICO * 1000), mensaje: 'Ajuste fino: '+Math.round(g/CONFIG.CONCENTRACION_SOLUCION_CITRICO*1000)+' mL de soluci&oacute;n de &aacute;cido c&iacute;trico en al&iacute;cuotas de 20-30 mL.', dentroRango: false };
+    const r = calcularEscenarioSoloPH(vols, volTotal, volTanque, ph, dPH);
+    if (r.tipo === 'solo_ph_up') { r.tipo = 'ajuste_fino_tanque'; r.gotasPHUp = r.gotasPaso1; r.mensaje = 'Ajuste fino: '+r.gotasPHUp+' gota(s) de pH Up directo al retorno. Recircula 10-15 min y mide.'; }
+    else if (r.tipo === 'solo_ph_down') { r.tipo = 'ajuste_fino_tanque'; r.mensaje = 'Ajuste fino: '+fmtCuch(r.cucharitasCitrico)+' de &aacute;cido c&iacute;trico pre-disuelta. Recircula 10-15 min y mide.'; }
+    return r;
   }
   if (!phOk && ecOk) return calcularEscenarioSoloPH(vols, volTotal, volTanque, ph, dPH);
-  if (ecBaja && ph > 6.3 && volFalt >= CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioDual(vols, volTotal, volFalt, ph, ec);
-  if (ecBaja && volFalt >= CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioNutriente(vols, volTotal, volFalt, ph, ec);
+  if (ecBaja && ph > 6.3) return calcularEscenarioDual(vols, volTotal, volFalt, ph, ec);
+  if (ecBaja) return calcularEscenarioNutriente(vols, volTotal, volFalt, ph, ec);
   if (ecAlta && volFalt >= CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioDilucion(vols, volTotal, volFalt, ph, ec);
   if (ecAlta && volFalt < CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioDrenaje(vols, volTotal, volTanque, ph, ec);
-  if (ecBaja && volFalt < CONFIG.VOLUMEN_BOTELLA) return calcularEscenarioDrenajeNutriente(vols, volTotal, volTanque, ph, ec);
   // v10.3: zona muerta de EC (desviacion <= UMBRAL_EC pero fuera de EC_OBJETIVO_MIN/MAX). Antes caia en 'generico' sin receta.
-  const gEst = dEC > 0 ? Math.round(dEC * volTotal * 10) / 10 : 0;
-  const notaEC = dEC > 0 ? ' EC '+ec+' ligeramente baja: ~'+gEst+' g de nutriente pre-disuelto (estimado con 1 g/L = 1 mS/cm).' : ' EC '+ec+' ligeramente alta: no agregues nutriente; las plantas la bajar&aacute;n.';
+  const gEst = dEC > 0 ? Math.round(dEC * volTotal / CONFIG.EC_MS_POR_G_POR_L * 10) / 10 : 0;
+  const notaEC = dEC > 0 ? ' EC '+ec+' ligeramente baja: ~'+Math.max(1, Math.round(gEst / CONFIG.CUCHARITA_G_NUTRIENTE))+' cucharita(s) de nutriente pre-disuelta (1 g/L = 1 mS/cm).' : ' EC '+ec+' ligeramente alta: no agregues nutriente; las plantas la bajar&aacute;n.';
   if (!phOk) { const r = calcularEscenarioSoloPH(vols, volTotal, volTanque, ph, dPH); r.ecMarginal = ec; r.gramosNutrienteEstimados = gEst; r.mensaje = r.mensaje + notaEC + ' Corrige primero el pH y re-mide.'; return r; }
   return { tipo: 'ec_marginal', ecMarginal: ec, gramosNutrienteEstimados: gEst, mensaje: 'pH en rango.' + notaEC, dentroRango: false };
 }
+function fmtCuch(n) { const e = Math.floor(n), m = n - e; return (e ? e : '') + (m ? (e ? ' ' : '') + '1/2' : '') + ' cucharita' + (n > 1 ? 's' : ''); }
+function pasosDe(total, max) { const p = []; let r = total; while (r > 0.0001) { const s = Math.min(max, r); p.push(s); r = Math.round((r - s) * 2) / 2; } return p; }
+function planCitrico(volTotal, absDPH) {
+  const g = absDPH * CONFIG.GRAMOS_CITRICO_POR_PH_62L * (volTotal / 62);
+  const cuch = Math.round(g / CONFIG.CUCHARITA_G_CITRICO * 2) / 2;
+  return { gramos: Math.round(g * 10) / 10, cucharitas: cuch, pasos: pasosDe(cuch, CONFIG.PASO_MAX_CITRICO), phPorCucharita: Math.round(CONFIG.CUCHARITA_G_CITRICO / (CONFIG.GRAMOS_CITRICO_POR_PH_62L * volTotal / 62) * 100) / 100 };
+}
+function planNutriente(volTotal, gramos) {
+  const cuch = Math.max(0, Math.round(gramos / CONFIG.CUCHARITA_G_NUTRIENTE));
+  return { gramos: Math.round(gramos * 10) / 10, cucharitas: cuch, pasos: pasosDe(cuch, CONFIG.PASO_MAX_NUTRIENTE), ecPorCucharita: Math.round(CONFIG.CUCHARITA_G_NUTRIENTE * CONFIG.EC_MS_POR_G_POR_L / volTotal * 1000) / 1000 };
+}
+function planPHUp(volTotal, dPH) {
+  const p = CONFIG.PHUP_POR_GOTA_REF * (CONFIG.PHUP_REF_V / volTotal), total = dPH / p;
+  return { gotasTotales: Math.max(1, Math.round(total)), gotasPaso1: Math.max(1, Math.min(CONFIG.PASO_MAX_PHUP_GOTAS, Math.round(0.6 * total))), phPorGota: Math.round(p * 1000) / 1000 };
+}
 function calcularEscenarioSoloPH(vols, volTotal, volTanque, ph, dPH) {
+  const vt = Math.round(volTotal * 10) / 10;
   if (dPH > 0) {
-    const p = calcularPotenciaPH(volTotal, 'ph_up', true); const mlT = dPH / p.porMl;
-    let nb = Math.max(1, Math.ceil(mlT / CONFIG.ML_MAX_PH_UP_POR_BOTELLA)), mb = mlT / nb;
-    const vf = vols.volumenObjetivoTanque - volTanque;
-    if (nb * CONFIG.VOLUMEN_BOTELLA > vf && vf > 0) { nb = Math.max(1, Math.floor(vf / CONFIG.VOLUMEN_BOTELLA)); mb = mlT / nb; }
-    return { tipo: 'solo_ph_up', numBotellas: nb, mlPHUpPorBotella: Math.round(mb*10)/10, mensaje: 'pH bajo ('+ph+'). Preparar '+nb+' botella(s) con '+Math.round(mb*10)/10+' mL pH Up.', dentroRango: false };
+    const u = planPHUp(volTotal, dPH);
+    return { tipo: 'solo_ph_up', gotasTotales: u.gotasTotales, gotasPaso1: u.gotasPaso1, phPorGota: u.phPorGota, dosis: { phup_gotas_total: u.gotasTotales, phup_gotas_paso1: u.gotasPaso1, vtot: vt },
+      mensaje: 'pH bajo ('+ph+'). Primer paso: '+u.gotasPaso1+' gota(s) de pH Up directo al retorno (total estimado ~'+u.gotasTotales+'). Recircula 10-15 min y mide antes de seguir.', dentroRango: false };
   }
-  const g = Math.abs(dPH) * CONFIG.GRAMOS_CITRICO_POR_PH_62L * (volTotal / 62);
-  const ml = g / CONFIG.CONCENTRACION_SOLUCION_CITRICO * 1000;
-  return { tipo: 'solo_ph_down', gramosCitrico: Math.round(g*10)/10, mlSolucionCitrico: Math.round(ml), mensaje: 'pH alto ('+ph+'). Agregar ~'+Math.round(ml)+' mL de soluci&oacute;n de &aacute;cido c&iacute;trico ('+CONFIG.CONCENTRACION_SOLUCION_CITRICO+' g/L) en al&iacute;cuotas de 30-40 mL con recirculaci&oacute;n de 10 min.', dentroRango: false };
+  const c = planCitrico(volTotal, Math.abs(dPH));
+  if (c.cucharitas === 0) return { tipo: 'ph_marginal', mensaje: 'pH alto ('+ph+') pero la diferencia pide menos de 1/2 cucharita de c&iacute;trico. Espera y vuelve a medir.', dentroRango: false };
+  return { tipo: 'solo_ph_down', gramosCitrico: c.gramos, cucharitasCitrico: c.cucharitas, pasos: c.pasos, phPorCucharita: c.phPorCucharita, dosis: { citrico_g: c.cucharitas * CONFIG.CUCHARITA_G_CITRICO, vtot: vt },
+    mensaje: 'pH alto ('+ph+'). Agregar '+fmtCuch(c.cucharitas)+' de &aacute;cido c&iacute;trico (&asymp; '+c.gramos+' g) en pasos de hasta '+CONFIG.PASO_MAX_CITRICO+'; recircula 10-15 min y mide entre pasos.', dentroRango: false };
 }
 function toparGramos(g) { const ec = g / CONFIG.VOLUMEN_BOTELLA; if (ec > CONFIG.EC_SEGURO_MAX) return { gramos: CONFIG.EC_SEGURO_MAX * CONFIG.VOLUMEN_BOTELLA, limitado: true }; return { gramos: g, limitado: false }; }
+function planNutrienteTanque(volTotal, volFalt, ec) {
+  const nb = volFalt >= CONFIG.VOLUMEN_BOTELLA ? Math.min(CONFIG.MAX_BOTELLAS_POR_SESION, Math.max(1, Math.ceil(volFalt / CONFIG.VOLUMEN_BOTELLA))) : 0;
+  const vag = nb * CONFIG.VOLUMEN_BOTELLA, vf = volTotal + vag;
+  const gT = (CONFIG.EC_OBJETIVO * vf - ec * volTotal) / CONFIG.EC_MS_POR_G_POR_L, gMax = (CONFIG.EC_SEGURO_MAX * vf - ec * volTotal) / CONFIG.EC_MS_POR_G_POR_L;
+  const pl = planNutriente(vf, Math.min(gT, gMax)), ecF = (ec * volTotal + pl.cucharitas * CONFIG.CUCHARITA_G_NUTRIENTE * CONFIG.EC_MS_POR_G_POR_L) / vf;
+  return { nb: nb, pl: pl, ecF: Math.round(ecF * 100) / 100, limitado: gT > gMax, vt: Math.round(volTotal * 10) / 10 };
+}
+function textoNutriente(x) { return fmtCuch(x.pl.cucharitas) + ' de nutriente (&asymp; '+x.pl.gramos+' g) en porciones de hasta '+CONFIG.PASO_MAX_NUTRIENTE + (x.nb ? ' y '+x.nb+' botella(s) de 2.5 L de agua limpia SIN aditivos' : ''); }
 function calcularEscenarioNutriente(vols, volTotal, volFalt, ph, ec) {
-  const nb = Math.min(CONFIG.MAX_BOTELLAS_POR_SESION, Math.max(1, Math.ceil(volFalt / CONFIG.VOLUMEN_BOTELLA)));
-  const vm = nb * CONFIG.VOLUMEN_BOTELLA;
-  const gT = CONFIG.EC_OBJETIVO * (volTotal + vm) - ec * volTotal;
-  const t = toparGramos(gT / nb);
-  const phN = 6.0 - CONFIG.CAIDA_PH_POR_NUTRIENTES;
-  const phM = Math.max(CONFIG.PH_SEGURO_MIN, Math.min(CONFIG.PH_SEGURO_MAX, (CONFIG.PH_OBJETIVO*(volTotal+vm) - ph*volTotal) / vm));
-  const ml = Math.max(0, Math.round((phM - phN) / calcularPotenciaPH(CONFIG.VOLUMEN_BOTELLA, 'ph_up', false).porMl * 10) / 10);
-  const phF = (ph*volTotal + phM*vm) / (volTotal + vm);
-  return { tipo: 'mezcla_madre', numBotellas: nb, mlPHUpPorBotella: ml, gramosNutrientePorBotella: Math.round(t.gramos*10)/10, ecMezclaLimitada: t.limitado, phMezclaMadre: Math.round(phM*10)/10, phInicialConNutrientes: phN, pH_final_esperado: Math.round(phF*10)/10, requiere_ajuste_fino: (phF < CONFIG.PH_OBJETIVO_MIN || phF > CONFIG.PH_OBJETIVO_MAX), mensaje: 'EC baja ('+ec+'). Preparar '+nb+' botella(s) con '+Math.round(t.gramos*10)/10+'g nutriente + '+ml+'mL pH Up.', dentroRango: false };
+  const x = planNutrienteTanque(volTotal, volFalt, ec);
+  return { tipo: 'nutriente', numBotellas: x.nb, nutriente: x.pl, ec_final_esperada: x.ecF, ecLimitada: x.limitado, dosis: { nutriente_g: x.pl.cucharitas * CONFIG.CUCHARITA_G_NUTRIENTE, agua_botellas: x.nb, vtot: x.vt },
+    mensaje: 'EC baja ('+ec+'). Agregar '+textoNutriente(x)+'. EC esperada ~'+x.ecF+'. El nutriente acidifica: mide el pH tras cada porci&oacute;n.', dentroRango: false };
 }
 function calcularEscenarioDual(vols, volTotal, volFalt, ph, ec) {
-  const nb = Math.min(CONFIG.MAX_BOTELLAS_POR_SESION, Math.max(1, Math.ceil(volFalt / CONFIG.VOLUMEN_BOTELLA)));
-  const vm = nb * CONFIG.VOLUMEN_BOTELLA;
-  const gT = CONFIG.EC_OBJETIVO * (volTotal + vm) - ec * volTotal;
-  const t = toparGramos(gT / nb);
-  const phM = Math.max(CONFIG.PH_SEGURO_MIN, Math.min(CONFIG.PH_SEGURO_MAX, (CONFIG.PH_OBJETIVO*(volTotal+vm) - ph*volTotal) / vm));
-  const phN = 6.0 - CONFIG.CAIDA_PH_POR_NUTRIENTES;
-  const ml = Math.max(0, Math.round((phM - phN) / calcularPotenciaPH(CONFIG.VOLUMEN_BOTELLA, 'ph_up', false).porMl * 10) / 10);
-  const phF = (ph*volTotal + phM*vm) / (volTotal + vm);
-  const ecF = (ec*volTotal + t.gramos*nb) / (volTotal + vm);
-  return { tipo: 'mezcla_madre_dual', numBotellas: nb, mlPHUpPorBotella: ml, gramosNutrientePorBotella: Math.round(t.gramos*10)/10, ecMezclaLimitada: t.limitado, phMezclaMadre: Math.round(phM*10)/10, phInicialConNutrientes: phN, pH_final_esperado: Math.round(phF*10)/10, ec_final_esperada: Math.round(ecF*100)/100, requiere_ajuste_fino: (phF < CONFIG.PH_OBJETIVO_MIN || phF > CONFIG.PH_OBJETIVO_MAX), mensaje: 'CORRECCI&Oacute;N DUAL (pH '+ph+' / EC '+ec+'): '+nb+' botella(s) con '+Math.round(t.gramos*10)/10+' g nutriente + '+ml+' mL pH Up c/u. Esperado: pH '+Math.round(phF*10)/10+' / EC '+Math.round(ecF*100)/100+((phF < CONFIG.PH_OBJETIVO_MIN || phF > CONFIG.PH_OBJETIVO_MAX) ? '. El pH quedar&aacute; fuera de rango: requiere ajuste fino con c&iacute;trico despu&eacute;s.' : '.'), dentroRango: false };
+  const x = planNutrienteTanque(volTotal, volFalt, ec);
+  return { tipo: 'nutriente_dual', numBotellas: x.nb, nutriente: x.pl, ec_final_esperada: x.ecF, ecLimitada: x.limitado, dosis: { nutriente_g: x.pl.cucharitas * CONFIG.CUCHARITA_G_NUTRIENTE, agua_botellas: x.nb, vtot: x.vt },
+    mensaje: 'CORRECCI&Oacute;N DUAL (pH '+ph+' / EC '+ec+'): primero '+textoNutriente(x)+'. EC esperada ~'+x.ecF+'. El nutriente tambi&eacute;n baja el pH: mide tras cada porci&oacute;n y usa c&iacute;trico solo si el pH sigue sobre 6.2.', dentroRango: false };
 }
 function calcularEscenarioDilucion(vols, volTotal, volFalt, ph, ec) {
   const vA = volTotal * (ec - CONFIG.EC_OBJETIVO) / CONFIG.EC_OBJETIVO;
@@ -1040,7 +1049,7 @@ function bloqueEnfriamiento(volTotal, temp) {
 function renderPlanAjuste(a) {
   const c = document.getElementById('revision-plan-contenido');
   const r = estado.revisionActual;
-  if (a.tipo === 'sin_ajuste' || a.tipo === 'esperar_consumo' || a.tipo === 'ec_marginal') {
+  if (a.tipo === 'sin_ajuste' || a.tipo === 'esperar_consumo' || a.tipo === 'ec_marginal' || a.tipo === 'ph_marginal') {
     c.innerHTML = (r.avisoAmb || '') + (r.tempAgua > CONFIG.TEMP_AGUA_MAX ? bloqueEnfriamiento(r.volumenTanque + r.vols.volTubos, r.tempAgua) : '') + '<div class="'+(a.tipo === 'sin_ajuste' ? 'success-box' : 'info-box')+'">'+a.mensaje+'</div>';
     document.getElementById('btn-confirmar-ajustes').style.display = 'none';
     document.getElementById('btn-sin-ajustes').style.display = 'block'; return;
@@ -1053,16 +1062,15 @@ function renderPlanAjuste(a) {
   if (a.tipo === 'solo_enfriamiento') {
     h += '<div class="bottle-instruction"><h4>Protocolo de enfriamiento</h4><ol style="margin-left:20px"><li>Introduce '+a.botellas.botellas+' botella(s) congelada(s) de 2L</li><li>Aisla y sombrea el tanque</li><li>Re-mide temperatura en 2h</li><li>Repite rotacion hasta &le;24&deg;C</li></ol></div>';
   } else if (a.tipo === 'ajuste_fino_tanque') {
-    h += '<div class="bottle-instruction"><h4>Ajuste fino directo</h4><ul>'+(a.mlPHUp ? '<li>pH Up: '+a.mlPHUp+' mL</li>' : '')+(a.mlSolucionCitrico ? '<li>&Aacute;cido c&iacute;trico ('+CONFIG.CONCENTRACION_SOLUCION_CITRICO+' g/L): '+a.mlSolucionCitrico+' mL en al&iacute;cuotas de 20-30 mL</li>' : '')+'</ul><ol style="margin-left:20px"><li>Agregar cerca del retorno</li><li>Recircular 10-15 min</li><li>Medir</li></ol></div>';
+    h += '<div class="bottle-instruction"><h4>Ajuste fino directo</h4><ul>'+(a.gotasPHUp ? '<li>pH Up: <strong>'+a.gotasPHUp+' gota(s)</strong> (~'+a.phPorGota+' pH por gota)</li>' : '')+(a.cucharitasCitrico ? '<li>&Aacute;cido c&iacute;trico: <strong>'+fmtCuch(a.cucharitasCitrico)+'</strong> (~'+a.phPorCucharita+' pH por cucharita)</li>' : '')+'</ul><ol style="margin-left:20px">'+(a.cucharitasCitrico ? '<li>Pre-disuelve en un vaso con agua del tanque</li>' : '')+'<li>Agregar en el retorno</li><li>Recircular 10-15 min</li><li>Medir</li></ol></div>';
     if (phAlto) h += '<div class="info-box">Usa &aacute;cido c&iacute;trico, no pH Down fosf&oacute;rico (evita algas).</div>';
   } else if (a.tipo === 'solo_ph_up') {
-    h += '<div class="bottle-instruction"><h4>pH Up ('+a.numBotellas+' botellas 2.5L)</h4><ul><li>2.5 L agua</li><li>pH Up: '+a.mlPHUpPorBotella+' mL</li></ul><ol style="margin-left:20px"><li>Verter una por una</li><li>15 min recirculaci&oacute;n entre cada una</li><li>Medir al final</li></ol></div>';
+    h += '<div class="bottle-instruction"><h4>pH Up en gotas (directo al retorno)</h4><ul><li>Primer paso: <strong>'+a.gotasPaso1+' gota(s)</strong></li><li>Total estimado: ~'+a.gotasTotales+' gotas (~'+a.phPorGota+' pH por gota)</li></ul><ol style="margin-left:20px"><li>Agregar las gotas del primer paso en el retorno</li><li>Recircular 10-15 min</li><li>Medir y repetir hasta pH 5.8-6.2</li></ol></div><div class="info-box">Potencia medida en el tanque; nunca agregues todo de una vez.</div>';
   } else if (a.tipo === 'solo_ph_down') {
-    h += '<div class="bottle-instruction"><h4>Bajar pH con &aacute;cido c&iacute;trico</h4><ul><li>Polvo equiv.: '+a.gramosCitrico+' g</li><li>Soluci&oacute;n '+CONFIG.CONCENTRACION_SOLUCION_CITRICO+' g/L: '+a.mlSolucionCitrico+' mL</li><li>Al&iacute;cuotas de 30-40 mL</li><li>10 min recirculaci&oacute;n entre al&iacute;cuotas</li></ul></div>';
-  } else if (a.tipo === 'mezcla_madre' || a.tipo === 'mezcla_madre_dual') {
-    h += '<div class="bottle-instruction"><h4>'+(a.tipo === 'mezcla_madre_dual' ? 'Correcci&oacute;n dual' : 'Mezcla madre')+' ('+a.numBotellas+' botellas 2.5L)</h4><ul><li>2.5 L agua</li><li>Nutriente: '+a.gramosNutrientePorBotella+' g</li><li>pH caer&aacute; a ~'+a.phInicialConNutrientes.toFixed(1)+'</li><li>pH Up: '+a.mlPHUpPorBotella+' mL (a pH '+a.phMezclaMadre+')</li></ul><p><strong>Esperado:</strong> pH '+a.pH_final_esperado+(a.ec_final_esperada ? ' &middot; EC '+a.ec_final_esperada : '')+'</p><ol style="margin-left:20px"><li>Verter una por una</li><li>15 min recirculaci&oacute;n</li><li>Medir</li></ol></div>';
-    if (a.ecMezclaLimitada) h += '<div class="warning-box">Gramos limitados a EC 2.5 por seguridad. Requerira segunda sesion.</div>';
-    if (a.requiere_ajuste_fino) h += '<div class="warning-box">pH final ~'+a.pH_final_esperado+': requerira ajuste fino posterior con c&iacute;trico.</div>';
+    h += '<div class="bottle-instruction"><h4>Bajar pH con &aacute;cido c&iacute;trico</h4><ul><li><strong>'+fmtCuch(a.cucharitasCitrico)+'</strong> (&asymp; '+a.gramosCitrico+' g)</li><li>Pasos: '+a.pasos.join(' + ')+' (~'+a.phPorCucharita+' pH por cucharita)</li></ul><ol style="margin-left:20px"><li>Pre-disuelve cada paso en un vaso con agua del tanque</li><li>Verter en el retorno</li><li>Recircular 10-15 min y medir entre pasos</li></ol></div>';
+  } else if (a.tipo === 'nutriente' || a.tipo === 'nutriente_dual') {
+    h += '<div class="bottle-instruction"><h4>'+(a.tipo === 'nutriente_dual' ? 'Correcci&oacute;n dual' : 'Nutriente')+'</h4><ul><li><strong>'+fmtCuch(a.nutriente.cucharitas)+'</strong> de nutriente (&asymp; '+a.nutriente.gramos+' g), porciones: '+a.nutriente.pasos.join(' + ')+' (~+'+a.nutriente.ecPorCucharita+' mS/cm por cucharita)</li>'+(a.numBotellas ? '<li>'+a.numBotellas+' botella(s) de 2.5 L de agua limpia SIN aditivos</li>' : '')+'<li>EC esperada ~'+a.ec_final_esperada+'</li></ul><ol style="margin-left:20px"><li>Pre-disuelve cada porci&oacute;n en un vaso con agua del tanque</li><li>Verter en el retorno</li><li>Recircular 10-15 min</li><li>Medir pH y EC antes de la siguiente porci&oacute;n</li></ol></div>';
+    if (a.ecLimitada) h += '<div class="warning-box">Cantidad limitada a EC '+CONFIG.EC_SEGURO_MAX+' por seguridad. Requerir&aacute; segunda sesi&oacute;n.</div>';
   } else if (a.tipo === 'dilucion') {
     h += '<div class="bottle-instruction"><h4>Diluci&oacute;n ('+a.numBotellas+' botellas)</h4><ul><li>2.5 L agua limpia SIN aditivos</li></ul><ol style="margin-left:20px"><li>Verter una por una</li><li>15 min recirculaci&oacute;n</li><li>Medir; si el pH queda alto, ajusta despu&eacute;s con c&iacute;trico en al&iacute;cuotas</li></ol></div>';
     h += '<div class="info-box">pH estimado tras diluir: '+a.phResultante+'. No agregues pH Down fosf&oacute;rico.</div>';
@@ -1079,7 +1087,7 @@ function renderPlanAjuste(a) {
 }
 function confirmarAjustes() {
   estado.revisionActual.iteraciones++;
-  estado.revisionActual.evento.acciones.push({ timestamp: timestampActual(), tipo: estado.revisionActual.ajuste.tipo, descripcion: estado.revisionActual.ajuste.mensaje });
+  estado.revisionActual.evento.acciones.push({ timestamp: timestampActual(), tipo: estado.revisionActual.ajuste.tipo, descripcion: estado.revisionActual.ajuste.mensaje, dosis: estado.revisionActual.ajuste.dosis || null });
   guardarEventoRevision();
   mostrarPantalla('screen-revision-4'); prepararRevisionPaso4();
 }
@@ -1093,16 +1101,17 @@ function marcarCompletadoSinAjustes() {
 function prepararRevisionPaso4() {
   document.getElementById('revision-info-post').innerHTML = '<strong>Caseta '+estado.revisionActual.caseta.numero+'</strong> &middot; Iteraci&oacute;n '+estado.revisionActual.iteraciones+' &middot; Vol previo '+estado.revisionActual.volumenTanque+'L';
   document.getElementById('rev-volumen-post').value = estado.revisionActual.volumenTanque;
-  ['rev-temp-agua-post','rev-temp-amb-actual-post','rev-temp-amb-max-post','rev-temp-amb-min-post','rev-ph-post','rev-ec-post'].forEach(i => document.getElementById(i).value = '');
+  ['rev-temp-agua-post','rev-ph-post','rev-ec-post'].forEach(i => document.getElementById(i).value = '');
   document.getElementById('error-rev4').classList.remove('visible');
-  document.getElementById('advertencias-volumen-post').innerHTML = ''; actualizarHoraBox('rev-hora-box-post');
+  document.getElementById('advertencias-volumen-post').innerHTML = '';
 }
 function revisionPaso4() {
   const v = parseFloat(document.getElementById('rev-volumen-post').value), t = parseFloat(document.getElementById('rev-temp-agua-post').value);
-  const ta = parseFloat(document.getElementById('rev-temp-amb-actual-post').value), tm = parseFloat(document.getElementById('rev-temp-amb-max-post').value), tn = parseFloat(document.getElementById('rev-temp-amb-min-post').value);
+  const ev0 = estado.revisionActual.evento, prev = ev0.mediciones[ev0.mediciones.length - 1] || ev0.medicion_inicial || {};
+  const ta = prev.temp_ambiental_actual, tm = prev.temp_ambiental_max, tn = prev.temp_ambiental_min; /* el ambiente no cambia en 10 min: se hereda de la medicion previa */
   const p = parseFloat(document.getElementById('rev-ph-post').value); let ec = parseFloat(document.getElementById('rev-ec-post').value);
   const e = document.getElementById('error-rev4'), ad = document.getElementById('advertencias-volumen-post');
-  if ([v, t, ta, tm, tn, p, ec].some(isNaN)) { e.textContent = 'Completa todos.'; e.classList.add('visible'); return; }
+  if ([v, t, p, ec].some(isNaN)) { e.textContent = 'Completa todos.'; e.classList.add('visible'); return; }
   const vo = estado.revisionActual.vols; let a = [];
   if (v < vo.minBomba) a.push('<div class="warning-box">Vol '+v+'L bajo m&iacute;nimo.</div>');
   if (v > vo.maxAbsolutoTanque) a.push('<div class="warning-box">Vol sobre maximo.</div>');
@@ -1111,7 +1120,7 @@ function revisionPaso4() {
   const er = validarRangos(p, ec); if (er.length) { e.textContent = er.join(' '); e.classList.add('visible'); return; }
   e.classList.remove('visible');
   estado.revisionActual.volumenTanque = v;
-  estado.revisionActual.evento.mediciones.push({ timestamp: timestampActual(), ph: p, ec: ec, temp_agua: t, temp_ambiental_actual: ta, temp_ambiental_max: tm, temp_ambiental_min: tn, hora: horaActual(), min_completo: ventanaTermica().minCompleta, max_completo: ventanaTermica().maxCompleta, min_estado: ventanaTermica().minEstado, max_estado: ventanaTermica().maxEstado, volumen: v });
+  estado.revisionActual.evento.mediciones.push({ timestamp: timestampActual(), ph: p, ec: ec, temp_agua: t, temp_ambiental_actual: ta, temp_ambiental_max: tm, temp_ambiental_min: tn, amb_heredado: true, hora: horaActual(), volumen: v });
   const tO = t <= CONFIG.TEMP_AGUA_MAX, aO = ta >= CONFIG.TEMP_AMBIENTAL_MIN && ta <= CONFIG.TEMP_AMBIENTAL_MAX;
   const pO = p >= CONFIG.PH_OBJETIVO_MIN && p <= CONFIG.PH_OBJETIVO_MAX, eO = ec >= CONFIG.EC_OBJETIVO_MIN && ec <= CONFIG.EC_OBJETIVO_MAX;
   const ok = tO && aO && pO && eO;
@@ -1152,7 +1161,7 @@ function cerrarRevision() {
 }
 
 function exportarBackupJSON() {
-  const b = { version: '10.8', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
+  const b = { version: '10.9', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
   const bl = new Blob([JSON.stringify(b, null, 2)], {type: 'application/json'});
   const u = URL.createObjectURL(bl); const l = document.createElement('a');
   l.href = u; l.download = 'backup_hidroponico_'+hoy()+'.json'; l.click(); URL.revokeObjectURL(u);
