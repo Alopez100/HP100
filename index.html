@@ -2,18 +2,18 @@
 GUARDADO SEGURO (archivo 100% ASCII, a prueba de corrupcion):
 1) Copia TODO este archivo.
 2) Pegalo en un editor de texto plano (Notepad++, Acode, QuickEdit, VS Code).
-3) Guardalo como: hydro_control_v107.html
+3) Guardalo como: hydro_control_v108.html
    - Codificacion: cualquiera (UTF-8 o ANSI). No hay bytes no-ASCII que corromper.
 4) Si lo transfieres por WhatsApp/Drive/correo: envialo como ARCHIVO/DOCUMENTO, nunca como texto pegado.
 5) Abrelo en el navegador: acentos y simbolos se renderizan via entidades HTML y escapes \u de JS.
-Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.7).
+Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.8).
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Control Hidrop&oacute;nico v10.7 - ASCII Seguro</title>
+<title>Control Hidrop&oacute;nico v10.8 - ASCII Seguro</title>
 <style>
 :root { --vc:#e8f5e9; --vf:#2e7d32; --vo:#1b5e20; --ac:#e3f2fd; --af:#1565c0; --gc:#f5f5f5; --gm:#e0e0e0; --go:#616161; --ra:#c62828; --rc:#ffebee; --aa:#f9a825; --ac2:#fff8e1; --na:#ef6c00; --nc:#fff3e0; --bl:#fff; --ne:#212121; --mo:#6a1b9a; --mc:#f3e5f5; }
 * { box-sizing:border-box; margin:0; padding:0; }
@@ -79,7 +79,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
 </head>
 <body>
 <div class="container">
-<header><h1>CONTROL HIDROP&Oacute;NICO v10.7</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
+<header><h1>CONTROL HIDROP&Oacute;NICO v10.8</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
 
 <div id="screen-dashboard" class="screen active-screen">
   <div class="screen-header">Panel Principal<span id="nube-pill" class="nube-pill nube-off" style="display:none" onclick="mostrarPantalla('screen-mas')">Fuera de l&iacute;nea</span></div>
@@ -158,8 +158,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
     <div class="info-box" id="rr-hora-box"></div>
     <div class="form-group" style="margin:0"><label>Actual (&deg;C):</label><input type="number" id="rr-temp-amb" step="0.1" placeholder="Ej: 31.0"></div>
     <div class="form-group" style="margin:0"><label>M&aacute;xima del d&iacute;a (&deg;C):</label><input type="number" id="rr-temp-amb-max" step="0.1" placeholder="Ej: 38.3"></div>
-    <div class="form-group" style="margin:0"><label>M&iacute;nima del d&iacute;a (&deg;C):</label><input type="number" id="rr-temp-amb-min" step="0.1" placeholder="Ej: 17.4"></div>
-    <div class="form-group" style="margin:0"><label>Humedad relativa (%):</label><input type="number" id="rr-hr" step="1" placeholder="Ej: 45"></div></div>
+    <div class="form-group" style="margin:0"><label>M&iacute;nima del d&iacute;a (&deg;C):</label><input type="number" id="rr-temp-amb-min" step="0.1" placeholder="Ej: 17.4"></div></div>
   <div class="card card-warning"><h3>2. Agua (medidor de pluma)</h3>
     <div class="form-group" style="margin:0"><label>Temperatura agua (&deg;C):</label><input type="number" id="rr-temp-agua" step="0.1" placeholder="Ej: 24"></div>
     <div class="form-group" style="margin:0"><label>pH:</label><input type="number" id="rr-ph" step="0.01" placeholder="Ej: 6.57"></div>
@@ -273,7 +272,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
   </div>
 </div>
 
-<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.7 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
+<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.8 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
 </div>
 
 <script>
@@ -333,11 +332,12 @@ function guardarDatos(k, d) { localStorage.setItem(k, JSON.stringify(d)); if (!S
 /* ===== v10.6: sincronizacion en la nube (Supabase, REST) con cola sin conexion =====
    Solo SUBE y ACTUALIZA registros: nunca borra datos locales ni remotos.
    Sincroniza cultivos, casetas y eventos (las alertas se recalculan y no se sincronizan). */
-const NUBE = { url: '', key: '' }; /* PEGA AQUI: URL del proyecto Supabase y llave publicable (anon/publishable) */
+const NUBE = { url: '', key: '', auto: true }; /* PEGA AQUI: URL del proyecto Supabase y llave publicable (anon/publishable) */
 const SYNC_COLS = { hydro_cultivos: 'cultivos', hydro_casetas: 'casetas', hydro_eventos: 'eventos' };
 const SYNC_K = { sesion: 'hydro_sync_sesion', cola: 'hydro_sync_cola', meta: 'hydro_sync_meta', cursor: 'hydro_sync_cursor', estado: 'hydro_sync_estado', respaldo: 'hydro_backup_pre_sync' };
 let SYNC_APLICANDO = false, SYNC_OCUPADO = false, SYNC_TIMER = null, SYNC_REINTENTO = null;
 const SYNC_REINTENTO_MS = 60000;
+let SYNC_PROG = false;
 function syncLeer(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch (e) { return def; } }
 function syncGuardar(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 function syncCanon(o) { if (Array.isArray(o)) return '[' + o.map(syncCanon).join(',') + ']'; if (o && typeof o === 'object') return '{' + Object.keys(o).sort().map(k => JSON.stringify(k) + ':' + syncCanon(o[k])).join(',') + '}'; return JSON.stringify(o === undefined ? null : o); }
@@ -350,7 +350,7 @@ function syncDetectarCambios(k, arr) {
     if (meta[mk] !== h) { meta[mk] = h; cola = cola.filter(q => !(q.c === col && q.id === id)); cola.push({ c: col, id: id, data: r }); cambio = true; } });
   if (cambio) { syncGuardar(SYNC_K.meta, meta); syncGuardar(SYNC_K.cola, cola); syncProgramar(); }
 }
-function syncProgramar() { if (!NUBE.url) return; clearTimeout(SYNC_TIMER); SYNC_TIMER = setTimeout(() => { syncAhora(); }, 1500); syncPintar(); }
+function syncProgramar() { if (!NUBE.url || !NUBE.auto) return; if (!SYNC_PROG) { SYNC_PROG = true; Promise.resolve().then(() => { SYNC_PROG = false; syncAhora(); }); } syncPintar(); }
 function syncEstadoSet(o) { syncGuardar(SYNC_K.estado, Object.assign(syncLeer(SYNC_K.estado, {}), o)); syncPintar(); }
 function syncPintar() {
   const el = document.getElementById('nube-estado'); if (!el) return;
@@ -403,14 +403,14 @@ async function syncAhora(manual) {
   clearTimeout(SYNC_REINTENTO);
   const ses = syncLeer(SYNC_K.sesion, null); if (!ses) { syncPintar(); return { ok: false, motivo: 'sin_sesion' }; }
   if (typeof navigator !== 'undefined' && navigator.onLine === false) { syncEstadoSet({ error: 'sin red' }); syncReintentar(); return { ok: false, motivo: 'offline' }; }
-  SYNC_OCUPADO = true;
+  SYNC_OCUPADO = true; let okFin = false;
   try {
     // 1) SUBIR la cola (solo se vacia lo que el servidor confirmo)
     let cola = syncLeer(SYNC_K.cola, []);
     while (cola.length) {
       const lote = cola.slice(0, 200);
-      const r = await syncHttp('/rest/v1/hydro_docs?on_conflict=owner,coleccion,id', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
-        body: JSON.stringify(lote.map(q => ({ owner: ses.uid, coleccion: q.c, id: q.id, data: q.data }))) }, true);
+      const cuerpo = JSON.stringify(lote.map(q => ({ owner: ses.uid, coleccion: q.c, id: q.id, data: q.data })));
+      const r = await syncHttp('/rest/v1/hydro_docs?on_conflict=owner,coleccion,id', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: cuerpo, keepalive: cuerpo.length < 60000 }, true);
       if (!r.ok) throw new Error('subida HTTP ' + r.status);
       const sent = {}; lote.forEach(q => { sent[q.c + '|' + q.id] = syncHash(q.data); });
       cola = syncLeer(SYNC_K.cola, []).filter(q => sent[q.c + '|' + q.id] !== syncHash(q.data));
@@ -430,9 +430,9 @@ async function syncAhora(manual) {
     syncGuardar(SYNC_K.cursor, (Date.now() - Date.parse(maxVisto) < 15000) ? new Date(Date.parse(maxVisto) - 5000).toISOString() : maxVisto);
     syncEstadoSet({ error: null, ultimoOk: timestampActual() });
     if (aplicados && typeof actualizarDashboard === 'function') actualizarDashboard();
-    return { ok: true, aplicados: aplicados };
+    okFin = true; return { ok: true, aplicados: aplicados };
   } catch (e) { syncEstadoSet({ error: String(e.message || e).slice(0, 60) }); syncReintentar(); return { ok: false, motivo: 'error', error: String(e.message || e) }; }
-  finally { SYNC_OCUPADO = false; }
+  finally { SYNC_OCUPADO = false; if (okFin && syncLeer(SYNC_K.cola, []).length) Promise.resolve().then(() => syncAhora()); }
 }
 function syncAplicar(rows) {
   const pend = {}; syncLeer(SYNC_K.cola, []).forEach(q => { pend[q.c + '|' + q.id] = 1; });
@@ -459,7 +459,7 @@ function syncInicializar() {
   syncCargarCfg();
   Object.keys(SYNC_COLS).forEach(k => { const d = cargarDatos(k); if (d) syncDetectarCambios(k, d); });
   window.addEventListener('online', () => syncAhora());
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncAhora(); });
+  document.addEventListener('visibilitychange', () => { syncAhora(); });
   window.addEventListener('offline', () => { syncEstadoSet({ error: 'sin red' }); syncReintentar(); });
   syncPintar(); syncAhora();
 }
@@ -467,11 +467,11 @@ function syncInicializar() {
 function agregarRegistro(k, r) { const d = cargarDatos(k) || []; d.push(r); guardarDatos(k, d); return d; }
 function actualizarRegistro(k, c, v, n) { const d = cargarDatos(k) || []; const i = d.findIndex(r => r[c] === v); if (i !== -1) { d[i] = Object.assign({}, d[i], n); guardarDatos(k, d); return d[i]; } return null; }
 function migrarDatosAntiguos() {
-  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5','v10.6'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
+  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5','v10.6','v10.7'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
     const old = localStorage.getItem('hydro_'+k+'_'+v), cur = localStorage.getItem('hydro_'+k);
     if (old && !cur) localStorage.setItem('hydro_'+k, old);
   });});
-  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.7');
+  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.8');
 }
 function mostrarPantalla(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
@@ -947,7 +947,7 @@ function abrirRegistroRapido() {
   const c = estado.casetaActual; if (!c) return;
   const v = calcularVolumenesSistema(c);
   document.getElementById('rr-info-caseta').innerHTML = '<strong>Caseta '+c.numero+'</strong> &middot; '+v.numTubosActivos+' tubos &middot; '+v.volumenPorTubo.toFixed(1)+' L/tubo';
-  ['rr-volumen','rr-temp-agua','rr-ph','rr-ec','rr-temp-amb','rr-temp-amb-max','rr-temp-amb-min','rr-hr'].forEach(i => document.getElementById(i).value = '');
+  ['rr-volumen','rr-temp-agua','rr-ph','rr-ec','rr-temp-amb','rr-temp-amb-max','rr-temp-amb-min'].forEach(i => document.getElementById(i).value = '');
   document.getElementById('error-rr').classList.remove('visible');
   document.getElementById('rr-advertencias').innerHTML = ''; actualizarHoraBox('rr-hora-box');
   mostrarPantalla('screen-registro-rapido');
@@ -957,9 +957,8 @@ function guardarRegistroRapido() {
   const vol = parseFloat(document.getElementById('rr-volumen').value), t = parseFloat(document.getElementById('rr-temp-agua').value);
   const p = parseFloat(document.getElementById('rr-ph').value); let ec = parseFloat(document.getElementById('rr-ec').value);
   const ta = parseFloat(document.getElementById('rr-temp-amb').value), tm = parseFloat(document.getElementById('rr-temp-amb-max').value), tn = parseFloat(document.getElementById('rr-temp-amb-min').value);
-  const hr = parseFloat(document.getElementById('rr-hr').value);
   const e = document.getElementById('error-rr');
-  if ([vol, t, p, ec, ta, tm, tn].some(isNaN)) { e.textContent = 'Completa todos (HR opcional).'; e.classList.add('visible'); return; }
+  if ([vol, t, p, ec, ta, tm, tn].some(isNaN)) { e.textContent = 'Completa todos.'; e.classList.add('visible'); return; }
   const n = normalizarEC(ec); if (n.convertida && confirm('EC='+n.original+' parece uS/cm. Convertir a '+n.ec+' mS/cm?')) ec = n.ec;
   const er = validarRangos(p, ec); if (er.length) { e.textContent = er.join(' '); e.classList.add('visible'); return; }
   let a = [];
@@ -973,7 +972,7 @@ function guardarRegistroRapido() {
   avisosAmbientePorCultivo(c.numero, ta).forEach(x => a.push(x));
   document.getElementById('rr-advertencias').innerHTML = a.join('');
   const ok = p >= CONFIG.PH_OBJETIVO_MIN && p <= CONFIG.PH_OBJETIVO_MAX && ec >= CONFIG.EC_OBJETIVO_MIN && ec <= CONFIG.EC_OBJETIVO_MAX && t <= CONFIG.TEMP_AGUA_MAX;
-  agregarRegistro(CONFIG.STORAGE_KEYS.eventos, { evento_id: generarIdEvento(c.numero), caseta_id: c.numero, fecha_inicio: timestampActual(), fecha_fin: timestampActual(), tipo: 'medicion_rutinaria', medicion_inicial: null, medicion_final: null, mediciones: [{ timestamp: timestampActual(), ph: p, ec: ec, temp_agua: t, temp_ambiental_actual: ta, temp_ambiental_max: tm, temp_ambiental_min: tn, hora: horaActual(), min_completo: ventanaTermica().minCompleta, max_completo: ventanaTermica().maxCompleta, min_estado: ventanaTermica().minEstado, max_estado: ventanaTermica().maxEstado, hr: isNaN(hr) ? null : hr, volumen: vol }], acciones: [], dentro_rango: ok, ultimo_ph: p, ultimo_ec: ec, ultimo_temp_agua: t, ultimo_temp_ambiental: ta, ultimo_temp_ambiental_max: tm, ultimo_temp_ambiental_min: tn, ultimo_volumen: vol });
+  agregarRegistro(CONFIG.STORAGE_KEYS.eventos, { evento_id: generarIdEvento(c.numero), caseta_id: c.numero, fecha_inicio: timestampActual(), fecha_fin: timestampActual(), tipo: 'medicion_rutinaria', medicion_inicial: null, medicion_final: null, mediciones: [{ timestamp: timestampActual(), ph: p, ec: ec, temp_agua: t, temp_ambiental_actual: ta, temp_ambiental_max: tm, temp_ambiental_min: tn, hora: horaActual(), min_completo: ventanaTermica().minCompleta, max_completo: ventanaTermica().maxCompleta, min_estado: ventanaTermica().minEstado, max_estado: ventanaTermica().maxEstado, volumen: vol }], acciones: [], dentro_rango: ok, ultimo_ph: p, ultimo_ec: ec, ultimo_temp_agua: t, ultimo_temp_ambiental: ta, ultimo_temp_ambiental_max: tm, ultimo_temp_ambiental_min: tn, ultimo_volumen: vol });
   alert('Medici\u00f3n guardada en historial de Caseta ' + c.numero);
   verDetalleCaseta(c.numero);
 }
@@ -1029,7 +1028,7 @@ function revisionPaso2() {
   Object.assign(estado.revisionActual, { tempAgua: t, tempAmbActual: ta, tempAmbMax: tm, tempAmbMin: tn, ph: p, ec: ec });
   e.classList.remove('visible');
   const m = { timestamp: timestampActual(), ph: p, ec: ec, temp_agua: t, temp_ambiental_actual: ta, temp_ambiental_max: tm, temp_ambiental_min: tn, hora: horaActual(), min_completo: ventanaTermica().minCompleta, max_completo: ventanaTermica().maxCompleta, min_estado: ventanaTermica().minEstado, max_estado: ventanaTermica().maxEstado, volumen: estado.revisionActual.volumenTanque };
-  estado.revisionActual.evento.medicion_inicial = m; estado.revisionActual.evento.mediciones.push(m);
+  estado.revisionActual.evento.medicion_inicial = m; estado.revisionActual.evento.mediciones.push(m); guardarEventoRevision();
   estado.revisionActual.avisoAmb = avisosAmbientePorCultivo(estado.revisionActual.caseta.numero, ta).join('');
   estado.revisionActual.ajuste = calcularAjusteTanque(estado.revisionActual.volumenTanque, estado.revisionActual.vols.numTubosActivos, p, ec, t, estado.revisionActual.caseta);
   renderPlanAjuste(estado.revisionActual.ajuste); mostrarPantalla('screen-revision-3');
@@ -1081,13 +1080,14 @@ function renderPlanAjuste(a) {
 function confirmarAjustes() {
   estado.revisionActual.iteraciones++;
   estado.revisionActual.evento.acciones.push({ timestamp: timestampActual(), tipo: estado.revisionActual.ajuste.tipo, descripcion: estado.revisionActual.ajuste.mensaje });
+  guardarEventoRevision();
   mostrarPantalla('screen-revision-4'); prepararRevisionPaso4();
 }
 function marcarCompletadoSinAjustes() {
   const e = estado.revisionActual.evento, r = estado.revisionActual;
   e.medicion_final = e.mediciones.length ? e.mediciones[e.mediciones.length - 1] : e.medicion_inicial; e.fecha_fin = timestampActual(); e.dentro_rango = (r.tempAgua <= CONFIG.TEMP_AGUA_MAX);
   Object.assign(e, { ultimo_ph: r.ph, ultimo_ec: r.ec, ultimo_temp_agua: r.tempAgua, ultimo_temp_ambiental: r.tempAmbActual, ultimo_temp_ambiental_max: r.tempAmbMax, ultimo_temp_ambiental_min: r.tempAmbMin, ultimo_volumen: r.volumenTanque });
-  agregarRegistro(CONFIG.STORAGE_KEYS.eventos, e);
+  e.en_curso = false; guardarEventoRevision();
   verDetalleCaseta(estado.casetaActual.numero);
 }
 function prepararRevisionPaso4() {
@@ -1117,6 +1117,7 @@ function revisionPaso4() {
   const ok = tO && aO && pO && eO;
   const sg = ok ? null : calcularAjusteTanque(v, vo.numTubosActivos, p, ec, t, estado.revisionActual.caseta);
   Object.assign(estado.revisionActual, { tempAgua: t, tempAmbActual: ta, tempAmbMax: tm, tempAmbMin: tn, ph: p, ec: ec, siguienteAjuste: sg, avisoAmb: avisosAmbientePorCultivo(estado.revisionActual.caseta.numero, ta).join('') });
+  guardarEventoRevision();
   renderResultadoFinal(t, ta, p, ec, ok, sg); mostrarPantalla('screen-revision-5');
 }
 function renderResultadoFinal(t, ta, p, ec, ok, sg) {
@@ -1126,6 +1127,15 @@ function renderResultadoFinal(t, ta, p, ec, ok, sg) {
   if (ok && t <= CONFIG.TEMP_AGUA_MAX) { h += '<div class="success-box">Caseta en rango.</div>'; document.getElementById('btn-cerrar-revision').style.display = 'block'; document.getElementById('btn-seguir-ajustando').style.display = 'none'; }
   else { h += '<div class="warning-box">A&uacute;n fuera de rango'+(t > CONFIG.TEMP_AGUA_MAX ? ' (temperatura critica)' : '')+'.</div>'+(sg ? '<div class="info-box"><strong>Siguiente:</strong> '+sg.mensaje+'</div>' : ''); if (estado.revisionActual.iteraciones >= 3) h += '<div class="danger-box">3 iteraciones sin rango: revisa medidor.</div>'; document.getElementById('btn-cerrar-revision').style.display = 'none'; document.getElementById('btn-seguir-ajustando').style.display = 'block'; }
   c.innerHTML = h;
+}
+function guardarEventoRevision() {
+  const r = estado.revisionActual; if (!r) return; const e = r.evento;
+  if (e.en_curso === undefined) e.en_curso = true;
+  if (r.ph !== undefined) Object.assign(e, { ultimo_ph: r.ph, ultimo_ec: r.ec, ultimo_temp_agua: r.tempAgua, ultimo_temp_ambiental: r.tempAmbActual, ultimo_temp_ambiental_max: r.tempAmbMax, ultimo_temp_ambiental_min: r.tempAmbMin, ultimo_volumen: r.volumenTanque });
+  e.fecha_fin = timestampActual();
+  const d = cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], i = d.findIndex(x => x.evento_id === e.evento_id), copia = JSON.parse(JSON.stringify(e));
+  if (i === -1) d.push(copia); else d[i] = copia;
+  guardarDatos(CONFIG.STORAGE_KEYS.eventos, d);
 }
 function seguirAjustando() {
   const r = estado.revisionActual; if (!r) return;
@@ -1137,12 +1147,12 @@ function cerrarRevision() {
   e.medicion_final = { timestamp: timestampActual(), ph: r.ph, ec: r.ec, temp_agua: r.tempAgua, temp_ambiental_actual: r.tempAmbActual, temp_ambiental_max: r.tempAmbMax, temp_ambiental_min: r.tempAmbMin, volumen: r.volumenTanque };
   e.fecha_fin = timestampActual(); e.dentro_rango = true;
   Object.assign(e, { ultimo_ph: r.ph, ultimo_ec: r.ec, ultimo_temp_agua: r.tempAgua, ultimo_temp_ambiental: r.tempAmbActual, ultimo_temp_ambiental_max: r.tempAmbMax, ultimo_temp_ambiental_min: r.tempAmbMin, ultimo_volumen: r.volumenTanque });
-  agregarRegistro(CONFIG.STORAGE_KEYS.eventos, e);
+  e.en_curso = false; guardarEventoRevision();
   verDetalleCaseta(estado.casetaActual.numero);
 }
 
 function exportarBackupJSON() {
-  const b = { version: '10.7', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
+  const b = { version: '10.8', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
   const bl = new Blob([JSON.stringify(b, null, 2)], {type: 'application/json'});
   const u = URL.createObjectURL(bl); const l = document.createElement('a');
   l.href = u; l.download = 'backup_hidroponico_'+hoy()+'.json'; l.click(); URL.revokeObjectURL(u);
