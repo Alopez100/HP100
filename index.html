@@ -2,18 +2,18 @@
 GUARDADO SEGURO (archivo 100% ASCII, a prueba de corrupcion):
 1) Copia TODO este archivo.
 2) Pegalo en un editor de texto plano (Notepad++, Acode, QuickEdit, VS Code).
-3) Guardalo como: hydro_control_v1013.html
+3) Guardalo como: hydro_control_v1014.html
    - Codificacion: cualquiera (UTF-8 o ANSI). No hay bytes no-ASCII que corromper.
 4) Si lo transfieres por WhatsApp/Drive/correo: envialo como ARCHIVO/DOCUMENTO, nunca como texto pegado.
 5) Abrelo en el navegador: acentos y simbolos se renderizan via entidades HTML y escapes \u de JS.
-Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.13).
+Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.14).
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Control Hidrop&oacute;nico v10.13 - ASCII Seguro</title>
+<title>Control Hidrop&oacute;nico v10.14 - ASCII Seguro</title>
 <style>
 :root { --vc:#e8f5e9; --vf:#2e7d32; --vo:#1b5e20; --ac:#e3f2fd; --af:#1565c0; --gc:#f5f5f5; --gm:#e0e0e0; --go:#616161; --ra:#c62828; --rc:#ffebee; --aa:#f9a825; --ac2:#fff8e1; --na:#ef6c00; --nc:#fff3e0; --bl:#fff; --ne:#212121; --mo:#6a1b9a; --mc:#f3e5f5; }
 * { box-sizing:border-box; margin:0; padding:0; }
@@ -79,7 +79,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
 </head>
 <body>
 <div class="container">
-<header><h1>CONTROL HIDROP&Oacute;NICO v10.13</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
+<header><h1>CONTROL HIDROP&Oacute;NICO v10.14</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
 
 <div id="screen-dashboard" class="screen active-screen">
   <div class="screen-header">Panel Principal<span id="nube-pill" class="nube-pill nube-off" style="display:none" onclick="mostrarPantalla('screen-mas')">Fuera de l&iacute;nea</span></div>
@@ -267,7 +267,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
   </div>
 </div>
 
-<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.13 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
+<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.14 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
 </div>
 
 <script>
@@ -301,7 +301,7 @@ const CONFIG = {
     'Ar\u00fagula': { ph_min:6.0, ph_max:6.5, ec_min:1.2, ec_max:1.6, temp_agua_min:15, temp_agua_max:20, temp_amb_min:15, temp_amb_max:20, dias_oscuridad:2, dias_trasplante:12, dias_cosecha:27, requiere_oscuridad:true, descripcion_oscuridad:'Oscuridad los primeros 2 d&iacute;as' },
     'Lechuga Parris Island': { ph_min:5.8, ph_max:6.2, ec_min:1.4, ec_max:1.8, temp_agua_min:18, temp_agua_max:22, temp_amb_min:18, temp_amb_max:22, dias_oscuridad:2, dias_trasplante:16, dias_cosecha:40, requiere_oscuridad:false, descripcion_oscuridad:'Luz brillante indirecta desde el inicio' },
     'Espinaca': { ph_min:6.0, ph_max:6.5, ec_min:1.4, ec_max:1.8, temp_agua_min:15, temp_agua_max:20, temp_amb_min:15, temp_amb_max:20, dias_oscuridad:3, dias_trasplante:16, dias_cosecha:40, requiere_oscuridad:true, descripcion_oscuridad:'Oscuridad total los primeros 3 d&iacute;as' } },
-  STORAGE_KEYS: { cultivos:'hydro_cultivos', casetas:'hydro_casetas', eventos:'hydro_eventos', alertas:'hydro_alertas', schema:'hydro_schema_v102' }
+  STORAGE_KEYS: { cultivos:'hydro_cultivos', casetas:'hydro_casetas', eventos:'hydro_eventos', alertas:'hydro_alertas', mediciones:'hydro_mediciones', dosis:'hydro_dosis', schema:'hydro_schema_v102' }
 };
 let estado = { casetaActual: null, cultivoActual: null, revisionActual: null };
 
@@ -325,17 +325,22 @@ function timestampActual() { const n = new Date(); return n.getFullYear()+'-'+St
 function diasEntre(f1, f2) { const d1 = new Date(f1), d2 = new Date(f2 || new Date()); return Math.floor((d2 - d1) / 86400000); }
 function sumarDias(f, d) { const x = new Date(f); x.setDate(x.getDate() + d); return x.toISOString().split('T')[0]; }
 function generarIdCultivo() { const h = hoy().replace(/-/g,''); const c = cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []; return 'C-'+h+'-'+String(c.filter(x => x.fecha_siembra === hoy()).length + 1).padStart(2,'0'); }
-function generarIdEvento(id) { return 'E-C'+id+'-'+timestampActual().replace(/[-: ]/g,''); }
+function generarIdEvento(id) {
+  const base = 'E-C' + id + '-' + timestampActual().replace(/[-: ]/g, '') + String(Date.now() % 1000).padStart(3, '0');
+  const ex = cargarDatos(CONFIG.STORAGE_KEYS.eventos) || []; let n = base, k = 0;
+  while (ex.some(e => e.evento_id === n)) { k++; n = base + '-' + k; }
+  return n;
+}
 function normalizarEC(v) { if (v > CONFIG.UMBRAL_CONVERSION_EC) return { ec: Math.round(v/10)/100, convertida: true, original: v }; return { ec: v, convertida: false, original: v }; }
 function validarRangos(ph, ec) { const e = []; if (ph < 0 || ph > 14) e.push('pH '+ph+' fuera de 0-14.'); if (ec < CONFIG.MIN_EC_VALIDA || ec > CONFIG.MAX_EC_VALIDA) e.push('EC '+ec+' fuera de '+CONFIG.MIN_EC_VALIDA+'-'+CONFIG.MAX_EC_VALIDA+' mS/cm.'); return e; }
 function contarCultivosActivos(n) { return (cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || []).filter(c => c.caseta_actual === n && c.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO).length; }
 function cargarDatos(k) { const d = localStorage.getItem(k); return d ? JSON.parse(d) : null; }
-function guardarDatos(k, d) { localStorage.setItem(k, JSON.stringify(d)); if (!SYNC_APLICANDO && typeof syncDetectarCambios === 'function') syncDetectarCambios(k, d); }
+function guardarDatos(k, d) { localStorage.setItem(k, JSON.stringify(d)); if (k === CONFIG.STORAGE_KEYS.eventos && !SYNC_APLICANDO && typeof derivarPlanosTodos === 'function') derivarPlanosTodos(d); if (!SYNC_APLICANDO && typeof syncDetectarCambios === 'function') syncDetectarCambios(k, d); }
 /* ===== v10.6: sincronizacion en la nube (Supabase, REST) con cola sin conexion =====
    Solo SUBE y ACTUALIZA registros: nunca borra datos locales ni remotos.
    Sincroniza cultivos, casetas y eventos (las alertas se recalculan y no se sincronizan). */
 const NUBE = { url: '', key: '', auto: true }; /* PEGA AQUI: URL del proyecto Supabase y llave publicable (anon/publishable) */
-const SYNC_COLS = { hydro_cultivos: 'cultivos', hydro_casetas: 'casetas', hydro_eventos: 'eventos' };
+const SYNC_COLS = { hydro_cultivos: 'cultivos', hydro_casetas: 'casetas', hydro_eventos: 'eventos', hydro_mediciones: 'mediciones', hydro_dosis: 'dosis' };
 const SYNC_K = { sesion: 'hydro_sync_sesion', cola: 'hydro_sync_cola', meta: 'hydro_sync_meta', cursor: 'hydro_sync_cursor', estado: 'hydro_sync_estado', respaldo: 'hydro_backup_pre_sync' };
 let SYNC_APLICANDO = false, SYNC_OCUPADO = false, SYNC_TIMER = null, SYNC_REINTENTO = null;
 const SYNC_REINTENTO_MS = 60000;
@@ -344,7 +349,7 @@ function syncLeer(k, def) { try { const v = localStorage.getItem(k); return v ? 
 function syncGuardar(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 function syncCanon(o) { if (Array.isArray(o)) return '[' + o.map(syncCanon).join(',') + ']'; if (o && typeof o === 'object') return '{' + Object.keys(o).sort().map(k => JSON.stringify(k) + ':' + syncCanon(o[k])).join(',') + '}'; return JSON.stringify(o === undefined ? null : o); }
 function syncHash(o) { const s = syncCanon(o); let h = 5381; for (let i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) >>> 0; return h.toString(36) + ':' + s.length; }
-function syncIdDe(col, r) { return String(col === 'cultivos' ? r.cultivo_id : col === 'casetas' ? r.numero : r.evento_id); }
+function syncIdDe(col, r) { return String(col === 'cultivos' ? r.cultivo_id : col === 'casetas' ? r.numero : col === 'mediciones' ? r.medicion_id : col === 'dosis' ? r.dosis_id : r.evento_id); }
 function syncDetectarCambios(k, arr) {
   const col = SYNC_COLS[k]; if (!col || !Array.isArray(arr)) return;
   const meta = syncLeer(SYNC_K.meta, {}); let cola = syncLeer(SYNC_K.cola, []), cambio = false;
@@ -360,7 +365,7 @@ function syncPintar() {
   let t;
   if (!NUBE.url || !NUBE.key) t = 'Nube sin configurar (falta URL y llave en el archivo). Los datos se guardan solo en este tel&eacute;fono.';
   else if (!ses) t = 'Sin sesi&oacute;n: ingresa tu correo y contrase&ntilde;a. Pendientes por subir: ' + n + '.';
-  else t = (e.error ? 'Sin conexi&oacute;n o con error (' + e.error + '). ' : (e.ultimoOk ? 'Sincronizado ' + e.ultimoOk + '. ' : 'Conectado. ')) + 'Pendientes por subir: ' + n + '.';
+  else t = (e.error ? 'Sin conexi&oacute;n o con error (' + e.error + '). ' : (e.ultimoOk ? 'Sincronizado ' + e.ultimoOk + '. ' : 'Conectado. ')) + 'Pendientes por subir: ' + n + '.' + (e.aviso ? ' ' + e.aviso : '');
   el.innerHTML = t;
   const pl = document.getElementById('nube-pill');
   if (pl) { const conf = !!(NUBE.url && NUBE.key), on = conf && !!ses && !e.error && !(typeof navigator !== 'undefined' && navigator.onLine === false);
@@ -405,19 +410,24 @@ async function syncAhora(manual) {
   clearTimeout(SYNC_REINTENTO);
   const ses = syncLeer(SYNC_K.sesion, null); if (!ses) { syncPintar(); return { ok: false, motivo: 'sin_sesion' }; }
   if (typeof navigator !== 'undefined' && navigator.onLine === false) { syncEstadoSet({ error: 'sin red' }); syncReintentar(); return { ok: false, motivo: 'offline' }; }
-  SYNC_OCUPADO = true; let okFin = false;
+  SYNC_OCUPADO = true; let okFin = false, enviados = 0, extraFallo = false;
   try {
-    // 1) SUBIR la cola (solo se vacia lo que el servidor confirmo)
-    let cola = syncLeer(SYNC_K.cola, []);
-    while (cola.length) {
-      const lote = cola.slice(0, 200);
-      const cuerpo = JSON.stringify(lote.map(q => ({ owner: ses.uid, coleccion: q.c, id: q.id, data: q.data })));
-      const r = await syncHttp('/rest/v1/hydro_docs?on_conflict=owner,coleccion,id', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: cuerpo, keepalive: cuerpo.length < 60000 }, true);
-      if (!r.ok) throw new Error('subida HTTP ' + r.status);
-      const sent = {}; lote.forEach(q => { sent[q.c + '|' + q.id] = syncHash(q.data); });
-      cola = syncLeer(SYNC_K.cola, []).filter(q => sent[q.c + '|' + q.id] !== syncHash(q.data));
-      syncGuardar(SYNC_K.cola, cola);
-    }
+    // 1) SUBIR: primero los datos principales; despues los registros planos (mediciones, dosis). Si estos fallan (p. ej. falta el SQL nuevo), NO bloquean lo principal.
+    const esCore = q => q.c === 'cultivos' || q.c === 'casetas' || q.c === 'eventos';
+    const subir = async (filtro) => {
+      let pend = syncLeer(SYNC_K.cola, []).filter(filtro);
+      while (pend.length) {
+        const lote = pend.slice(0, 200), cuerpo = JSON.stringify(lote.map(q => ({ owner: ses.uid, coleccion: q.c, id: q.id, data: q.data })));
+        const r = await syncHttp('/rest/v1/hydro_docs?on_conflict=owner,coleccion,id', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: cuerpo, keepalive: cuerpo.length < 60000 }, true);
+        if (!r.ok) throw new Error('subida HTTP ' + r.status);
+        enviados += lote.length;
+        const sent = {}; lote.forEach(q => { sent[q.c + '|' + q.id] = syncHash(q.data); });
+        const resto = syncLeer(SYNC_K.cola, []).filter(q => sent[q.c + '|' + q.id] !== syncHash(q.data)); syncGuardar(SYNC_K.cola, resto);
+        pend = resto.filter(filtro);
+      }
+    };
+    await subir(esCore);
+    try { await subir(q => !esCore(q)); } catch (e2) { extraFallo = true; }
     // 2) BAJAR cambios del servidor (con 5 s de traslape; los ecos se descartan por comparacion)
     const cur = syncLeer(SYNC_K.cursor, '1970-01-01T00:00:00.000Z'); let desde = cur, maxVisto = cur, aplicados = 0;
     for (let pag = 0; pag < 100; pag++) {
@@ -430,11 +440,11 @@ async function syncAhora(manual) {
     }
     /* si lo mas nuevo es reciente (<15 s) guarda el cursor 5 s atras por transacciones que aun no confirman; si no, el cursor exacto */
     syncGuardar(SYNC_K.cursor, (Date.now() - Date.parse(maxVisto) < 15000) ? new Date(Date.parse(maxVisto) - 5000).toISOString() : maxVisto);
-    syncEstadoSet({ error: null, ultimoOk: timestampActual() });
+    syncEstadoSet({ error: null, ultimoOk: timestampActual(), aviso: extraFallo ? 'Registros planos (mediciones/dosis) pendientes: ejecuta el SQL nuevo en Supabase.' : null });
     if (aplicados && typeof actualizarDashboard === 'function') actualizarDashboard();
-    okFin = true; return { ok: true, aplicados: aplicados };
+    okFin = true; if (enviados) toast('Subido a la nube \u2713 (' + enviados + ')'); return { ok: true, aplicados: aplicados, enviados: enviados };
   } catch (e) { syncEstadoSet({ error: String(e.message || e).slice(0, 60) }); syncReintentar(); return { ok: false, motivo: 'error', error: String(e.message || e) }; }
-  finally { SYNC_OCUPADO = false; if (okFin && syncLeer(SYNC_K.cola, []).length) Promise.resolve().then(() => syncAhora()); }
+  finally { SYNC_OCUPADO = false; if (okFin && !extraFallo && syncLeer(SYNC_K.cola, []).length) Promise.resolve().then(() => syncAhora()); }
 }
 function syncAplicar(rows) {
   const pend = {}; syncLeer(SYNC_K.cola, []).forEach(q => { pend[q.c + '|' + q.id] = 1; });
@@ -458,6 +468,7 @@ function syncGuardarCfg() {
   m.textContent = ''; syncGuardar('hydro_sync_cfg', { url: u, key: k }); NUBE.url = u; NUBE.key = k; syncPintar(); syncProgramar();
 }
 function syncInicializar() {
+  try { derivarPlanosTodos(); } catch (e) {}
   syncCargarCfg();
   Object.keys(SYNC_COLS).forEach(k => { const d = cargarDatos(k); if (d) syncDetectarCambios(k, d); });
   window.addEventListener('online', () => syncAhora());
@@ -469,11 +480,11 @@ function syncInicializar() {
 function agregarRegistro(k, r) { const d = cargarDatos(k) || []; d.push(r); guardarDatos(k, d); return d; }
 function actualizarRegistro(k, c, v, n) { const d = cargarDatos(k) || []; const i = d.findIndex(r => r[c] === v); if (i !== -1) { d[i] = Object.assign({}, d[i], n); guardarDatos(k, d); return d[i]; } return null; }
 function migrarDatosAntiguos() {
-  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5','v10.6','v10.7','v10.8','v10.9','v10.10','v10.11','v10.12'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
+  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5','v10.6','v10.7','v10.8','v10.9','v10.10','v10.11','v10.12','v10.13'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
     const old = localStorage.getItem('hydro_'+k+'_'+v), cur = localStorage.getItem('hydro_'+k);
     if (old && !cur) localStorage.setItem('hydro_'+k, old);
   });});
-  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.13');
+  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.14');
 }
 function mostrarPantalla(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
@@ -573,6 +584,50 @@ function ecCompPreview(tId, eId, oId) {
   o.style.display = 'block'; o.innerHTML = 'A 25&deg;C: <strong>' + ecA25(val, t) + ' mS/cm</strong> (el medidor no compensa; se corrige ' + (CONFIG.EC_ALFA_POR_C * 100) + '% por &deg;C)';
 }
 function avisoEcComp(r) { return (r.ecMedida !== undefined && r.ecMedida !== r.ec) ? '<div class="info-box">EC medida <strong>' + r.ecMedida + '</strong> mS/cm a ' + r.tempAgua + '&deg;C (sin compensar) = <strong>' + r.ec + ' mS/cm a 25&deg;C</strong>. Las dosis usan este valor.</div>' : ''; }
+const APP_VERSION = '10.14';
+function toast(msg) {
+  try { let t = document.getElementById('toast');
+    if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('style', 'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1b5e20;color:#fff;padding:10px 16px;border-radius:20px;font-size:.9rem;z-index:9999;max-width:90%;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.3)'); document.body.appendChild(t); }
+    t.textContent = msg; t.style.display = 'block'; clearTimeout(t._h); t._h = setTimeout(() => { t.style.display = 'none'; }, 2800); } catch (e) {}
+}
+function r1(x) { return (x === null || x === undefined || !isFinite(x)) ? null : Math.round(x * 10) / 10; }
+function difMin(a, b) { const pa = Date.parse(String(a).replace(' ', 'T')), pb = Date.parse(String(b).replace(' ', 'T')); return (isFinite(pa) && isFinite(pb)) ? Math.round((pb - pa) / 6000) / 10 : null; }
+function nz(x) { return (x === undefined || x === null) ? null : x; }
+function derivarPlanosTodos(eventos) {
+  const evs = eventos || cargarDatos(CONFIG.STORAGE_KEYS.eventos) || []; if (!evs.length) return;
+  const meds = cargarDatos(CONFIG.STORAGE_KEYS.mediciones) || [], dos = cargarDatos(CONFIG.STORAGE_KEYS.dosis) || [];
+  const cas = cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], cul = cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [];
+  const mI = {}, dI = {}; meds.forEach((x, i) => { mI[x.medicion_id] = i; }); dos.forEach((x, i) => { dI[x.dosis_id] = i; });
+  let cm = false, cd = false;
+  evs.forEach(ev => {
+    if (!ev || !ev.evento_id || !Array.isArray(ev.mediciones)) return;
+    const c = cas.find(x => x.numero === ev.caseta_id) || null, vols = c ? calcularVolumenesSistema(c) : null, geo = (c && c.geometria_tubos) ? c.geometria_tubos : CONFIG.GEOMETRIA_TUBOS_DEFAULT;
+    const pres = cul.filter(k => k.caseta_actual === ev.caseta_id && k.fase_actual !== CONFIG.FASES_CULTIVO.COSECHADO).map(k => k.variedad);
+    ev.mediciones.forEach((m, i) => {
+      const id = ev.evento_id + '-M' + (i + 1); if (mI[id] !== undefined) return;
+      const vt = nz(m.volumen), dm = difMin(m.timestamp, timestampActual());
+      meds.push({ medicion_id: id, evento_id: ev.evento_id, caseta: ev.caseta_id, tipo_evento: ev.tipo, momento: ev.tipo === 'medicion_rutinaria' ? 'rutinaria' : (i === 0 ? 'inicial' : 'post_ajuste'), orden: i + 1, timestamp: m.timestamp, hora: nz(m.hora),
+        volumen_tanque_l: vt, volumen_tubos_l: vols ? r1(vols.volTubos) : null, volumen_total_l: (vt !== null && vols) ? r1(vt + vols.volTubos) : null, lamina_tubos_cm: geo.lamina_cm, geometria_asumida: vols ? vols.geometriaAsumida : null,
+        ph: nz(m.ph), ec_medida: m.ec_medida !== undefined ? m.ec_medida : nz(m.ec), ec_25c: m.ec_comp ? m.ec : null, ec_compensada: !!m.ec_comp, temp_agua_c: nz(m.temp_agua),
+        temp_amb_actual_c: nz(m.temp_ambiental_actual), temp_amb_max_c: nz(m.temp_ambiental_max), temp_amb_min_c: nz(m.temp_ambiental_min), amb_heredado: !!m.amb_heredado, max_estado: nz(m.max_estado), min_estado: nz(m.min_estado),
+        cultivos_presentes: pres, contexto_reconstruido: !(dm !== null && Math.abs(dm) < 10), app_version: APP_VERSION });
+      mI[id] = meds.length - 1; cm = true;
+    });
+    (ev.acciones || []).forEach((a, j) => {
+      const id = ev.evento_id + '-D' + (j + 1), mA = ev.mediciones[j] || null, mD = ev.mediciones[j + 1] || null, d = a.dosis || {};
+      const phA = mA ? nz(mA.ph) : null, phD = mD ? nz(mD.ph) : null, ecA = (mA && mA.ec_comp) ? mA.ec : null, ecD = (mD && mD.ec_comp) ? mD.ec : null;
+      const desp = { ph_despues: phD, ec25_despues: ecD, temp_agua_despues_c: mD ? nz(mD.temp_agua) : null, delta_ph: (phA !== null && phD !== null) ? Math.round((phD - phA) * 100) / 100 : null, delta_ec25: (ecA !== null && ecD !== null) ? Math.round((ecD - ecA) * 100) / 100 : null, minutos_entre: (mA && mD) ? difMin(mA.timestamp, mD.timestamp) : null };
+      if (dI[id] === undefined) {
+        dos.push(Object.assign({ dosis_id: id, evento_id: ev.evento_id, caseta: ev.caseta_id, orden: j + 1, timestamp: a.timestamp, tipo_ajuste: a.tipo, descripcion: String(a.descripcion || '').replace(/&asymp;/g, '~').replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, ''), dosis_es_recomendada: true,
+          citrico_g: nz(d.citrico_g), nutriente_g: nz(d.nutriente_g), phup_gotas_total: nz(d.phup_gotas_total), phup_gotas_paso1: nz(d.phup_gotas_paso1), phup_ml_premezcla: nz(d.phup_ml_premezcla), agua_botellas: nz(d.agua_botellas), volumen_total_l: nz(d.vtot),
+          ph_antes: phA, ec25_antes: ecA, temp_agua_antes_c: mA ? nz(mA.temp_agua) : null, app_version: APP_VERSION }, desp));
+        dI[id] = dos.length - 1; cd = true;
+      } else if (dos[dI[id]].ph_despues === null && mD) { Object.assign(dos[dI[id]], desp); cd = true; }
+    });
+  });
+  if (cm) guardarDatos(CONFIG.STORAGE_KEYS.mediciones, meds);
+  if (cd) guardarDatos(CONFIG.STORAGE_KEYS.dosis, dos);
+}
 function fmtCuch(n) { const e = Math.floor(n), m = n - e; return (e ? e : '') + (m ? (e ? ' ' : '') + '1/2' : '') + ' cucharita' + (n > 1 ? 's' : ''); }
 function fmtPaso(n) { const e = Math.floor(n), m = n - e; return (e ? e : '') + (m ? (e ? ' ' : '') + '1/2' : ''); }
 function pasosDe(total, max) { const p = []; let r = total; while (r > 0.0001) { const s = Math.min(max, r); p.push(s); r = Math.round((r - s) * 2) / 2; } return p; }
@@ -1166,6 +1221,7 @@ function guardarEventoRevision() {
   const d = cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], i = d.findIndex(x => x.evento_id === e.evento_id), copia = JSON.parse(JSON.stringify(e));
   if (i === -1) d.push(copia); else d[i] = copia;
   guardarDatos(CONFIG.STORAGE_KEYS.eventos, d);
+  toast('Guardado en el tel\u00e9fono \u2713');
 }
 function seguirAjustando() {
   const r = estado.revisionActual; if (!r) return;
@@ -1182,7 +1238,7 @@ function cerrarRevision() {
 }
 
 function exportarBackupJSON() {
-  const b = { version: '10.13', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
+  const b = { version: '10.14', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
   const bl = new Blob([JSON.stringify(b, null, 2)], {type: 'application/json'});
   const u = URL.createObjectURL(bl); const l = document.createElement('a');
   l.href = u; l.download = 'backup_hidroponico_'+hoy()+'.json'; l.click(); URL.revokeObjectURL(u);
@@ -1230,7 +1286,9 @@ function exportarTodoCSV() {
     descargarCSV('eventos_'+h+'.csv', [hd.join(','), ...rw].join('\n'));
   }
   if (al.length) descargarCSV('alertas_'+h+'.csv', 'tipo,prioridad,caseta,mensaje\n' + al.map(a => [a.t, a.p, a.c || '', a.m].map(x => '"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n'));
-  alert('CSV exportados: casetas, tubos, cultivos, eventos, alertas');
+  const csvPlano = (arr, nombre) => { if (!arr.length) return; const cols = Object.keys(arr.reduce((acc, x) => Object.assign(acc, x), {})); const q = v => '"' + String(v === null || v === undefined ? '' : (typeof v === 'object' ? JSON.stringify(v) : v)).replace(/"/g, '""') + '"'; descargarCSV(nombre + '_' + h + '.csv', [cols.join(','), ...arr.map(x => cols.map(c => q(x[c])).join(','))].join('\n')); };
+  csvPlano(cargarDatos(CONFIG.STORAGE_KEYS.mediciones) || [], 'mediciones'); csvPlano(cargarDatos(CONFIG.STORAGE_KEYS.dosis) || [], 'dosis');
+  alert('CSV exportados: casetas, tubos, cultivos, eventos, alertas, mediciones, dosis');
 }
 function descargarCSV(n, c) {
   const b = new Blob(['\ufeff'+c], {type: 'text/csv;charset=utf-8;'});
