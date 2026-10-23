@@ -2,18 +2,18 @@
 GUARDADO SEGURO (archivo 100% ASCII, a prueba de corrupcion):
 1) Copia TODO este archivo.
 2) Pegalo en un editor de texto plano (Notepad++, Acode, QuickEdit, VS Code).
-3) Guardalo como: hydro_control_v1014.html
+3) Guardalo como: hydro_control_v1015.html
    - Codificacion: cualquiera (UTF-8 o ANSI). No hay bytes no-ASCII que corromper.
 4) Si lo transfieres por WhatsApp/Drive/correo: envialo como ARCHIVO/DOCUMENTO, nunca como texto pegado.
 5) Abrelo en el navegador: acentos y simbolos se renderizan via entidades HTML y escapes \u de JS.
-Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.14).
+Si algo se ve como "?" o rombos, NO es este archivo (verifica que el pie diga v10.15).
 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Control Hidrop&oacute;nico v10.14 - ASCII Seguro</title>
+<title>Control Hidrop&oacute;nico v10.15 - ASCII Seguro</title>
 <style>
 :root { --vc:#e8f5e9; --vf:#2e7d32; --vo:#1b5e20; --ac:#e3f2fd; --af:#1565c0; --gc:#f5f5f5; --gm:#e0e0e0; --go:#616161; --ra:#c62828; --rc:#ffebee; --aa:#f9a825; --ac2:#fff8e1; --na:#ef6c00; --nc:#fff3e0; --bl:#fff; --ne:#212121; --mo:#6a1b9a; --mc:#f3e5f5; }
 * { box-sizing:border-box; margin:0; padding:0; }
@@ -79,7 +79,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
 </head>
 <body>
 <div class="container">
-<header><h1>CONTROL HIDROP&Oacute;NICO v10.14</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
+<header><h1>CONTROL HIDROP&Oacute;NICO v10.15</h1><p class="subtitle">Sin suite interna &middot; Verificaci&oacute;n externa &middot; C&iacute;trico calibrado &middot; Archivo ASCII-seguro</p></header>
 
 <div id="screen-dashboard" class="screen active-screen">
   <div class="screen-header">Panel Principal<span id="nube-pill" class="nube-pill nube-off" style="display:none" onclick="mostrarPantalla('screen-mas')">Fuera de l&iacute;nea</span></div>
@@ -249,6 +249,13 @@ button:disabled { opacity:.5; cursor:not-allowed; }
   <div class="screen-header"><span class="step-number">Paso 4/5</span> Nueva Medici&oacute;n Post-Ajuste</div>
   <div class="info-box" id="revision-info-post"></div>
   <div class="form-group"><label>Volumen actual del tanque (L):</label><input type="number" id="rev-volumen-post" step="0.5" min="0" placeholder="Ej: 52"><small style="color:var(--go)">Actual&iacute;zalo si agregaste o drenaste agua durante el ajuste.</small></div>
+  <div class="card card-info" id="card-dosis-real"><h3>Dosis aplicada</h3><div class="info-box" style="margin:0 0 8px">Precargada con lo indicado en el plan. Corrige si agregaste otra cantidad (0 = no agregaste).</div>
+    <div class="form-group" style="margin:0"><label>&Aacute;cido c&iacute;trico (g):</label><input type="number" id="rev-real-citrico" step="0.1" min="0"></div>
+    <div class="form-group" style="margin:0"><label>Nutriente (g):</label><input type="number" id="rev-real-nutriente" step="0.1" min="0"></div>
+    <div class="form-group" style="margin:0"><label>pH Up directo (gotas):</label><input type="number" id="rev-real-phup" step="0.1" min="0"></div>
+    <div class="form-group" style="margin:0"><label>pH Up en la premezcla (mL):</label><input type="number" id="rev-real-phupml" step="0.1" min="0"></div>
+    <div class="form-group" style="margin:0"><label>Agua limpia repuesta (L):</label><input type="number" id="rev-real-agua" step="0.1" min="0"></div>
+    <div class="form-group" style="margin:0"><label>Botellas congeladas (n):</label><input type="number" id="rev-real-botellas" step="0.1" min="0"></div></div>
   <div class="card card-warning"><h3>Agua (medidor de pluma)</h3>
     <div class="form-group" style="margin:0"><label>Temperatura agua (&deg;C):</label><input type="number" id="rev-temp-agua-post" step="0.1" placeholder="Ej: 24" oninput="ecCompPreview('rev-temp-agua-post','rev-ec-post','revp-ec-comp')"></div>
     <div class="form-group" style="margin:0"><label>pH:</label><input type="number" id="rev-ph-post" step="0.01" placeholder="Ej: 6.57"></div>
@@ -267,7 +274,7 @@ button:disabled { opacity:.5; cursor:not-allowed; }
   </div>
 </div>
 
-<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.14 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
+<div class="footer-note">Sistema de Control Hidrop&oacute;nico v10.15 &middot; Octubre 2026 &middot; Archivo 100% ASCII (a prueba de corrupci&oacute;n)</div>
 </div>
 
 <script>
@@ -480,11 +487,11 @@ function syncInicializar() {
 function agregarRegistro(k, r) { const d = cargarDatos(k) || []; d.push(r); guardarDatos(k, d); return d; }
 function actualizarRegistro(k, c, v, n) { const d = cargarDatos(k) || []; const i = d.findIndex(r => r[c] === v); if (i !== -1) { d[i] = Object.assign({}, d[i], n); guardarDatos(k, d); return d[i]; } return null; }
 function migrarDatosAntiguos() {
-  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5','v10.6','v10.7','v10.8','v10.9','v10.10','v10.11','v10.12','v10.13'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
+  ['v5','v6','v7','v8','v9','v10','v10.1','v10.2','v10.3','v10.4','v10.5','v10.6','v10.7','v10.8','v10.9','v10.10','v10.11','v10.12','v10.13','v10.14'].forEach(v => { ['cultivos','casetas','eventos','alertas'].forEach(k => {
     const old = localStorage.getItem('hydro_'+k+'_'+v), cur = localStorage.getItem('hydro_'+k);
     if (old && !cur) localStorage.setItem('hydro_'+k, old);
   });});
-  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.14');
+  localStorage.setItem(CONFIG.STORAGE_KEYS.schema, '10.15');
 }
 function mostrarPantalla(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
@@ -584,7 +591,7 @@ function ecCompPreview(tId, eId, oId) {
   o.style.display = 'block'; o.innerHTML = 'A 25&deg;C: <strong>' + ecA25(val, t) + ' mS/cm</strong> (el medidor no compensa; se corrige ' + (CONFIG.EC_ALFA_POR_C * 100) + '% por &deg;C)';
 }
 function avisoEcComp(r) { return (r.ecMedida !== undefined && r.ecMedida !== r.ec) ? '<div class="info-box">EC medida <strong>' + r.ecMedida + '</strong> mS/cm a ' + r.tempAgua + '&deg;C (sin compensar) = <strong>' + r.ec + ' mS/cm a 25&deg;C</strong>. Las dosis usan este valor.</div>' : ''; }
-const APP_VERSION = '10.14';
+const APP_VERSION = '10.15';
 function toast(msg) {
   try { let t = document.getElementById('toast');
     if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('style', 'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1b5e20;color:#fff;padding:10px 16px;border-radius:20px;font-size:.9rem;z-index:9999;max-width:90%;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.3)'); document.body.appendChild(t); }
@@ -593,6 +600,10 @@ function toast(msg) {
 function r1(x) { return (x === null || x === undefined || !isFinite(x)) ? null : Math.round(x * 10) / 10; }
 function difMin(a, b) { const pa = Date.parse(String(a).replace(' ', 'T')), pb = Date.parse(String(b).replace(' ', 'T')); return (isFinite(pa) && isFinite(pb)) ? Math.round((pb - pa) / 6000) / 10 : null; }
 function nz(x) { return (x === undefined || x === null) ? null : x; }
+function realDe(a) {
+  const r = a.dosis_real || null;
+  return { real_citrico_g: r ? r.citrico_g : null, real_nutriente_g: r ? r.nutriente_g : null, real_phup_gotas: r ? r.phup_gotas : null, real_phup_ml_premezcla: r ? r.phup_ml_premezcla : null, real_agua_l: r ? r.agua_l : null, real_botellas_congeladas: r ? r.botellas_congeladas : null, dosis_real_editada: r ? !!r.editada : null, dosis_real_capturada: !!r };
+}
 function derivarPlanosTodos(eventos) {
   const evs = eventos || cargarDatos(CONFIG.STORAGE_KEYS.eventos) || []; if (!evs.length) return;
   const meds = cargarDatos(CONFIG.STORAGE_KEYS.mediciones) || [], dos = cargarDatos(CONFIG.STORAGE_KEYS.dosis) || [];
@@ -620,13 +631,34 @@ function derivarPlanosTodos(eventos) {
       if (dI[id] === undefined) {
         dos.push(Object.assign({ dosis_id: id, evento_id: ev.evento_id, caseta: ev.caseta_id, orden: j + 1, timestamp: a.timestamp, tipo_ajuste: a.tipo, descripcion: String(a.descripcion || '').replace(/&asymp;/g, '~').replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, ''), dosis_es_recomendada: true,
           citrico_g: nz(d.citrico_g), nutriente_g: nz(d.nutriente_g), phup_gotas_total: nz(d.phup_gotas_total), phup_gotas_paso1: nz(d.phup_gotas_paso1), phup_ml_premezcla: nz(d.phup_ml_premezcla), agua_botellas: nz(d.agua_botellas), volumen_total_l: nz(d.vtot),
-          ph_antes: phA, ec25_antes: ecA, temp_agua_antes_c: mA ? nz(mA.temp_agua) : null, app_version: APP_VERSION }, desp));
+          ph_antes: phA, ec25_antes: ecA, temp_agua_antes_c: mA ? nz(mA.temp_agua) : null, sugerida_paso1: d.paso1 || null, app_version: APP_VERSION }, desp, realDe(a)));
         dI[id] = dos.length - 1; cd = true;
-      } else if (dos[dI[id]].ph_despues === null && mD) { Object.assign(dos[dI[id]], desp); cd = true; }
+      } else { const ex = dos[dI[id]]; if (ex.ph_despues === null && mD) { Object.assign(ex, desp); cd = true; } if (!ex.dosis_real_capturada && a.dosis_real) { Object.assign(ex, realDe(a)); cd = true; } }
     });
   });
   if (cm) guardarDatos(CONFIG.STORAGE_KEYS.mediciones, meds);
   if (cd) guardarDatos(CONFIG.STORAGE_KEYS.dosis, dos);
+}
+function dosisPaso1(a, r) {
+  const vTot = r.volumenTanque + r.vols.volTubos, p = { citrico_g: 0, nutriente_g: 0, phup_gotas: 0, phup_ml_premezcla: 0, agua_l: 0, botellas_congeladas: 0 };
+  if (a.tipo === 'solo_ph_down') p.citrico_g = (a.pasos && a.pasos[0] ? a.pasos[0] : 0) * CONFIG.CUCHARITA_G_CITRICO;
+  if (a.tipo === 'ajuste_fino_tanque') { p.citrico_g = (a.cucharitasCitrico || 0) * CONFIG.CUCHARITA_G_CITRICO; p.phup_gotas = a.gotasPHUp || 0; }
+  if (a.tipo === 'solo_ph_up') p.phup_gotas = a.gotasPaso1 || 0;
+  if (a.nutriente) { p.nutriente_g = (a.nutriente.pasos[0] || 0) * CONFIG.CUCHARITA_G_NUTRIENTE; p.phup_ml_premezcla = a.nutriente.phupPasosMl[0] || 0; }
+  if (a.tipo === 'nutriente' || a.tipo === 'nutriente_dual' || a.tipo === 'dilucion') p.agua_l = (a.numBotellas || 0) * CONFIG.VOLUMEN_BOTELLA;
+  if (r.tempAgua > CONFIG.TEMP_AGUA_MAX) p.botellas_congeladas = botellasEnfriamiento(vTot, r.tempAgua).botellas;
+  Object.keys(p).forEach(k => { p[k] = Math.round(p[k] * 10) / 10; });
+  return p;
+}
+function leerDosisReal() {
+  const ids = { citrico_g: 'rev-real-citrico', nutriente_g: 'rev-real-nutriente', phup_gotas: 'rev-real-phup', phup_ml_premezcla: 'rev-real-phupml', agua_l: 'rev-real-agua', botellas_congeladas: 'rev-real-botellas' };
+  const pre = (estado.revisionActual && estado.revisionActual.dosisPrefill) || {}, v = {}; let editada = false;
+  for (const k of Object.keys(ids)) {
+    const raw = document.getElementById(ids[k]).value, x = raw === '' ? 0 : parseFloat(raw);
+    if (!isFinite(x) || x < 0 || x > 1000) return { error: 'Dosis aplicada: usa n\u00fameros entre 0 y 1000 (0 = no agregaste).' };
+    v[k] = x; if (Math.abs(x - (pre[k] || 0)) > 1e-9) editada = true;
+  }
+  v.editada = editada; return { valores: v };
 }
 function fmtCuch(n) { const e = Math.floor(n), m = n - e; return (e ? e : '') + (m ? (e ? ' ' : '') + '1/2' : '') + ' cucharita' + (n > 1 ? 's' : ''); }
 function fmtPaso(n) { const e = Math.floor(n), m = n - e; return (e ? e : '') + (m ? (e ? ' ' : '') + '1/2' : ''); }
@@ -1162,7 +1194,7 @@ function renderPlanAjuste(a) {
 }
 function confirmarAjustes() {
   estado.revisionActual.iteraciones++;
-  estado.revisionActual.evento.acciones.push({ timestamp: timestampActual(), tipo: estado.revisionActual.ajuste.tipo, descripcion: estado.revisionActual.ajuste.mensaje, dosis: estado.revisionActual.ajuste.dosis || null });
+  estado.revisionActual.evento.acciones.push({ timestamp: timestampActual(), tipo: estado.revisionActual.ajuste.tipo, descripcion: estado.revisionActual.ajuste.mensaje, dosis: Object.assign({}, estado.revisionActual.ajuste.dosis || {}, { paso1: dosisPaso1(estado.revisionActual.ajuste, estado.revisionActual) }) });
   guardarEventoRevision();
   mostrarPantalla('screen-revision-4'); prepararRevisionPaso4();
 }
@@ -1179,6 +1211,10 @@ function prepararRevisionPaso4() {
   ['rev-temp-agua-post','rev-ph-post','rev-ec-post'].forEach(i => document.getElementById(i).value = '');
   document.getElementById('error-rev4').classList.remove('visible');
   document.getElementById('advertencias-volumen-post').innerHTML = '';
+  const r4 = estado.revisionActual, ac = r4.evento.acciones[r4.evento.acciones.length - 1], p1 = (ac && ac.dosis && ac.dosis.paso1) || {};
+  r4.dosisPrefill = p1;
+  const cm = { citrico_g: 'rev-real-citrico', nutriente_g: 'rev-real-nutriente', phup_gotas: 'rev-real-phup', phup_ml_premezcla: 'rev-real-phupml', agua_l: 'rev-real-agua', botellas_congeladas: 'rev-real-botellas' };
+  Object.keys(cm).forEach(k => { document.getElementById(cm[k]).value = (p1[k] !== undefined && p1[k] !== null) ? p1[k] : 0; });
 }
 function revisionPaso4() {
   const v = parseFloat(document.getElementById('rev-volumen-post').value), t = parseFloat(document.getElementById('rev-temp-agua-post').value);
@@ -1193,6 +1229,7 @@ function revisionPaso4() {
   ad.innerHTML = a.join('');
   const n = normalizarEC(ec); if (n.convertida && confirm('EC='+n.original+' parece uS/cm. Convertir?')) ec = n.ec;
   const er = validarRangos(p, ec); if (er.length) { e.textContent = er.join(' '); e.classList.add('visible'); return; }
+  const dr = leerDosisReal(); if (dr.error) { e.textContent = dr.error; e.classList.add('visible'); return; }
   const ecMed = ec; ec = ecA25(ec, t);
   e.classList.remove('visible');
   estado.revisionActual.volumenTanque = v;
@@ -1202,6 +1239,7 @@ function revisionPaso4() {
   const ok = tO && aO && pO && eO;
   const sg = ok ? null : calcularAjusteTanque(v, vo.numTubosActivos, p, ec, t, estado.revisionActual.caseta);
   Object.assign(estado.revisionActual, { tempAgua: t, tempAmbActual: ta, tempAmbMax: tm, tempAmbMin: tn, ph: p, ec: ec, ecMedida: ecMed, siguienteAjuste: sg, avisoAmb: avisosAmbientePorCultivo(estado.revisionActual.caseta.numero, ta).join('') });
+  const acUlt = ev0.acciones[ev0.acciones.length - 1]; if (acUlt && !acUlt.dosis_real) acUlt.dosis_real = dr.valores;
   guardarEventoRevision();
   renderResultadoFinal(t, ta, p, ec, ok, sg); mostrarPantalla('screen-revision-5');
 }
@@ -1238,7 +1276,7 @@ function cerrarRevision() {
 }
 
 function exportarBackupJSON() {
-  const b = { version: '10.14', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
+  const b = { version: '10.15', fecha: timestampActual(), datos: { cultivos: cargarDatos(CONFIG.STORAGE_KEYS.cultivos) || [], casetas: cargarDatos(CONFIG.STORAGE_KEYS.casetas) || [], eventos: cargarDatos(CONFIG.STORAGE_KEYS.eventos) || [], alertas: cargarDatos(CONFIG.STORAGE_KEYS.alertas) || [] } };
   const bl = new Blob([JSON.stringify(b, null, 2)], {type: 'application/json'});
   const u = URL.createObjectURL(bl); const l = document.createElement('a');
   l.href = u; l.download = 'backup_hidroponico_'+hoy()+'.json'; l.click(); URL.revokeObjectURL(u);
